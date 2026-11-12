@@ -31,7 +31,7 @@ test('page reflows at 320 CSS pixels and the table has a keyboard region', async
   );
   expect(pageOverflow).toBe(false);
 
-  const wrapper = page.locator('.table-wrap');
+  const wrapper = page.getByRole('region', { name: 'Recorded market options table' });
   await expect(wrapper).toHaveAttribute('role', 'region');
   await expect(wrapper).toHaveAttribute('tabindex', '0');
   const scrollable = await wrapper.evaluate(el => el.scrollWidth > el.clientWidth);
