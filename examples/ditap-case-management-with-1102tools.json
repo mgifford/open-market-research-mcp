@@ -1,0 +1,573 @@
+{
+  "schema_version": "0.2.0",
+  "demonstration_only": true,
+  "project": {
+    "name": "DITAP workshop: accessible case management",
+    "need": "A fictional federal team wants to replace a fragmented case management process without excluding people with disabilities.",
+    "users": "Members of the public and agency staff who use assistive technology, mobile devices, and low-bandwidth connections.",
+    "constraints": "Illustrative exercise only. Do not use this as market research evidence or as a supplier shortlist.",
+    "ict_type": "Web application"
+  },
+  "accessibility_requirements": {
+    "identified": true,
+    "tool": "GSA ART (fictional workshop run)",
+    "reviewer": "Fictional Section 508 specialist",
+    "as_of": "2026-11-01",
+    "requirement_ids": [
+      "1.1.1",
+      "1.3.1",
+      "2.1.1",
+      "2.4.7",
+      "4.1.2"
+    ],
+    "notes": "Fictional requirement set for the workshop. It is not an agency determination."
+  },
+  "research_questions": [
+    {
+      "id": "rq-reuse",
+      "question": "Are there existing federal or state case management systems that could be reused or adapted?",
+      "need_link": "Reuse could reduce new development, but only if ownership, maintenance, and reuse rights are established.",
+      "category": "government-reuse",
+      "status": "in-progress",
+      "search_ids": [
+        "s-reuse-inventory",
+        "s-reuse-archive"
+      ],
+      "evidence_ids": [
+        "ev-reuse-inventory",
+        "ev-reuse-archive"
+      ],
+      "uncertainties": "One inventory says production; a second index says archived."
+    },
+    {
+      "id": "rq-open",
+      "question": "Is there an open-source case management product with active maintenance and suitable licensing?",
+      "need_link": "An open-source option could reduce lock-in if the project is healthy and adaptable.",
+      "category": "government-reuse",
+      "status": "in-progress",
+      "search_ids": [
+        "s-open"
+      ],
+      "evidence_ids": [
+        "ev-open"
+      ],
+      "uncertainties": "No accessibility testing evidence was found."
+    },
+    {
+      "id": "rq-commercial",
+      "question": "Which commercial products claim the required case management functions, at which versions?",
+      "need_link": "The commercial market is one alternative, not a default.",
+      "category": "supplier-capabilities",
+      "status": "in-progress",
+      "search_ids": [
+        "s-commercial",
+        "search-1102tools-fake-2020-001"
+      ],
+      "evidence_ids": [
+        "ev-1102tools-fake-2020-001"
+      ],
+      "uncertainties": "Fictional notices are incomplete and do not describe the whole market."
+    },
+    {
+      "id": "rq-accessibility",
+      "question": "What product- and version-specific ACR evidence exists, and what remains untested?",
+      "need_link": "Accessibility evidence is required before the team can judge whether the option can meet the acquisition requirements.",
+      "category": "accessibility",
+      "status": "unresolved",
+      "search_ids": [
+        "s-acr"
+      ],
+      "evidence_ids": [
+        "ev-acr-commercial"
+      ],
+      "uncertainties": "The commercial ACR is vendor-authored and incomplete; the reuse and open-source options have no ACR."
+    },
+    {
+      "id": "rq-small-business",
+      "question": "What small-business or socioeconomic market research is required for this acquisition?",
+      "need_link": "The acquisition strategy must consider the small-business market and agency requirements.",
+      "category": "other",
+      "status": "not-started",
+      "search_ids": [
+        "s-small-business"
+      ],
+      "evidence_ids": [],
+      "uncertainties": "The fictional small-business portal failed during the workshop search."
+    },
+    {
+      "id": "rq-interoperability",
+      "question": "What integration and data-portability requirements must each option meet?",
+      "need_link": "Exit and integration costs belong in total cost of ownership and market comparison.",
+      "category": "interoperability",
+      "status": "not-started",
+      "search_ids": [
+        "s-interoperability"
+      ],
+      "evidence_ids": [],
+      "uncertainties": "No interoperability search has been performed."
+    }
+  ],
+  "searches": [
+    {
+      "id": "s-reuse-inventory",
+      "question_id": "rq-reuse",
+      "source_name": "Fictional government software inventory",
+      "source_url": "https://example.gov/inventory",
+      "source_type": "public-repository",
+      "authority": "public-repository",
+      "query": "case management",
+      "filters": "public",
+      "method": "manual",
+      "searched_at": "2026-11-05T09:00",
+      "source_as_of": "2026-10-01",
+      "result_count": 2,
+      "status": "completed-with-results",
+      "limitations": "The inventory lists projects but not reuse permissions or maintenance commitments.",
+      "coverage_gaps": "No owning-agency confirmation."
+    },
+    {
+      "id": "s-reuse-archive",
+      "question_id": "rq-reuse",
+      "source_name": "Fictional archived system index",
+      "source_url": "https://example.gov/archive-index",
+      "source_type": "public-repository",
+      "authority": "public-repository",
+      "query": "case management archived",
+      "filters": "archived",
+      "method": "manual",
+      "searched_at": "2026-11-05T09:20",
+      "source_as_of": "2025-12-01",
+      "result_count": 1,
+      "status": "completed-with-results",
+      "limitations": "The archive is historical and may not reflect current ownership or operation.",
+      "coverage_gaps": "No current agency confirmation."
+    },
+    {
+      "id": "s-open",
+      "question_id": "rq-open",
+      "source_name": "Fictional public code index",
+      "source_url": "https://example.gov/open-source-index",
+      "source_type": "public-repository",
+      "authority": "public-repository",
+      "query": "case management",
+      "filters": "public repositories",
+      "method": "manual",
+      "searched_at": "2026-11-06T10:00",
+      "source_as_of": "2026-10-15",
+      "result_count": 1,
+      "status": "completed-with-results",
+      "limitations": "Repository metadata is self-reported and does not include accessibility testing.",
+      "coverage_gaps": "No license or accessibility review."
+    },
+    {
+      "id": "s-commercial",
+      "question_id": "rq-commercial",
+      "source_name": "Fictional procurement notice archive",
+      "source_url": "https://example.gov/notices",
+      "source_type": "official",
+      "authority": "official",
+      "query": "case management",
+      "filters": "fictional sample",
+      "method": "manual",
+      "searched_at": "2026-11-06T11:00",
+      "source_as_of": "2026-11-01",
+      "result_count": 0,
+      "status": "completed-without-results",
+      "limitations": "The fictional archive is a small sample; absence of notices is not evidence that no market exists.",
+      "coverage_gaps": "No live procurement search was performed."
+    },
+    {
+      "id": "s-acr",
+      "question_id": "rq-accessibility",
+      "source_name": "Fictional ACR index",
+      "source_url": "https://example.gov/acr-index",
+      "source_type": "official",
+      "authority": "official",
+      "query": "commercial case management 4.2",
+      "filters": "published ACR",
+      "method": "manual",
+      "searched_at": "2026-11-07T09:00",
+      "source_as_of": "2026-10-20",
+      "result_count": 2,
+      "status": "completed-with-results",
+      "limitations": "An ACR index entry does not establish that the report is current or complete.",
+      "coverage_gaps": "No independent test report found."
+    },
+    {
+      "id": "s-small-business",
+      "question_id": "rq-small-business",
+      "source_name": "Fictional small-business portal",
+      "source_url": "https://example.gov/small-business",
+      "source_type": "official",
+      "authority": "official",
+      "query": "case management",
+      "filters": "small business",
+      "method": "manual",
+      "searched_at": "2026-11-07T10:00",
+      "source_as_of": "",
+      "result_count": null,
+      "status": "failed",
+      "limitations": "The fictional portal returned an error; no search result was obtained.",
+      "coverage_gaps": "Retry and consult the contracting office."
+    },
+    {
+      "id": "s-interoperability",
+      "question_id": "rq-interoperability",
+      "source_name": "Fictional standards library",
+      "source_url": "https://example.gov/standards",
+      "source_type": "other",
+      "authority": "unknown",
+      "query": "case management data portability",
+      "filters": "",
+      "method": "manual",
+      "searched_at": "",
+      "source_as_of": "",
+      "result_count": null,
+      "status": "not-searched",
+      "limitations": "Planned; not yet searched.",
+      "coverage_gaps": "This is not an investigation."
+    },
+    {
+      "id": "search-1102tools-fake-2020-001",
+      "question_id": "rq-commercial",
+      "source_name": "USAspending.gov via 1102tools",
+      "source_url": "https://example.gov/usaspending/FICTIONAL-AWARD-001",
+      "source_type": "official",
+      "authority": "official",
+      "query": "Comparable awards for rq-commercial",
+      "filters": "Selected public record only",
+      "method": "mcp",
+      "searched_at": "2026-11-12T10:00",
+      "source_as_of": "2026-10-30",
+      "result_count": 1,
+      "status": "completed-with-results",
+      "limitations": "The researcher selected one public award record; this is not a market-wide search.",
+      "coverage_gaps": "Other awards, suppliers, and market segments were not reviewed in this record."
+    }
+  ],
+  "evidence": [
+    {
+      "id": "ev-reuse-inventory",
+      "search_id": "s-reuse-inventory",
+      "source_name": "Fictional government software inventory",
+      "source_url": "https://example.gov/inventory/record-1",
+      "source_identifier": "record-1",
+      "retrieved_at": "2026-11-05T09:10",
+      "source_as_of": "2026-10-01",
+      "evidence_type": "government-software-metadata",
+      "candidate_id": "c-reuse",
+      "product_version": "2025.1",
+      "requirement_ids": [],
+      "claim": "A fictional case management system is listed as production.",
+      "limitations": "Inventory metadata does not establish reuse rights or maintenance.",
+      "uncertainties": "Owning agency and current owner are unconfirmed.",
+      "verification_state": "unverified",
+      "reviewer": ""
+    },
+    {
+      "id": "ev-reuse-archive",
+      "search_id": "s-reuse-archive",
+      "source_name": "Fictional archived system index",
+      "source_url": "https://example.gov/archive-index/record-1",
+      "source_identifier": "record-1",
+      "retrieved_at": "2026-11-05T09:25",
+      "source_as_of": "2025-12-01",
+      "evidence_type": "government-software-metadata",
+      "candidate_id": "c-reuse",
+      "product_version": "2024.3",
+      "requirement_ids": [],
+      "claim": "A second fictional index marks the system archived.",
+      "limitations": "Archived metadata may be stale and may refer to a different release.",
+      "uncertainties": "Conflicts with the production listing.",
+      "verification_state": "unverified",
+      "reviewer": ""
+    },
+    {
+      "id": "ev-open",
+      "search_id": "s-open",
+      "source_name": "Fictional OpenCase project",
+      "source_url": "https://example.gov/open-source-index/opencase",
+      "source_identifier": "opencase",
+      "retrieved_at": "2026-11-06T10:10",
+      "source_as_of": "2026-10-15",
+      "evidence_type": "government-software-metadata",
+      "candidate_id": "c-open",
+      "product_version": "3.2",
+      "requirement_ids": [],
+      "claim": "Repository metadata reports version 3.2 and recent maintenance activity.",
+      "limitations": "Metadata does not establish license compatibility, quality, security, or accessibility.",
+      "uncertainties": "No accessibility testing or independent evaluation was found.",
+      "verification_state": "unverified",
+      "reviewer": ""
+    },
+    {
+      "id": "ev-acr-commercial",
+      "search_id": "s-acr",
+      "source_name": "Fictional commercial ACR",
+      "source_url": "https://example.gov/acr/commercial-4.2",
+      "source_identifier": "acr-4.2",
+      "retrieved_at": "2026-11-07T09:10",
+      "source_as_of": "2026-09-15",
+      "evidence_type": "accessibility-report",
+      "candidate_id": "c-commercial",
+      "product_version": "4.2",
+      "requirement_ids": [
+        "1.1.1",
+        "2.4.7",
+        "4.1.2"
+      ],
+      "claim": "The vendor ACR reports partial support for 2.4.7, does not support 1.1.1, and leaves several criteria not evaluated.",
+      "limitations": "Vendor-authored; no independent test; catalog completeness was not checked.",
+      "uncertainties": "The ACR does not cover every required function or configuration.",
+      "verification_state": "unverified",
+      "reviewer": ""
+    },
+    {
+      "id": "ev-1102tools-fake-2020-001",
+      "search_id": "search-1102tools-fake-2020-001",
+      "source_name": "USAspending.gov via 1102tools",
+      "source_url": "https://example.gov/usaspending/FICTIONAL-AWARD-001",
+      "source_identifier": "FAKE-2020-001",
+      "retrieved_at": "2026-11-12T10:00",
+      "source_as_of": "2026-10-30",
+      "evidence_type": "official-record",
+      "candidate_id": "",
+      "product_version": "",
+      "requirement_ids": [],
+      "claim": "USAspending record FAKE-2020-001 reports Fictional Civic Systems LLC received $1,250,000 from Example Agency for Fictional case management modernization services.",
+      "limitations": "A historical award record does not establish current capability, current price, or market completeness.",
+      "uncertainties": "The record should be reviewed against the acquisition need and the researcher's question.",
+      "verification_state": "unverified",
+      "reviewer": ""
+    }
+  ],
+  "findings": [
+    {
+      "id": "f-reuse-conflict",
+      "description": "A fictional government system may be reusable, but the inventory and archive records conflict and ownership is unconfirmed.",
+      "supporting_evidence_ids": [
+        "ev-reuse-inventory"
+      ],
+      "contradicting_evidence_ids": [
+        "ev-reuse-archive"
+      ],
+      "evidence_gap": "Current ownership, maintenance, release, and reuse rights need agency confirmation.",
+      "question_ids": [
+        "rq-reuse"
+      ],
+      "candidate_ids": [
+        "c-reuse"
+      ],
+      "requires_verification": true,
+      "reviewer_notes": "Do not resolve the conflict by choosing one record."
+    },
+    {
+      "id": "f-acr-partial",
+      "description": "The commercial ACR reports a barrier and partial support, but it is vendor-authored and incomplete.",
+      "supporting_evidence_ids": [
+        "ev-acr-commercial"
+      ],
+      "contradicting_evidence_ids": [],
+      "evidence_gap": "Independent testing and a complete catalog comparison are missing.",
+      "question_ids": [
+        "rq-accessibility"
+      ],
+      "candidate_ids": [
+        "c-commercial"
+      ],
+      "requires_verification": true,
+      "reviewer_notes": "A partial claim is not a failed test; a valid ACR is not conformance."
+    },
+    {
+      "id": "f-open-no-accessibility",
+      "description": "The open-source option has maintenance metadata but no accessibility evidence.",
+      "supporting_evidence_ids": [
+        "ev-open"
+      ],
+      "contradicting_evidence_ids": [],
+      "evidence_gap": "No ACR, independent test, or license review was found.",
+      "question_ids": [
+        "rq-open",
+        "rq-accessibility"
+      ],
+      "candidate_ids": [
+        "c-open"
+      ],
+      "requires_verification": true,
+      "reviewer_notes": "Absence of evidence is not a conclusion about the product."
+    }
+  ],
+  "decisions": [
+    {
+      "id": "d-reuse-rights",
+      "description": "Ask the owning agency about current ownership, maintenance, release, and government-wide reuse rights.",
+      "decision_type": "reuse-rights",
+      "status": "under-review",
+      "owner": "Fictional acquisition lead",
+      "rationale": "The inventory and archive records conflict.",
+      "evidence_ids": [
+        "ev-reuse-inventory",
+        "ev-reuse-archive"
+      ],
+      "due_date": "2026-11-20",
+      "resolved_at": ""
+    },
+    {
+      "id": "d-acr-request",
+      "description": "Request a current, version-matched ACR and independent test report for the commercial product.",
+      "decision_type": "acr-request",
+      "status": "pending",
+      "owner": "Fictional contracting specialist",
+      "rationale": "The available ACR is vendor-authored and incomplete.",
+      "evidence_ids": [
+        "ev-acr-commercial"
+      ],
+      "due_date": "2026-11-22",
+      "resolved_at": ""
+    },
+    {
+      "id": "d-508-review",
+      "description": "Route the reported barrier and missing criteria to a Section 508 specialist.",
+      "decision_type": "section-508-review",
+      "status": "pending",
+      "owner": "Fictional Section 508 specialist",
+      "rationale": "The team cannot determine conformance or whether an exception process applies.",
+      "evidence_ids": [
+        "ev-acr-commercial"
+      ],
+      "due_date": "2026-11-25",
+      "resolved_at": ""
+    },
+    {
+      "id": "d-supplier-question",
+      "description": "Ask the supplier which functions, configurations, and versions the ACR covers, and whether a current OpenACR exists.",
+      "decision_type": "supplier-question",
+      "status": "pending",
+      "owner": "Fictional market researcher",
+      "rationale": "The ACR scope and completeness are unclear.",
+      "evidence_ids": [
+        "ev-acr-commercial"
+      ],
+      "due_date": "",
+      "resolved_at": ""
+    },
+    {
+      "id": "d-small-business",
+      "description": "Retry the small-business search and confirm the required socioeconomic market research with the contracting office.",
+      "decision_type": "market-engagement",
+      "status": "pending",
+      "owner": "Fictional small-business specialist",
+      "rationale": "The portal failed and no result was obtained.",
+      "evidence_ids": [],
+      "due_date": "2026-11-30",
+      "resolved_at": ""
+    },
+    {
+      "id": "d-exception-review",
+      "description": "Ask agency officials whether any potential Best Meets or Undue Burden exception review is warranted; no exception is approved here.",
+      "decision_type": "exception-review",
+      "status": "pending",
+      "owner": "Fictional agency official",
+      "rationale": "Exception decisions require the agency process and specialist input.",
+      "evidence_ids": [
+        "ev-acr-commercial"
+      ],
+      "due_date": "",
+      "resolved_at": ""
+    }
+  ],
+  "candidates": [
+    {
+      "id": "c-reuse",
+      "name": "Fictional agency case management reuse option",
+      "approach": "government-reuse",
+      "version": "2025.1",
+      "scope": "Case intake, assignment, and status tracking",
+      "url": "https://example.gov/case-management",
+      "acr_url": "",
+      "acr_date": "",
+      "accessibility_claim": "unknown",
+      "independent_evaluation": "none",
+      "notes": "Fictional reuse option. Ownership, maintenance, release, and reuse rights are unconfirmed. A second fictional index says archived.",
+      "acr": {
+        "found": false,
+        "product_version": "2025.1",
+        "functions_covered": "Case intake, assignment, and status tracking",
+        "publication_date": "",
+        "evaluation_methods": "",
+        "catalog_id": "",
+        "completeness": "unknown",
+        "notes": "No ACR found in the fictional exercise."
+      }
+    },
+    {
+      "id": "c-open",
+      "name": "Fictional OpenCase project",
+      "approach": "open-source",
+      "version": "3.2",
+      "scope": "Open-source case management",
+      "url": "https://example.gov/open-case",
+      "acr_url": "",
+      "acr_date": "",
+      "accessibility_claim": "unknown",
+      "independent_evaluation": "none",
+      "notes": "Fictional open-source option. Repository metadata reports maintenance, but license, security, accessibility, and integration fit are unverified.",
+      "acr": {
+        "found": false,
+        "product_version": "3.2",
+        "functions_covered": "Open-source case management",
+        "publication_date": "",
+        "evaluation_methods": "",
+        "catalog_id": "",
+        "completeness": "unknown",
+        "notes": "No ACR or independent test found."
+      }
+    },
+    {
+      "id": "c-commercial",
+      "name": "Fictional commercial case management system",
+      "approach": "commercial",
+      "version": "4.2 (fictional)",
+      "scope": "Case intake, workflow, reporting, and public portal",
+      "url": "https://example.gov/commercial-case",
+      "acr_url": "https://example.gov/acr/commercial-4.2",
+      "acr_date": "2026-09-15",
+      "accessibility_claim": "partially-supports",
+      "independent_evaluation": "none",
+      "notes": "Fictional supplier reports partial support. The ACR is vendor-authored and does not cover every required function. No independent test was found.",
+      "acr": {
+        "found": true,
+        "product_version": "4.2",
+        "functions_covered": "Case intake, workflow, reporting, and public portal",
+        "publication_date": "2026-09-15",
+        "evaluation_methods": "Vendor self-assessment and manual checks; no independent test",
+        "catalog_id": "Fictional WCAG 2.1 / 508 subset",
+        "completeness": "incomplete",
+        "notes": "Several criteria are not evaluated and the catalog completeness was not checked."
+      }
+    },
+    {
+      "id": "c-new",
+      "name": "Fictional new-build option",
+      "approach": "new-build",
+      "version": "",
+      "scope": "Custom case management development",
+      "url": "",
+      "acr_url": "",
+      "acr_date": "",
+      "accessibility_claim": "unknown",
+      "independent_evaluation": "none",
+      "notes": "Fictional new-build alternative. Accessibility, cost, schedule, and integration requirements would need to be designed and tested.",
+      "acr": {
+        "found": false,
+        "product_version": "",
+        "functions_covered": "Custom case management development",
+        "publication_date": "",
+        "evaluation_methods": "",
+        "catalog_id": "",
+        "completeness": "unknown",
+        "notes": "No ACR; the product does not yet exist."
+      }
+    }
+  ]
+}

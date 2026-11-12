@@ -22,6 +22,7 @@ Build a small, inclusive, vendor-neutral market research companion useful in DIT
 14. Keep search states distinct: not searched, completed with results, completed without matching records, partial, and failed. A reference link is not a completed search.
 15. Preserve 0.1.0 imports through the documented migration. Do not invent search dates, evidence, reviewers, or verification results.
 16. Update `schemas/research.schema.json`, `src/omr_mcp/rules.json`, both validators, fixtures, tests, and migration documentation together.
+17. A selected 1102tools or source record may be mapped into a draft only; applying it to a research record needs explicit human approval and preserved source provenance.
 
 ## Repository map
 

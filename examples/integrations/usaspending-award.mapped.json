@@ -1,0 +1,57 @@
+{
+  "integration": {
+    "adapter_id": "1102tools.usaspending",
+    "adapter_version": "0.1.0",
+    "mode": "fixture-or-selected-live-record",
+    "requires_user_approval": true,
+    "network_access": false,
+    "source": "1102tools federal contracting MCPs, USAspending server",
+    "note": "Mapping only. The host must obtain user approval before applying this to a research record."
+  },
+  "search": {
+    "id": "search-1102tools-fake-2020-001",
+    "question_id": "rq-commercial",
+    "source_name": "USAspending.gov via 1102tools",
+    "source_url": "https://example.gov/usaspending/FICTIONAL-AWARD-001",
+    "source_type": "official",
+    "authority": "official",
+    "query": "Comparable awards for rq-commercial",
+    "filters": "Selected public record only",
+    "method": "mcp",
+    "searched_at": "2026-11-12T10:00",
+    "source_as_of": "2026-10-30",
+    "result_count": 1,
+    "status": "completed-with-results",
+    "limitations": "The researcher selected one public award record; this is not a market-wide search.",
+    "coverage_gaps": "Other awards, suppliers, and market segments were not reviewed in this record."
+  },
+  "evidence": {
+    "id": "ev-1102tools-fake-2020-001",
+    "search_id": "search-1102tools-fake-2020-001",
+    "source_name": "USAspending.gov via 1102tools",
+    "source_url": "https://example.gov/usaspending/FICTIONAL-AWARD-001",
+    "source_identifier": "FAKE-2020-001",
+    "retrieved_at": "2026-11-12T10:00",
+    "source_as_of": "2026-10-30",
+    "evidence_type": "official-record",
+    "candidate_id": "",
+    "product_version": "",
+    "requirement_ids": [],
+    "claim": "USAspending record FAKE-2020-001 reports Fictional Civic Systems LLC received $1,250,000 from Example Agency for Fictional case management modernization services.",
+    "limitations": "A historical award record does not establish current capability, current price, or market completeness.",
+    "uncertainties": "The record should be reviewed against the acquisition need and the researcher's question.",
+    "verification_state": "unverified",
+    "reviewer": ""
+  },
+  "source_record": {
+    "award_id": "FAKE-2020-001",
+    "recipient": "Fictional Civic Systems LLC",
+    "award_amount": 1250000,
+    "awarding_agency": "Example Agency",
+    "start_date": "2020-10-01",
+    "end_date": "2025-09-30",
+    "description": "Fictional case management modernization services",
+    "naics": "541512",
+    "psc": "DA01"
+  }
+}

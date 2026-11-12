@@ -755,11 +755,12 @@ def build_report(data: dict[str, Any]) -> str:
     for item in evidence:
         lines.append(
             f"- Evidence {item['id']}: {item['source_name']} ({item['source_url'] or 'no URL'}), "
-            f"retrieved {item['retrieved_at']}, source as of "
-            f"{item['source_as_of'] or 'not recorded'}, type "
+            f"identifier {item['source_identifier'] or 'not recorded'}, retrieved {item['retrieved_at']}, "
+            f"source as of {item['source_as_of'] or 'not recorded'}, type "
             f"{_label('evidence_types', item['evidence_type'])}, verification "
             f"{_label('verification_states', item['verification_state'])}."
         )
+        lines.append(f"  - Claim: {item['claim'] or 'None recorded'}")
     if prepared.get("migration"):
         migration = prepared["migration"]
         lines.append(

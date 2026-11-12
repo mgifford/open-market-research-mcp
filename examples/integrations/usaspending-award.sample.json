@@ -1,0 +1,15 @@
+{
+  "generated_internal_id": "FICTIONAL-AWARD-001",
+  "Award ID": "FAKE-2020-001",
+  "Recipient Name": "Fictional Civic Systems LLC",
+  "Award Amount": 1250000,
+  "Awarding Agency": "Example Agency",
+  "Awarding Sub Agency": "Example Program Office",
+  "Start Date": "2020-10-01",
+  "End Date": "2025-09-30",
+  "Last Modified Date": "2026-10-30",
+  "Description": "Fictional case management modernization services.",
+  "NAICS": "541512",
+  "PSC": "DA01",
+  "recipient_id": "fictional-recipient-001"
+}
