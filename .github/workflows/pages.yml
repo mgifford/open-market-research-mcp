@@ -1,0 +1,63 @@
+name: Test and deploy GitHub Pages
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: pages-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install Python package and test dependencies
+        run: python -m pip install '.[dev]'
+      - name: Verify curated software snapshot
+        run: python scripts/verify_catalog.py
+      - name: Test deterministic research engine
+        run: python -m pytest -q
+      - name: Test browser research helpers
+        run: node --test tests/research.test.mjs
+      - name: Build Pages site from canonical project data
+        run: python scripts/build_site.py
+      - name: Verify expected site files
+        run: |
+          test -s _site/index.html
+          test -s _site/app.js
+          test -s _site/research.js
+          test -s _site/data/sources.json
+          test -s _site/data/demo.json
+          test -s _site/data/public-software.json
+      - name: Upload Pages artifact
+        if: github.event_name != 'pull_request'
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: _site/
+
+  deploy:
+    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    permissions:
+      pages: write
+      id-token: write
+    steps:
+      - uses: actions/deploy-pages@v4
+        id: deployment

@@ -1,0 +1,32 @@
+name: Optional HF fictional demo
+on:
+  workflow_dispatch:
+    inputs:
+      model:
+        description: 'Explicit Hugging Face Inference Providers model ID'
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+jobs:
+  summarize:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Generate unverified demo summary
+        env:
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
+          HF_MODEL: ${{ inputs.model }}
+        run: python scripts/hf_summarize.py
+      - name: Upload result for human review (not Pages)
+        uses: actions/upload-artifact@v4
+        with:
+          name: unverified-hf-demo
+          path: _outputs/hf-demo-summary.json
+          retention-days: 7

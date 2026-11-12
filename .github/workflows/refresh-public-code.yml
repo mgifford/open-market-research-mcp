@@ -1,0 +1,28 @@
+name: Reviewable public code.json snapshot
+on:
+  schedule:
+    - cron: '17 10 * * 1'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Fetch allowlisted public code.json entries
+        run: python scripts/refresh_public_code.py
+      - name: Validate source snapshot
+        run: python scripts/verify_catalog.py
+      - name: Save updated catalog for review
+        uses: actions/upload-artifact@v4
+        with:
+          name: public-codejson-for-review
+          path: data/public-software.json
+          retention-days: 7

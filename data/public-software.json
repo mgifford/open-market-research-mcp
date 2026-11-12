@@ -1,0 +1,77 @@
+{
+  "catalog_type": "curated-public-codejson-examples",
+  "scope_note": "Illustrative CMS project metadata only. This is not a cross-government inventory, candidate recommendation, eligibility check, or assessment of fitness for any acquisition.",
+  "retrieved_at": "2026-11-12",
+  "entries": [
+    {
+      "id": "DSACMS/share-it-act-lp",
+      "name": "share-it-act-lp",
+      "description": "Guide to the SHARE IT Act helping federal agencies comply with source code sharing requirements",
+      "url": "https://github.com/DSACMS/share-it-act-lp",
+      "metadata_url": "https://github.com/DSACMS/share-it-act-lp/blob/main/code.json",
+      "organization": "Centers for Medicare & Medicaid Services",
+      "status": "Production",
+      "visibility": "public",
+      "usage_type": ["openSource"],
+      "license_names": ["CC0-1.0"],
+      "version": "",
+      "metadata_last_updated": "2026-09-28T19:53:23.546Z"
+    },
+    {
+      "id": "DSACMS/gov-codejson",
+      "name": "gov-codejson",
+      "description": "Metadata documentation and schema for agency software projects.",
+      "url": "https://github.com/DSACMS/gov-codejson",
+      "metadata_url": "https://github.com/DSACMS/gov-codejson/blob/main/code.json",
+      "organization": "Centers for Medicare & Medicaid Services",
+      "status": "Production",
+      "visibility": "public",
+      "usage_type": ["openSource"],
+      "license_names": [],
+      "version": "2.0.0",
+      "metadata_last_updated": "2026-10-01T03:54:33.657Z"
+    },
+    {
+      "id": "DSACMS/codejson-generator",
+      "name": "codejson-generator",
+      "description": "CMS code.json generator tool (project details must be verified in source).",
+      "url": "https://github.com/DSACMS/codejson-generator",
+      "metadata_url": "https://github.com/DSACMS/codejson-generator/blob/main/code.json",
+      "organization": "Centers for Medicare & Medicaid Services",
+      "status": "Production",
+      "visibility": "public",
+      "usage_type": ["openSource"],
+      "license_names": [],
+      "version": "",
+      "metadata_last_updated": "2026-10-01T03:35:24.955Z"
+    },
+    {
+      "id": "DSACMS/automated-codejson-generator",
+      "name": "automated-codejson-generator",
+      "description": "CMS code.json metadata automation tool (project details must be verified in source).",
+      "url": "https://github.com/DSACMS/automated-codejson-generator",
+      "metadata_url": "https://github.com/DSACMS/automated-codejson-generator/blob/main/code.json",
+      "organization": "Centers for Medicare & Medicaid Services",
+      "status": "Production",
+      "visibility": "public",
+      "usage_type": ["openSource"],
+      "license_names": [],
+      "version": "2.0.0",
+      "metadata_last_updated": "2026-10-14T21:00:00.000Z"
+    },
+    {
+      "id": "DSACMS/share-it-savings",
+      "name": "share-it-savings",
+      "description": "CMS SHARE IT Act cost savings estimation scripts.",
+      "url": "https://github.com/DSACMS/share-it-savings",
+      "metadata_url": "https://github.com/DSACMS/share-it-savings/blob/main/code.json",
+      "organization": "Centers for Medicare & Medicaid Services",
+      "status": "production",
+      "visibility": "public",
+      "usage_type": ["openSource"],
+      "license_names": [],
+      "version": "",
+      "metadata_last_updated": "2025-07-28T19:19:19+0000"
+    }
+  ]
+}

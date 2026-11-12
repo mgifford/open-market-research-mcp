@@ -1,0 +1,10 @@
+{
+  "purpose": "Curated CMS SHARE IT metadata examples, not a market-wide software catalog",
+  "repositories": [
+    "DSACMS/share-it-act-lp",
+    "DSACMS/gov-codejson",
+    "DSACMS/codejson-generator",
+    "DSACMS/automated-codejson-generator",
+    "DSACMS/share-it-savings"
+  ]
+}

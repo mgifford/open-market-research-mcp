@@ -1,0 +1,28 @@
+[build-system]
+requires = ["hatchling>=1.25,<2"]
+build-backend = "hatchling.build"
+
+[project]
+name = "open-market-research-mcp"
+version = "0.1.0"
+description = "Evidence-first market research MCP and GitHub Pages companion for DITAP"
+readme = "README.md"
+license = "MIT"
+requires-python = ">=3.11"
+dependencies = ["mcp>=2,<3"]
+
+[project.optional-dependencies]
+dev = ["pytest>=8,<10", "jsonschema>=4.23,<5"]
+
+[project.scripts]
+omr-mcp = "omr_mcp.server:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/omr_mcp"]
+
+[tool.hatch.build.targets.sdist]
+include = ["src/", "README.md", "pyproject.toml", "LICENSE"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]

@@ -1,0 +1,155 @@
+[
+  {
+    "id": "gsa-art",
+    "name": "GSA Accessibility Requirements Tool (ART)",
+    "category": "accessibility-requirements",
+    "url": "https://www.section508.gov/art/",
+    "purpose": "Generate tailored Section 508 requirements for an ICT purchase or development effort.",
+    "limitations": "An ART output identifies requirements, not product conformance or an approved exception.",
+    "method": "Follow official guidance and retain the requirements generated for the specific acquisition."
+  },
+  {
+    "id": "gsa-acr-editor",
+    "name": "GSA ACR Editor",
+    "category": "accessibility-evidence",
+    "url": "https://acreditor.section508.gov/",
+    "purpose": "Create or work with machine-readable OpenACR reports.",
+    "limitations": "An ACR is a report of claims and findings, not an independent procurement approval.",
+    "method": "Request version-matched ACRs from suppliers and verify claims by additional evaluation."
+  },
+  {
+    "id": "gsa-buy",
+    "name": "Section508.gov: Buy or Sell Accessible ICT",
+    "category": "accessibility-guidance",
+    "url": "https://www.section508.gov/buy-sell/",
+    "purpose": "Understand accessibility requirements and acquisition responsibilities.",
+    "limitations": "Agency-specific procedures and current rules must also be reviewed.",
+    "method": "Use the buyer guidance alongside your agency Section 508 program."
+  },
+  {
+    "id": "gsa-exceptions",
+    "name": "Section 508 ICT exceptions guidance",
+    "category": "accessibility-guidance",
+    "url": "https://www.section508.gov/buy/determine-ict-exceptions/",
+    "purpose": "Identify whether any narrow exception might warrant formal review.",
+    "limitations": "Do not treat a possible exception as an authorized determination.",
+    "method": "Preserve required evidence and send it through agency approval procedures."
+  },
+  {
+    "id": "gsa-assessment",
+    "name": "FY 2025 Section 508 assessment recommendations",
+    "category": "accessibility-guidance",
+    "url": "https://www.section508.gov/manage/section-508-assessment/2025/recommendations/",
+    "purpose": "Identify program improvements related to acquisition, oversight, and exceptions.",
+    "limitations": "Recommendations are not a standalone product evaluation standard.",
+    "method": "Use as context when designing quality checks and follow-up responsibilities."
+  },
+  {
+    "id": "gsa-acr-supplement",
+    "name": "GSA ACR Issue Detail Supplement",
+    "category": "accessibility-evidence",
+    "url": "https://www.section508.gov/sell/acr-supplement/",
+    "purpose": "Request additional details on barriers, severity, and impact.",
+    "limitations": "Supplemental claims still need verification.",
+    "method": "Ask suppliers to provide issue-level details for partial support or failures."
+  },
+  {
+    "id": "openacr",
+    "name": "GSA OpenACR",
+    "category": "accessibility-evidence",
+    "url": "https://github.com/GSA/openacr",
+    "purpose": "Machine-readable ACR schema and tools.",
+    "limitations": "This starter does not yet parse or validate OpenACR YAML, PDF, DOCX, or HTML files.",
+    "method": "Record ACR URLs and metadata now; add upstream OpenACR validation in the next phase."
+  },
+  {
+    "id": "sam-gov",
+    "name": "SAM.gov via 1102tools",
+    "category": "contracting-data",
+    "url": "https://github.com/1102tools-dev/federal-contracting-mcps/tree/main/servers/sam-gov-mcp",
+    "purpose": "Research notices, registered entities, certifications, and exclusions.",
+    "limitations": "Hosted and local editions differ in coverage and freshness; registration is not proof of delivery capability.",
+    "method": "Use the existing MCP through an AI host; record exact records, retrieval dates, and source dates."
+  },
+  {
+    "id": "usaspending",
+    "name": "USAspending via 1102tools",
+    "category": "contracting-data",
+    "url": "https://github.com/1102tools-dev/federal-contracting-mcps/tree/main/servers/usaspending-gov-mcp",
+    "purpose": "Research comparable contracts, agency purchases, and incumbent suppliers.",
+    "limitations": "Past contracts do not imply current capability or market completeness.",
+    "method": "Search comparables, inspect award scopes, and retain record links."
+  },
+  {
+    "id": "gsa-calc",
+    "name": "GSA CALC+ via 1102tools",
+    "category": "pricing-data",
+    "url": "https://github.com/1102tools-dev/federal-contracting-mcps/tree/main/servers/gsa-calc-mcp",
+    "purpose": "Research federal awarded labor ceiling rates.",
+    "limitations": "Ceiling rates are not actual rates paid or fully burdened cost estimates.",
+    "method": "Match labor categories, contract conditions, and geographic assumptions."
+  },
+  {
+    "id": "bls",
+    "name": "BLS OEWS via 1102tools",
+    "category": "pricing-data",
+    "url": "https://github.com/1102tools-dev/federal-contracting-mcps/tree/main/servers/bls-oews-mcp",
+    "purpose": "Find occupational wage benchmarks.",
+    "limitations": "Wage statistics are not the same as vendor hourly billing rates.",
+    "method": "Record occupation, geography, year, and any data suppression caveat."
+  },
+  {
+    "id": "acquisition-gov",
+    "name": "Acquisition.gov via 1102tools",
+    "category": "regulatory-research",
+    "url": "https://github.com/1102tools-dev/federal-contracting-mcps/tree/main/servers/acquisition-gov-mcp",
+    "purpose": "Investigate FAR Overhaul language, agency deviations, and source guidance.",
+    "limitations": "Model language alone does not establish which rule governs a particular procurement.",
+    "method": "Inspect dates, agency-specific deviations, and operative authority."
+  },
+  {
+    "id": "ecfr",
+    "name": "eCFR via 1102tools",
+    "category": "regulatory-research",
+    "url": "https://github.com/1102tools-dev/federal-contracting-mcps/tree/main/servers/ecfr-mcp",
+    "purpose": "Retrieve CFR provisions, history, and associated clauses.",
+    "limitations": "An AI summary is not a legal applicability determination.",
+    "method": "Quote and link to applicable text as-of a particular date."
+  },
+  {
+    "id": "cms-codejson",
+    "name": "CMS gov-codejson and SHARE IT guidance",
+    "category": "software-reuse",
+    "url": "https://github.com/DSACMS/gov-codejson",
+    "purpose": "Discover agency software inventory metadata and reuse conditions.",
+    "limitations": "An inventory entry does not prove that software is fit for the user's need.",
+    "method": "Look for code.json, agency indexes, repository visibility, license, and maintenance."
+  },
+  {
+    "id": "publiccode",
+    "name": "publiccode.yml",
+    "category": "software-reuse",
+    "url": "https://yml.publiccode.tools/",
+    "purpose": "Discover and describe public-sector software using an established metadata convention.",
+    "limitations": "Metadata completeness and field semantics vary by project and version.",
+    "method": "Validate claims against project source code, governance, and documentation."
+  },
+  {
+    "id": "ditap",
+    "name": "DITAP Core Curriculum",
+    "category": "market-method",
+    "url": "https://github.com/usds/ditap-curriculum-update/tree/main/3_Curriculum/3A_DITAP-Core-Curriculum/Module-2/Sprint-4",
+    "purpose": "Guide research questions, responsible industry engagement, and the market research case study.",
+    "limitations": "Curriculum material is educational, not agency-specific approval authority.",
+    "method": "Use Module 2 Sprint 4 learning outcomes and the Live Digital Assignment rubric."
+  },
+  {
+    "id": "digital-first",
+    "name": "Digital.gov digital-first public experience guidance",
+    "category": "digital-service-quality",
+    "url": "https://digital.gov/resources/delivering-digital-first-public-experience",
+    "purpose": "Examine usability, accessibility, content, mobile, service quality, and the public experience.",
+    "limitations": "Determine applicability of policy provisions and current agency rules independently.",
+    "method": "Translate applicable outcomes into verifiable evaluation questions."
+  }
+]
