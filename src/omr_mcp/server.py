@@ -83,13 +83,16 @@ def draft_market_research_report(research_json: str) -> str:
 
 
 @mcp.tool()
-def import_openacr_report(openacr_yaml: str) -> dict:
+def import_openacr_report(openacr_yaml: str, catalog_yaml: str = "") -> dict:
     """Import OpenACR YAML for inspection. Never creates or certifies an ACR."""
     if len(openacr_yaml) > 2_000_000:
         raise ToolError("OpenACR input exceeds the 2,000,000-character limit.")
+    if len(catalog_yaml) > 2_000_000:
+        raise ToolError("OpenACR catalog input exceeds the 2,000,000-character limit.")
     try:
-        return parse_openacr_yaml(openacr_yaml)
-    except ValueError as exc:
+        catalog = yaml.safe_load(catalog_yaml) if catalog_yaml else None
+        return parse_openacr_yaml(openacr_yaml, catalog=catalog)
+    except (ValueError, yaml.YAMLError) as exc:
         raise ToolError(str(exc)) from exc
 
 

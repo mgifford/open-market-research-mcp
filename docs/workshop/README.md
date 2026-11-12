@@ -17,6 +17,8 @@ meets an agency training requirement until a documented pilot is complete.
   browser steps.
 - [Pilot protocol](PILOT-PROTOCOL.md) — how to run and record a real pilot,
   including consent and assistive-technology participation.
+- [Pilot report template](PILOT-REPORT-TEMPLATE.md) — the record to complete
+  before calling the materials tested.
 
 ## Materials
 

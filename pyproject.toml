@@ -9,10 +9,10 @@ description = "Evidence-first market research MCP and GitHub Pages companion for
 readme = "README.md"
 license = "MIT"
 requires-python = ">=3.11"
-dependencies = ["mcp>=2.3,<3", "pyyaml>=6,<7"]
+dependencies = ["mcp>=2.3,<3", "pyyaml>=6,<7", "jsonschema>=4.23,<5"]
 
 [project.optional-dependencies]
-dev = ["pytest>=8,<10", "jsonschema>=4.23,<5"]
+dev = ["pytest>=8,<10"]
 
 [project.scripts]
 omr-mcp = "omr_mcp.server:main"

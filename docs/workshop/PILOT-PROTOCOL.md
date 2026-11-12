@@ -69,8 +69,9 @@ assistance conditions.
 - File accessibility barriers with reproduction steps and the environment.
 - Update the worksheet and report only where the evidence supports it.
 - Re-run the affected tasks after changes.
-- Add the pilot report to this directory and remove the “untested” status only
-  when the report exists.
+- Add the pilot report to this directory using
+  [PILOT-REPORT-TEMPLATE.md](PILOT-REPORT-TEMPLATE.md) and remove the
+  “untested” status only when the report exists.
 
 ## Stop conditions
 

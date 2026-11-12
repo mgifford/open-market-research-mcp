@@ -1,0 +1,14 @@
+title: Fictional OpenACR catalog subset for import tests
+chapters:
+  - id: success_criteria_level_a
+    criteria:
+      - id: "1.1.1"
+      - id: "1.2.1"
+      - id: "2.1.1"
+      - id: "4.1.2"
+  - id: success_criteria_level_aa
+    criteria:
+      - id: "2.4.7"
+  - id: success_criteria_level_aaa
+    criteria:
+      - id: "1.4.6"
