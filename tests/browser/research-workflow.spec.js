@@ -122,3 +122,15 @@ test('accessibility requirements save and appear in the report', async ({ page }
   await expect(page.locator('#preview')).toContainText('Requirements identified: Yes');
   await expect(page.locator('#preview')).toContainText('GSA ART');
 });
+
+test('the About local MCP section is static and does not imply live data', async ({ page }) => {
+  await openApp(page);
+  const section = page.locator('#local-mcp');
+  await expect(section).toContainText('About the local MCP');
+  await expect(section).toContainText('This page does not display live MCP data');
+  await expect(section).toContainText('cannot start or reach a local stdio MCP server');
+  await expect(section).toContainText('Eight read-only tools');
+  await expect(section).not.toContainText('live MCP connection');
+  await page.getByRole('link', { name: 'MCP', exact: true }).click();
+  await expect(page).toHaveURL(/#local-mcp$/);
+});

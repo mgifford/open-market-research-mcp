@@ -17,6 +17,7 @@ The practical objective is to help an acquisition professional answer:
 
 - **GitHub Pages browser app:** Seven guided stages from defining the need through questions, searches, alternatives, accessibility evidence, findings/decisions, and report export. Record what was actually searched, attach evidence to candidates, and export JSON or a Markdown draft.
 - **Evidence-backed research record (0.2.0):** Research questions, searches, evidence, findings, and pending decisions are linked by stable identifiers. Legacy 0.1.0 records import through a documented migration that does not invent history.
+- **Static About the local MCP:** The Pages app explains the local stdio server, its tools/resources, and its boundaries without claiming live MCP data.
 - **Shared decision rules:** `src/omr_mcp/rules.json` drives the browser and Python questions, validation limits, and report wording from one versioned source.
 - **Local MCP server:** Seven read-only/deterministic tools and two resources for source discovery, research planning, accessibility evidence questions, report drafting, public metadata normalization, and OpenACR import.
 - **Public metadata adapters:** Read-only normalization of public `code.json`, `agency-index.json`, and `publiccode.yml` with source, retrieval date, data-as-of date, license, access rights, and limitations.

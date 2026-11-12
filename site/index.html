@@ -25,6 +25,7 @@
         <a href="#accessibility">Accessibility</a>
         <a href="#findings">Findings</a>
         <a href="#report">Report</a>
+        <a href="#local-mcp">MCP</a>
       </nav>
     </div>
   </header>
@@ -322,6 +323,23 @@
         <h3>Report preview</h3>
         <pre id="preview" tabindex="0" class="report-preview">Save research scope or load the fictional exercise to preview a report.</pre>
         <p class="small">Import/export is local to this browser. Reports contain research notes and may require handling under agency information policies.</p>
+      </div>
+    </section>
+    <section id="local-mcp" aria-labelledby="local-mcp-heading">
+      <div class="section-title"><span class="step">MCP</span><div><h2 id="local-mcp-heading" tabindex="-1">About the local MCP</h2><p>The browser workspace is static. The deterministic MCP server runs separately on your computer.</p></div></div>
+      <div class="panel">
+        <p><strong>This page does not display live MCP data.</strong> GitHub Pages cannot start or reach a local stdio MCP server. The browser uses bundled JSON files for rules, sources, the fictional demo, and the public metadata snapshot.</p>
+        <p>The local server is optional. It adds deterministic tools and two JSON resources for an MCP-capable client; the browser does not need it, and the core workflow has no AI or network dependency.</p>
+        <h3>Run it locally</h3>
+        <pre><code>python -m pip install -e '.[dev]'
+omr-mcp</code></pre>
+        <p>Point your MCP client at the absolute path of the virtual environment's <code>omr-mcp</code> executable. The server uses local stdio and makes no live procurement or model requests.</p>
+        <h3>What it exposes</h3>
+        <ul>
+          <li><strong>Eight read-only tools:</strong> source discovery, research planning, accessibility evidence questions, deterministic report drafting, public metadata normalization, OpenACR import, and USAspending record mapping.</li>
+          <li><strong>Two JSON resources:</strong> <code>research://sources</code> and <code>research://workflow</code>.</li>
+        </ul>
+        <p><strong>Boundaries:</strong> OpenACR import preserves supplier/author claims and does not certify conformance. Public metadata and USAspending mapping preserve provenance; mapping a selected record into a research file requires explicit human approval. See the repository README and <code>docs/ARCHITECTURE.md</code> for the local setup and limitations.</p>
       </div>
     </section>
     <section class="end-note" aria-label="Project information">
