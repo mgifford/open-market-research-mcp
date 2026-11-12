@@ -27,22 +27,40 @@
 | Time | Activity | Facilitation note |
 | --- | --- | --- |
 | 0–5 | Welcome and purpose | Name the user need and the decision the research must inform |
-| 5–12 | Define scope | Learners complete the project fields; ask who is missing from the user description |
-| 12–20 | Search sources | Learners use the curated source directory and record why each source is relevant |
-| 20–30 | Record alternatives | Require at least three approaches, including reuse and open source |
-| 30–38 | Evidence gaps | Learners record ACR status, version, scope, and questions; missing is not failure |
-| 38–43 | Report and critique | Export the draft; ask what the report overstates or omits |
-| 43–45 | Close | One commitment: what evidence will be requested next, and from whom |
+| 5–10 | Define the need | Learners complete the project fields; ask who is missing from the user description |
+| 10–16 | Plan questions | Require questions that name an uncertainty, not a preferred product |
+| 16–25 | Search the market | Learners record a real search, a no-matching-records search, and a failed or not-searched entry; do not count reference links as searches |
+| 25–33 | Alternatives and accessibility | Compare reuse, open source, commercial, and new build; record ACR version, scope, methods, and missing evidence |
+| 33–40 | Findings and decisions | Require evidence for each finding; route ACR, reuse-rights, specialist, small-business, and exception questions to people |
+| 40–45 | Report and critique | Export the draft; ask what the report overstates, omits, or presents as more certain than the evidence |
 
 ## 90-minute extension
 
-Add a 30-minute market-engagement exercise:
+Add a 30-minute market-engagement and evidence exercise:
 
+- Use [the fictional case](CASE.md) to identify the conflict between the
+  production listing and the archive record. Do not resolve it by choosing one
+  record; name the follow-up.
 - Draft three neutral questions for a supplier or agency reuse owner.
 - Practice asking what a partial-support claim means for a specific user task.
 - Identify which questions must go to an accessibility specialist rather than
   a vendor.
+- Compare the generated sample report with the learner's report and identify
+  every place where the learner's report is more certain than its evidence.
 - Debrief on how the questions avoid privileging an incumbent.
+
+## Learning outcomes for this exercise
+
+A learner should be able to:
+
+- define the need without naming a preferred product;
+- write researchable questions and link them to the need;
+- distinguish a reference link from a performed search;
+- distinguish no matching records, a failed search, and a planned search;
+- trace each finding to evidence and keep contradictory records separate;
+- explain why a missing or incomplete ACR is not a failed accessibility test;
+- identify the human review needed for ACRs, reuse rights, small business, and
+  possible exceptions.
 
 ## Accessibility of the session
 
@@ -60,6 +78,9 @@ Add a 30-minute market-engagement exercise:
 
 - Which alternative would have been missed if you had started from the
   incumbent?
+- Which records conflicted, and what did you do instead of averaging them?
+- Which search returned no matching records, and which one failed? Why does the
+  difference matter?
 - What did the ACR tell you, and what did it not tell you?
 - Which missing evidence is a research gap rather than a product failure?
 - Who must review a possible exception, and what record do they need?

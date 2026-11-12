@@ -37,7 +37,7 @@ test('a valid import completes without an error and clears the file input', asyn
   await expect(page.locator('#status')).toContainText('imported');
   await expect(page.locator('#import-file')).toHaveValue('');
   expect(pageErrors).toEqual([]);
-  await expect(page.locator('#candidate-table tr')).toHaveCount(2);
+  await expect(page.locator('#candidate-table tr')).toHaveCount(4);
 });
 
 test('removing a row by keyboard moves focus to a logical remaining target', async ({ page }) => {

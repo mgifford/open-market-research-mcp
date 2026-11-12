@@ -134,3 +134,21 @@ test('the About local MCP section is static and does not imply live data', async
   await page.getByRole('link', { name: 'MCP', exact: true }).click();
   await expect(page).toHaveURL(/#local-mcp$/);
 });
+
+test('expanded fictional case shows conflicts, missing ACRs, and search states', async ({ page }) => {
+  await openApp(page);
+  await page.click('#demo');
+  await expect(page.locator('#need')).not.toHaveValue('');
+  await expect(page.locator('#question-table tr')).toHaveCount(6);
+  await expect(page.locator('#search-table tr')).toHaveCount(7);
+  await expect(page.locator('#evidence-table tr')).toHaveCount(4);
+  await expect(page.locator('#finding-table tr')).toHaveCount(3);
+  await expect(page.locator('#decision-table tr')).toHaveCount(6);
+  await expect(page.locator('#search-table')).toContainText('Completed without matching records');
+  await expect(page.locator('#search-table')).toContainText('Failed');
+  await expect(page.locator('#search-table')).toContainText('Not searched');
+  await expect(page.locator('#candidate-table')).toContainText('ACR found for 4.2');
+  await expect(page.locator('#preview')).toContainText('Contradictory evidence: ev-reuse-archive');
+  await expect(page.locator('#preview')).toContainText('without matching records: 1');
+  await expect(page.locator('#preview')).toContainText('failed: 1');
+});
