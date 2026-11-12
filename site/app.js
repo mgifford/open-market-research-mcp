@@ -1,4 +1,4 @@
-import { emptyResearch, validateResearch, safeUrl, questionsFor, markdownReport } from './research.js';
+import { emptyResearch, prepareResearch, safeUrl, questionsFor, markdownReport } from './research.js';
 import { getRules, setRules } from './rules.js';
 
 let research = emptyResearch();
@@ -164,7 +164,17 @@ function renderPublicSoftware() {
         name: record.name, approach: 'government-reuse', version: record.version || '',
         scope: record.description, url: record.url, acr_url: '', acr_date: '',
         accessibility_claim: 'unknown', independent_evaluation: 'none',
-        notes: `Illustrative metadata import from ${record.metadata_url}. Requires suitability, rights, and accessibility review. Source metadata last updated: ${record.metadata_last_updated}. Static snapshot fetched: ${publicSnapshotAsOf}.`
+        notes: `Illustrative metadata import from ${record.metadata_url}. Requires suitability, rights, and accessibility review. Source metadata last updated: ${record.metadata_last_updated}. Static snapshot fetched: ${publicSnapshotAsOf}.`,
+        acr: {
+          found: false,
+          product_version: record.version || '',
+          functions_covered: record.description || '',
+          publication_date: '',
+          evaluation_methods: '',
+          catalog_id: '',
+          completeness: 'unknown',
+          notes: ''
+        }
       };
       research.candidates.push(item);
       render();
@@ -206,6 +216,16 @@ function addCandidate(event) {
   const fields = ['name', ...rules.report.candidate_fields.map(spec => spec.field)];
   const candidate = { id: typeof crypto.randomUUID === 'function' ? crypto.randomUUID() : `${Date.now()}-${research.candidates.length}` };
   for (const field of fields) candidate[field] = valueOf(form, field);
+  candidate.acr = {
+    found: Boolean(candidate.acr_url),
+    product_version: candidate.version || '',
+    functions_covered: candidate.scope || '',
+    publication_date: candidate.acr_date || '',
+    evaluation_methods: '',
+    catalog_id: '',
+    completeness: 'unknown',
+    notes: ''
+  };
   if (research.candidates.length >= rules.limits.max_candidates) {
     status(`Limit of ${rules.limits.max_candidates} options reached. Export your research.`);
     return;
@@ -233,8 +253,7 @@ async function loadDemo() {
     const response = await fetch('./data/demo.json');
     if (!response.ok) throw new Error('Demo file unavailable.');
     const incoming = await response.json();
-    validateResearch(incoming);
-    research = incoming;
+    research = prepareResearch(incoming);
     render({ syncProjectForm: true });
     status('Fictional DITAP exercise loaded. It must not be presented as real procurement evidence.');
   } catch (error) { status(`Could not load demonstration: ${error.message}`); }
@@ -247,11 +266,12 @@ async function importFile(event) {
     const maxBytes = getRules().limits.max_import_bytes;
     if (file.size > maxBytes) throw new Error(`File exceeds the ${maxBytes.toLocaleString()} byte limit.`);
     const data = JSON.parse(await file.text());
-    validateResearch(data);
+    const prepared = prepareResearch(data);
     if (!confirmReplace('Replace the research in this tab with the imported file? Unsaved changes will be lost.')) return;
-    research = data;
+    research = prepared;
     render({ syncProjectForm: true });
-    status('Research JSON imported in this tab. Review all unverified claims.');
+    const migrationNote = prepared.migration ? ` Migrated from schema ${prepared.migration.from_schema_version}.` : '';
+    status(`Research JSON imported in this tab.${migrationNote} Review all unverified claims.`);
   } catch (error) { status(`Import failed: ${error.message}`); }
   finally { input.value = ''; }
 }

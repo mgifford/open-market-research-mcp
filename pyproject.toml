@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "open-market-research-mcp"
-version = "0.1.0"
+version = "0.2.0"
 description = "Evidence-first market research MCP and GitHub Pages companion for DITAP"
 readme = "README.md"
 license = "MIT"
