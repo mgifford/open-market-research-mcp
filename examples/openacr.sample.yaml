@@ -1,0 +1,70 @@
+title: Example Civic Forms Accessibility Conformance Report
+product:
+  name: Example Civic Forms
+  version: "1.0"
+  description: >-
+    Fictional public-sector forms product used only to exercise the OpenACR
+    import prototype. It is not a real product claim.
+author:
+  name: Example Tester
+  company_name: Example Agency
+  email: tester@example.invalid
+report_date: "2026-10-15"
+last_modified_date: "2026-10-15"
+version: 1
+notes: >-
+  Fictional demonstration fixture for an educational market research tool.
+  Do not treat these claims as evidence about any real product.
+evaluation_methods_used: >-
+  Fictional demonstration only. In a real report this field would describe the
+  evaluation methods, sample, tools, and assistive technology used.
+legal_disclaimer: >-
+  Draft demonstration content. Not a conformance claim, certification, or
+  approval, and not legal advice.
+catalog: 2.4-edition-wcag-2.1-508-en
+chapters:
+  success_criteria_level_a:
+    criteria:
+      - num: "1.1.1"
+        components:
+          - name: web
+            adherence:
+              level: supports
+              notes: Fictional demonstration claim.
+          - name: electronic-docs
+            adherence:
+              level: not-applicable
+              notes: Fictional demonstration.
+          - name: software
+            adherence:
+              level: not-applicable
+              notes: Fictional demonstration.
+          - name: authoring-tool
+            adherence:
+              level: not-applicable
+              notes: Fictional demonstration.
+      - num: "1.2.1"
+        components:
+          - name: web
+      - num: "4.1.2"
+        components:
+          - name: web
+            adherence:
+              level: does-not-support
+              notes: Fictional demonstration of a reported barrier.
+  success_criteria_level_aa:
+    criteria:
+      - num: "2.4.7"
+        components:
+          - name: web
+            adherence:
+              level: partially-supports
+              notes: Fictional demonstration of partial support.
+  success_criteria_level_aaa:
+    criteria:
+      - num: "1.4.6"
+        components:
+          - name: web
+            adherence:
+              level: not-evaluated
+              notes: Fictional demonstration; no evaluation was performed.

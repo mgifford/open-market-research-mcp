@@ -42,6 +42,10 @@ A learner can:
 
 A perfect score is not an actual procurement or accessibility approval.
 
+## Ready-to-use materials
+
+A printable [worksheet](workshop/WORKSHEET.md), [facilitator guide](workshop/FACILITATOR-GUIDE.md), and [pilot protocol](workshop/PILOT-PROTOCOL.md) support this plan. They are prepared but **not yet tested with learners**; do not describe them as validated training or claim learning outcomes until a pilot report exists.
+
 ## Extensions
 
 - Instructors can use SAM.gov and USAspending through existing 1102tools MCPs in a separate approved AI environment.

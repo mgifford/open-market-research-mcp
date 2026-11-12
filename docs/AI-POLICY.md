@@ -2,7 +2,7 @@
 
 ## Default: no AI required
 
-AI is not necessary to perform the starter's core tasks. The browser never sends user inputs to external services. The local MCP server performs deterministic operations without a model.
+AI is not necessary to perform the starter's core tasks. The browser never sends user inputs to external services. The local MCP server performs deterministic operations without a model, including public metadata normalization and OpenACR YAML import.
 
 ## Experiment included
 

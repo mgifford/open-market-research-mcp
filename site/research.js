@@ -1,9 +1,13 @@
+import { format, getRules, getRulesOrNull } from './rules.js';
+
 export const SCHEMA_VERSION = '0.1.0';
-export const APPROACHES = ['government-reuse', 'open-source', 'commercial', 'new-build'];
-export const CLAIMS = ['supports', 'partially-supports', 'does-not-support', 'not-evaluated', 'unknown'];
-export const EVALUATIONS = ['none', 'planned', 'completed'];
+const TOP_LEVEL_FIELDS = ['schema_version', 'demonstration_only', 'project', 'candidates'];
+
+const message = (name, values = {}) => format(getRules().messages[name], values);
+const candidateValue = (candidate, field, missing) => candidate[field] || missing[field] || missing.default;
+
 export const emptyResearch = () => ({
-  schema_version: SCHEMA_VERSION,
+  schema_version: getRulesOrNull()?.schema_version || SCHEMA_VERSION,
   demonstration_only: false,
   project: { name: '', need: '', users: '', constraints: '', ict_type: '' },
   candidates: []
@@ -18,81 +22,103 @@ export function safeUrl(value) {
 }
 
 export function validateResearch(data) {
-  if (!data || typeof data !== 'object' || Array.isArray(data) || data.schema_version !== SCHEMA_VERSION) {
-    throw new Error('Unsupported research file or schema version.');
+  const rules = getRules();
+  const projectFields = ['name', ...rules.report.project_fields.map(spec => spec.field)];
+  const candidateFields = ['id', 'name', ...rules.report.candidate_fields.map(spec => spec.field)];
+  if (!data || typeof data !== 'object' || Array.isArray(data) || data.schema_version !== rules.schema_version) {
+    throw new Error(message('schema'));
   }
-  if (!data.project || typeof data.project !== 'object') throw new Error('Missing project.');
-  for (const field of ['name', 'need', 'users', 'constraints', 'ict_type']) {
-    if (typeof data.project[field] !== 'string' || data.project[field].length > 5000) throw new Error(`Invalid project field: ${field}`);
+  for (const key of Object.keys(data)) {
+    if (!TOP_LEVEL_FIELDS.includes(key)) throw new Error(message('extra', { field: key }));
   }
-  if (!Array.isArray(data.candidates) || data.candidates.length > 100) throw new Error('Invalid option list or too many options.');
-  for (const c of data.candidates) {
-    if (!c || typeof c !== 'object' || typeof c.name !== 'string' || !c.name.trim() || !APPROACHES.includes(c.approach)) throw new Error('Invalid option.');
-    if (!CLAIMS.includes(c.accessibility_claim) || !EVALUATIONS.includes(c.independent_evaluation)) throw new Error('Invalid accessibility information.');
-    for (const field of ['id', 'version', 'scope', 'url', 'acr_url', 'acr_date', 'notes']) {
-      if (typeof c[field] !== 'string' || c[field].length > 5000) throw new Error(`Invalid option field: ${field}`);
+  if (data.demonstration_only !== undefined && typeof data.demonstration_only !== 'boolean') {
+    throw new Error(message('demonstration'));
+  }
+  if (!data.project || typeof data.project !== 'object' || Array.isArray(data.project)) {
+    throw new Error(message('project'));
+  }
+  for (const key of Object.keys(data.project)) {
+    if (!projectFields.includes(key)) throw new Error(message('extra', { field: key }));
+  }
+  for (const field of projectFields) {
+    if (typeof data.project[field] !== 'string' || data.project[field].length > rules.limits.project[field]) {
+      throw new Error(message('project_fields'));
     }
-    if (!safeUrl(c.url) || !safeUrl(c.acr_url)) throw new Error('Only HTTPS source URLs are accepted.');
+  }
+  if (!Array.isArray(data.candidates) || data.candidates.length > rules.limits.max_candidates) {
+    throw new Error(message('candidates', { max: rules.limits.max_candidates }));
+  }
+  for (const candidate of data.candidates) {
+    if (!candidate || typeof candidate !== 'object' || Array.isArray(candidate)) {
+      throw new Error(message('candidate_object'));
+    }
+    for (const key of Object.keys(candidate)) {
+      if (!candidateFields.includes(key)) throw new Error(message('extra', { field: key }));
+    }
+    for (const field of candidateFields) {
+      if (!(field in candidate)) throw new Error(message('field', { field }));
+    }
+    if (typeof candidate.id !== 'string' || !candidate.id.trim() ||
+        candidate.id.length > rules.limits.candidate.id) {
+      throw new Error(message('field', { field: 'id' }));
+    }
+    if (!rules.approaches.includes(candidate.approach)) throw new Error(message('approach'));
+    if (!rules.claims.includes(candidate.accessibility_claim)) throw new Error(message('claim'));
+    if (!rules.evaluations.includes(candidate.independent_evaluation)) throw new Error(message('evaluation'));
+    if (typeof candidate.name !== 'string' || !candidate.name.trim() ||
+        candidate.name.length > rules.limits.candidate.name) {
+      throw new Error(message('name'));
+    }
+    for (const [field, limit] of Object.entries(rules.limits.candidate)) {
+      if (typeof candidate[field] !== 'string' || candidate[field].length > limit) {
+        throw new Error(message('field', { field }));
+      }
+    }
+    for (const field of ['url', 'acr_url']) {
+      if (!safeUrl(candidate[field])) throw new Error(message('url', { field }));
+    }
   }
   return true;
 }
 
-export function questionsFor(c) {
-  const questions = [];
-  if (!c.url) questions.push('Identify an authoritative product or repository source.');
-  if (!c.version) questions.push('Confirm product version and configuration.');
-  if (!c.acr_url) questions.push('Request a product- and version-matched ACR.');
-  if (!c.acr_date) questions.push('Confirm the ACR date and scope.');
-  const byClaim = {
-    supports: 'Vendor support claim needs independent evidence.',
-    'partially-supports': 'Investigate affected tasks, user impact, and a remediation plan.',
-    'does-not-support': 'Investigate barriers and alternatives with an accessibility specialist.',
-    'not-evaluated': 'Not evaluated means evidence is missing, not a failed test.',
-    unknown: 'Obtain accessibility evidence; the claim is unknown.'
-  };
-  questions.push(byClaim[c.accessibility_claim] || byClaim.unknown);
-  if (c.independent_evaluation === 'completed') questions.push('Review the actual independent evaluation report and coverage.');
-  else if (c.independent_evaluation === 'planned') questions.push('Confirm independent evaluation scope and completion date.');
-  else questions.push('Plan independent testing of critical tasks.');
-  questions.push('Any potential Section 508 exception requires separate agency review, not approval here.');
-  return questions;
+function ruleMatches(when, candidate) {
+  if (when.type === 'always') return true;
+  if (when.type === 'empty') return !candidate[when.field];
+  if (when.type === 'claim') return (candidate.accessibility_claim || 'unknown') === when.value;
+  if (when.type === 'evaluation') return (candidate.independent_evaluation || 'none') === when.value;
+  throw new Error(`Unknown question rule type: ${when.type}`);
+}
+
+export function questionsFor(candidate) {
+  return getRules().questions.filter(rule => ruleMatches(rule.when, candidate)).map(rule => rule.text);
 }
 
 export function markdownReport(data, sources = []) {
   validateResearch(data);
+  const report = getRules().report;
   const project = data.project;
   const lines = [
-    `# Market research draft: ${project.name || 'Untitled research'}`, '',
-    '**Status: Unapproved working notes. Not a selection, conformance determination, or exception approval.**', '',
-    `**Fictional DITAP demonstration:** ${data.demonstration_only ? 'Yes' : 'No label; evidence still requires verification'}`, '',
-    '## Research scope', '',
-    `- Need: ${project.need || 'Not recorded'}`,
-    `- Users: ${project.users || 'Not recorded'}`,
-    `- ICT category: ${project.ict_type || 'Not recorded'}`,
-    `- Constraints: ${project.constraints || 'Not recorded'}`, '',
-    '## Alternatives investigated', ''
+    format(report.title, { name: project.name || report.untitled }), '',
+    report.status, '',
+    report.demonstration[String(Boolean(data.demonstration_only))], '',
+    report.headings.context, ''
   ];
-  if (!data.candidates.length) lines.push('No alternatives recorded. Do not treat this as a completed market search.', '');
-  data.candidates.forEach((c, index) => {
-    lines.push(`### ${index + 1}. ${c.name}`, '',
-      `- Approach: ${c.approach}`, `- Version: ${c.version || 'Not recorded'}`,
-      `- Functional scope: ${c.scope || 'Not recorded'}`,
-      `- Evidence source: ${c.url || 'Not recorded'}`,
-      `- ACR source: ${c.acr_url || 'Not found'}`,
-      `- ACR date: ${c.acr_date || 'Not found'}`,
-      `- Accessibility claim: ${c.accessibility_claim} (not independently verified by this tool)`,
-      `- Independent evaluation: ${c.independent_evaluation} (review status only)`,
-      `- Notes: ${c.notes || 'Not recorded'}`, '', '**Evidence gaps and research questions:**', '');
-    lines.push(...questionsFor(c).map(q => `- ${q}`), '');
+  for (const spec of report.project_fields) {
+    lines.push(`- ${spec.label}: ${project[spec.field] || report.missing.project}`);
+  }
+  lines.push('', report.headings.options, '');
+  if (!data.candidates.length) lines.push(report.empty_candidates);
+  data.candidates.forEach((candidate, index) => {
+    lines.push('', `### ${index + 1}. ${candidate.name}`, '');
+    for (const spec of report.candidate_fields) {
+      lines.push(`- ${spec.label}: ${candidateValue(candidate, spec.field, report.missing)}${spec.suffix || ''}`);
+    }
+    lines.push('', report.headings.questions, '');
+    lines.push(...questionsFor(candidate).map(question => `- ${question}`));
   });
-  lines.push('## Human review before making decisions', '',
-    '- Check whether the alternative search was broad enough, including government reuse and open source.',
-    '- Generate applicable Section 508 requirements using GSA ART and check agency policy.',
-    '- Confirm ACR versions and test claims with suitable independent evidence.',
-    '- Ask about critical workflows, maintenance, interoperability, user needs, and total cost.',
-    '- Document market engagement and any gaps; never assume a Section 508 exception is approved.',
-    '- Review digital-first public service requirements and their applicability.', '',
-    '## Sources to consult (not queried by this application)', '');
-  sources.forEach(s => lines.push(`- ${s.name}: ${s.url}`));
+  lines.push('', report.headings.review, '');
+  lines.push(...report.human_review.map(item => `- ${item}`));
+  lines.push('', report.headings.sources, '');
+  sources.forEach(source => lines.push(format(report.source_line, { name: source.name, url: source.url })));
   return lines.join('\n') + '\n';
 }

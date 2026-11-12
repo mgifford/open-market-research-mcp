@@ -16,12 +16,18 @@ The practical objective is to help an acquisition professional answer:
 ## What works today
 
 - **GitHub Pages browser app:** Define a need, browse curated research source descriptions and a small CMS public `code.json` example catalog, add market alternatives, track basic ACR metadata and evidence gaps, import/export JSON, and export a Markdown draft report.
-- **Local MCP server:** Five read-only/deterministic tools and two resources for source discovery, research planning, accessibility evidence questions, and report drafting.
-- **GitHub Actions:** Tests Python and browser logic, publishes the static app, and can refresh an allowlisted public `code.json` sample as a reviewable artifact.
+- **Shared decision rules:** `src/omr_mcp/rules.json` drives the browser and Python questions, validation limits, and report wording from one versioned source.
+- **Local MCP server:** Seven read-only/deterministic tools and two resources for source discovery, research planning, accessibility evidence questions, report drafting, public metadata normalization, and OpenACR import.
+- **Public metadata adapters:** Read-only normalization of public `code.json`, `agency-index.json`, and `publiccode.yml` with source, retrieval date, data-as-of date, license, access rights, and limitations.
+- **OpenACR import prototype:** Local CLI and MCP import of OpenACR YAML for human review, distinguishing supports, partial support, non-support, not applicable, not evaluated, and missing claims. It does not create or certify an ACR.
+- **DITAP workshop materials:** Fictional facilitator guide, worksheet, and pilot protocol. These are prepared but **not yet learner-tested**.
+- **GitHub Actions:** Tests Python, Node, MCP-over-stdio, browser behavior, axe/keyboard regressions, and the upstream OpenACR CLI; publishes the static app and can refresh an allowlisted public `code.json` sample as a reviewable artifact.
 - **DITAP fixture:** Clearly fictional case management scenario, never a real vendor shortlist.
 - **Optional Hugging Face Action:** Manual run on the fictional fixture, publishes an unverified artifact for review, never into the website.
 
-**No live procurement, vendor, ACR, ART, CMS, or AI APIs are connected in the initial release.** The source directory and public software sample are curated static metadata and links, not a comprehensive or live market search. A separate, scheduled GitHub Action can refresh the public sample for review; it does not publish it automatically. OpenACR documents are not parsed yet. The app never determines Section 508 conformance or approves exceptions.
+**No live procurement, vendor, ACR, ART, CMS, or AI APIs are connected by the browser.** The source directory and public software sample are curated static metadata and links, not a comprehensive or live market search. A scheduled GitHub Action can refresh the public sample for review; it does not publish it automatically. OpenACR and public metadata are parsed only by local tools, not by the static site. The app never determines Section 508 conformance or approves exceptions.
+
+**Accessibility status:** automated axe scans, keyboard/focus regression tests, 320 CSS px reflow, and forced-colors focus checks run in CI. Manual screen-reader testing with NVDA, JAWS, and VoiceOver has **not** been performed, and no WCAG conformance claim is made. See [testing](docs/TESTING.md).
 
 ## Deploy to GitHub Pages
 
@@ -77,9 +83,15 @@ pip install -e '.[dev]'
 python -m pytest -q
 node --test tests/research.test.mjs
 python scripts/build_site.py
+npm ci
+npx playwright install chromium
+npm test
 ```
 
-Node 22 is used by CI; no npm dependencies or JavaScript bundler required.
+`npm test` runs the Node unit tests, the pinned upstream OpenACR CLI
+validation, and the Playwright/axe browser suite. Node 22 is used by CI. The
+static site has **no runtime npm dependencies**; Playwright and the OpenACR CLI
+are dev-only test tooling recorded in `package-lock.json`.
 
 ## Architecture: static Pages plus local MCP
 
@@ -100,6 +112,8 @@ Node 22 is used by CI; no npm dependencies or JavaScript bundler required.
 ```
 
 GitHub Pages **cannot host a live MCP HTTP endpoint** or securely store AI API secrets. GitHub Actions run jobs and generate deployable files, not a continuously listening server. Hosted MCP would require a serverless/always-on runtime such as Cloudflare Workers, a container, or an approved agency host. See [Architecture](docs/ARCHITECTURE.md).
+
+`src/omr_mcp/rules.json` is copied to the Pages build and loaded by the browser; the Python server reads the same file. Public metadata normalization and OpenACR import are local-only tools, not browser features and not live API calls.
 
 ## Optional Hugging Face AI
 
@@ -127,7 +141,7 @@ These links are reference sources, not claims that any external program endorses
 
 ## What to build next
 
-See [Roadmap](docs/ROADMAP.md), [DITAP alignment](docs/DITAP.md), [implementation agent prompt](docs/IMPLEMENTATION-PROMPT.md), [security](SECURITY.md), and [contributing](CONTRIBUTING.md).
+See [Roadmap](docs/ROADMAP.md), [DITAP alignment](docs/DITAP.md), [workshop materials](docs/workshop/README.md), [decision rules](docs/DECISION-RULES.md), [public metadata adapters](docs/ADAPTERS.md), [OpenACR import](docs/OPENACR-IMPORT.md), [1102tools integration proposal](docs/INTEGRATION-1102TOOLS.md), [implementation agent prompt](docs/IMPLEMENTATION-PROMPT.md), [security](SECURITY.md), and [contributing](CONTRIBUTING.md).
 
 ## License
 

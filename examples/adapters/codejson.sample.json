@@ -1,0 +1,16 @@
+{
+  "name": "Example Benefits Portal",
+  "description": "Fictional public benefits portal used only for adapter tests.",
+  "organization": "Example Agency",
+  "repositoryURL": "https://github.com/example-org/example-benefits",
+  "status": "Production",
+  "repositoryVisibility": "public",
+  "version": "1.2.0",
+  "permissions": {
+    "usageType": ["openSource"],
+    "licenses": [{"name": "CC0-1.0"}]
+  },
+  "date": {
+    "metadataLastUpdated": "2026-10-01"
+  }
+}
