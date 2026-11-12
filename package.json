@@ -1,0 +1,19 @@
+{
+  "name": "open-market-research-mcp-tests",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Development-only browser and accessibility regression tests. The static site has no runtime npm dependencies.",
+  "scripts": {
+    "test:unit": "node --test tests/research.test.mjs",
+    "test:browser": "playwright test",
+    "test:a11y": "playwright test tests/browser/a11y.spec.js",
+    "test:openacr": "openacr validate -f examples/openacr.sample.yaml -c node_modules/@openacr/openacr/catalog/2.4-edition-wcag-2.1-508-en.yaml",
+    "test": "npm run test:unit && npm run test:openacr && npm run test:browser"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "4.14.0",
+    "@openacr/openacr": "0.3.8",
+    "@playwright/test": "1.65.0"
+  }
+}

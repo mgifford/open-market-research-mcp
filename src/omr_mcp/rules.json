@@ -1,0 +1,100 @@
+{
+  "version": "1.0.0",
+  "schema_version": "0.1.0",
+  "approaches": ["government-reuse", "open-source", "commercial", "new-build"],
+  "approach_labels": {
+    "government-reuse": "Government reuse",
+    "open-source": "Open source",
+    "commercial": "Commercial",
+    "new-build": "New development"
+  },
+  "claims": ["supports", "partially-supports", "does-not-support", "not-evaluated", "unknown"],
+  "evaluations": ["none", "planned", "completed"],
+  "limits": {
+    "project": {"name": 300, "need": 5000, "users": 3000, "constraints": 3000, "ict_type": 300},
+    "candidate": {"id": 100, "name": 300, "version": 300, "scope": 1000, "url": 2000, "acr_url": 2000, "acr_date": 100, "notes": 5000},
+    "max_candidates": 100,
+    "max_research_json_chars": 1000000,
+    "max_candidate_json_chars": 50000,
+    "max_import_bytes": 1000000
+  },
+  "questions": [
+    {"id": "source-url", "when": {"type": "empty", "field": "url"}, "text": "Identify an authoritative product or repository source for this option."},
+    {"id": "version", "when": {"type": "empty", "field": "version"}, "text": "Confirm the exact product release and configuration being evaluated."},
+    {"id": "acr-url", "when": {"type": "empty", "field": "acr_url"}, "text": "Request a current, product- and version-matched Accessibility Conformance Report (ACR)."},
+    {"id": "acr-date", "when": {"type": "empty", "field": "acr_date"}, "text": "Confirm the ACR date and the scope of the evaluation."},
+    {"id": "claim-supports", "when": {"type": "claim", "value": "supports"}, "text": "Vendor-reported support is not independently verified; request supporting test evidence."},
+    {"id": "claim-partially-supports", "when": {"type": "claim", "value": "partially-supports"}, "text": "Ask which tasks are affected, the impact on users, and the remediation plan."},
+    {"id": "claim-does-not-support", "when": {"type": "claim", "value": "does-not-support"}, "text": "Document reported barriers, affected tasks, and feasible alternatives; obtain specialist review."},
+    {"id": "claim-not-evaluated", "when": {"type": "claim", "value": "not-evaluated"}, "text": "Not evaluated means evidence is missing, not that the option has failed."},
+    {"id": "claim-unknown", "when": {"type": "claim", "value": "unknown"}, "text": "The accessibility claim is unknown; obtain structured evidence before comparing accessibility."},
+    {"id": "evaluation-none", "when": {"type": "evaluation", "value": "none"}, "text": "Plan independent evaluation of critical user tasks with appropriate assistive technology."},
+    {"id": "evaluation-planned", "when": {"type": "evaluation", "value": "planned"}, "text": "Obtain the evaluation plan, methods, coverage, and completion date."},
+    {"id": "evaluation-completed", "when": {"type": "evaluation", "value": "completed"}, "text": "Locate the actual independent evaluation report; verify its scope, date, and findings."},
+    {"id": "exceptions", "when": {"type": "always"}, "text": "Determine whether agency Section 508 reviewers must assess any possible exceptions."}
+  ],
+  "messages": {
+    "schema": "Unsupported research schema version.",
+    "project": "Missing project.",
+    "project_fields": "Project fields must be strings within their allowed length.",
+    "candidates": "Candidates must be a list with at most {max} items.",
+    "candidate_object": "Candidate must be an object.",
+    "approach": "Unrecognized approach.",
+    "claim": "Unrecognized accessibility claim.",
+    "evaluation": "Unrecognized evaluation state.",
+    "name": "Candidate name is required.",
+    "url": "{field} must be an HTTPS URL or empty.",
+    "field": "{field} must be a string within its allowed length.",
+    "extra": "Unrecognized field: {field}.",
+    "demonstration": "demonstration_only must be a boolean."
+  },
+  "report": {
+    "title": "Market research working report: {name}",
+    "untitled": "Untitled research",
+    "status": "**Status:** Draft research notes. Unapproved working notes. Not a solicitation. Not a selection. Not a Section 508 conformance determination, vendor selection, or exception approval.",
+    "demonstration": {
+      "true": "**Fictional DITAP demonstration:** Yes, fictional examples",
+      "false": "**Fictional DITAP demonstration:** No label; evidence still requires verification"
+    },
+    "project_fields": [
+      {"field": "need", "label": "Need"},
+      {"field": "users", "label": "Users"},
+      {"field": "constraints", "label": "Constraints"},
+      {"field": "ict_type", "label": "ICT type"}
+    ],
+    "candidate_fields": [
+      {"field": "approach", "label": "Approach"},
+      {"field": "version", "label": "Version"},
+      {"field": "scope", "label": "Scope"},
+      {"field": "url", "label": "Product source"},
+      {"field": "acr_url", "label": "ACR source"},
+      {"field": "acr_date", "label": "ACR date"},
+      {"field": "accessibility_claim", "label": "Accessibility claim", "suffix": " (unverified claim; not a finding)"},
+      {"field": "independent_evaluation", "label": "Independent evaluation", "suffix": " (self-reported review status)"},
+      {"field": "notes", "label": "Notes"}
+    ],
+    "headings": {
+      "context": "## Acquisition context",
+      "options": "## Market options considered",
+      "questions": "**Questions and evidence gaps:**",
+      "review": "## Required human review",
+      "sources": "## Reference sources (not automatically queried)"
+    },
+    "missing": {
+      "default": "Not supplied",
+      "project": "Not described",
+      "acr_url": "Not found",
+      "notes": "None"
+    },
+    "empty_candidates": "No candidate options have been recorded. A completed market research report needs broader discovery and verified source records.",
+    "human_review": [
+      "Confirm source completeness, especially vendors not already in federal award records.",
+      "Determine applicable Section 508 requirements using GSA ART and agency expertise.",
+      "Verify ACR claims with appropriate product-specific evidence and user testing.",
+      "Assess reuse rights, interoperability, maintainability, data portability, and total cost.",
+      "Consider procurement-specific exceptions only through the agency process; none are approved here.",
+      "Evaluate applicable digital-first public service expectations."
+    ],
+    "source_line": "- [{name}]({url})"
+  }
+}

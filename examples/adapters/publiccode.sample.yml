@@ -1,0 +1,17 @@
+publiccodeYmlVersion: "0.2"
+name: Example Benefits Portal
+url: https://github.com/example-org/example-benefits
+landingURL: https://example.gov/benefits
+softwareVersion: "1.2.0"
+releaseDate: "2026-10-01"
+description:
+  en:
+    shortDescription: Fictional public benefits portal used only for adapter tests.
+    longDescription: A clearly fictional example for testing publiccode.yml normalization.
+legal:
+  license: CC0-1.0
+maintenance:
+  type: internal
+organisation:
+  name: Example Agency
+  uri: https://example.gov

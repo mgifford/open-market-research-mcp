@@ -12,23 +12,30 @@ The first release is intentionally an educational prototype, not a procurement s
 - [x] Python MCP tools for local AI clients
 - [x] CI test/build/deploy GitHub Pages workflow
 - [x] Optional manual HF fiction-only Action
+- [x] Shared versioned decision rules for browser and Python
+- [x] Read-only public `code.json`, `agency-index.json`, and `publiccode.yml` adapters with provenance
+- [x] OpenACR YAML import prototype, validated with the pinned upstream CLI
+- [x] MCP stdio protocol smoke test against the v2 SDK
+- [x] Playwright/axe/keyboard browser regression suite
+- [x] DITAP workshop facilitator guide, worksheet, and pilot protocol (not yet learner-tested)
 
 ## Phase 1: complete educational pilot
 
 - [ ] Involve acquisition professionals and disabled participants in co-design and usability tests.
-- [ ] Test with axe, keyboard, screen readers, reflow, zoom, forced colors, and reduced motion.
-- [ ] Make decision rules a single machine-readable source rather than duplicated JS/Python text.
+- [x] Automated axe, keyboard, reflow, and forced-colors regression checks.
+- [ ] Manual screen-reader, zoom, text-spacing, and cross-browser testing.
+- [x] Make decision rules a single machine-readable source rather than duplicated JS/Python text.
 - [ ] Add report source selection and retrieval-as-of metadata.
 - [ ] Add more DITAP fixtures, including small-business and open-source reuse scenarios.
 - [ ] Expose issue-friendly data import errors and controlled export filename.
-- [ ] Validate MCP protocol with a real client and pin the SDK after running CI.
+- [x] Validate MCP protocol with a real client over stdio. The SDK is constrained to `mcp>=2.3,<3` and tested against 2.3.0; consider an exact pin after a release review.
 
 ## Phase 2: public-source discovery and ACR integration
 
-- [ ] Integrate upstream `code.json` inventories and `publiccode.yml` metadata without inventing replacement standards.
-- [ ] Connect 1102tools as an optional upstream MCP through a host adapter, not by copying servers.
+- [x] Prototype read-only `code.json`, `agency-index.json`, and `publiccode.yml` adapters without inventing replacement standards.
+- [x] Prepare an integration proposal for 1102tools with a minimal adapter boundary; no upstream connection or copied code.
 - [ ] Build a read-only discovery adapter for ACR URLs, with source/version/time metadata.
-- [ ] Parse machine-readable OpenACR using GSA's upstream schema and toolchain.
+- [x] Prototype machine-readable OpenACR import using GSA's upstream schema and pinned CLI validation.
 - [ ] Support Word/PDF ACR only with documented parsing limitations and human confirmation.
 - [ ] Support ART outputs and product-specific criteria mapping, subject to API compatibility.
 - [ ] Preserve a clear separation between claims, third-party tests, and procurement judgments.

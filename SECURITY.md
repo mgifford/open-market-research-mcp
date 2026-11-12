@@ -7,10 +7,14 @@
 - The local MCP server reads bundled public source descriptors and processes data supplied by its MCP host. The *host's* model provider, logging, and retention policies are separate and must be evaluated.
 - External source links open in new tabs with `rel="noopener noreferrer"`.
 - The HF demonstration uses `HF_TOKEN` only within a manually triggered GitHub Action and transmits only a fictional case study to the selected provider. It never publishes model output to Pages.
+- Public metadata adapters read local text by default. The optional fetch helper accepts HTTPS only, rejects credentials, limits response size, and permits only `raw.githubusercontent.com` and `raw.github.com`.
+- OpenACR import uses `yaml.safe_load`, a 2 MB input limit, and local input only. It preserves author/vendor fields present in the document; users must treat an ACR according to its handling requirements.
+- Browser tests assert that the site makes no cross-origin requests. The static site has no runtime npm dependencies; Playwright and the OpenACR CLI are dev-only and recorded in `package-lock.json`.
+- GitHub Actions are pinned to commit SHAs and use least-privilege `contents: read` except the Pages deployment job.
 
 ## Not yet assessed
 
-Production use, authorization to operate, accessibility conformance, supply-chain security, privacy impact, agency retention requirements, and user-submitted ACR document processing.
+Production use, authorization to operate, accessibility conformance, full supply-chain review, privacy impact, agency retention requirements, and processing of non-public or protected ACR documents. The OpenACR importer is a prototype; it has not been assessed for hostile YAML beyond `safe_load`, decompression, or very large catalogs.
 
 ## Hard requirements for future endpoints
 

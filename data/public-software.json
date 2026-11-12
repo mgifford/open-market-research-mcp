@@ -12,10 +12,26 @@
       "organization": "Centers for Medicare & Medicaid Services",
       "status": "Production",
       "visibility": "public",
-      "usage_type": ["openSource"],
-      "license_names": ["CC0-1.0"],
+      "usage_type": [
+        "openSource"
+      ],
+      "license_names": [
+        "CC0-1.0"
+      ],
       "version": "",
-      "metadata_last_updated": "2026-09-28T19:53:23.546Z"
+      "metadata_last_updated": "2026-09-28T19:53:23.546Z",
+      "adapter_id": "code.json",
+      "authority": "public-repository",
+      "source_url": "https://github.com/DSACMS/share-it-act-lp",
+      "retrieved_at": "2026-11-12",
+      "source_as_of": "2026-09-28T19:53:23.546Z",
+      "evidence_type": "metadata",
+      "license": "CC0-1.0",
+      "access_rights": "public",
+      "limitations": [
+        "Metadata is self-reported in code.json and is not independently verified.",
+        "A public repository does not establish reuse rights, maintenance, or fitness for a procurement need."
+      ]
     },
     {
       "id": "DSACMS/gov-codejson",
@@ -26,10 +42,24 @@
       "organization": "Centers for Medicare & Medicaid Services",
       "status": "Production",
       "visibility": "public",
-      "usage_type": ["openSource"],
+      "usage_type": [
+        "openSource"
+      ],
       "license_names": [],
       "version": "2.0.0",
-      "metadata_last_updated": "2026-10-01T03:54:33.657Z"
+      "metadata_last_updated": "2026-10-01T03:54:33.657Z",
+      "adapter_id": "code.json",
+      "authority": "public-repository",
+      "source_url": "https://github.com/DSACMS/gov-codejson",
+      "retrieved_at": "2026-11-12",
+      "source_as_of": "2026-10-01T03:54:33.657Z",
+      "evidence_type": "metadata",
+      "license": null,
+      "access_rights": "public",
+      "limitations": [
+        "Metadata is self-reported in code.json and is not independently verified.",
+        "A public repository does not establish reuse rights, maintenance, or fitness for a procurement need."
+      ]
     },
     {
       "id": "DSACMS/codejson-generator",
@@ -40,10 +70,24 @@
       "organization": "Centers for Medicare & Medicaid Services",
       "status": "Production",
       "visibility": "public",
-      "usage_type": ["openSource"],
+      "usage_type": [
+        "openSource"
+      ],
       "license_names": [],
       "version": "",
-      "metadata_last_updated": "2026-10-01T03:35:24.955Z"
+      "metadata_last_updated": "2026-10-01T03:35:24.955Z",
+      "adapter_id": "code.json",
+      "authority": "public-repository",
+      "source_url": "https://github.com/DSACMS/codejson-generator",
+      "retrieved_at": "2026-11-12",
+      "source_as_of": "2026-10-01T03:35:24.955Z",
+      "evidence_type": "metadata",
+      "license": null,
+      "access_rights": "public",
+      "limitations": [
+        "Metadata is self-reported in code.json and is not independently verified.",
+        "A public repository does not establish reuse rights, maintenance, or fitness for a procurement need."
+      ]
     },
     {
       "id": "DSACMS/automated-codejson-generator",
@@ -54,10 +98,24 @@
       "organization": "Centers for Medicare & Medicaid Services",
       "status": "Production",
       "visibility": "public",
-      "usage_type": ["openSource"],
+      "usage_type": [
+        "openSource"
+      ],
       "license_names": [],
       "version": "2.0.0",
-      "metadata_last_updated": "2026-10-14T21:00:00.000Z"
+      "metadata_last_updated": "2026-10-14T21:00:00.000Z",
+      "adapter_id": "code.json",
+      "authority": "public-repository",
+      "source_url": "https://github.com/DSACMS/automated-codejson-generator",
+      "retrieved_at": "2026-11-12",
+      "source_as_of": "2026-10-14T21:00:00.000Z",
+      "evidence_type": "metadata",
+      "license": null,
+      "access_rights": "public",
+      "limitations": [
+        "Metadata is self-reported in code.json and is not independently verified.",
+        "A public repository does not establish reuse rights, maintenance, or fitness for a procurement need."
+      ]
     },
     {
       "id": "DSACMS/share-it-savings",
@@ -68,10 +126,24 @@
       "organization": "Centers for Medicare & Medicaid Services",
       "status": "production",
       "visibility": "public",
-      "usage_type": ["openSource"],
+      "usage_type": [
+        "openSource"
+      ],
       "license_names": [],
       "version": "",
-      "metadata_last_updated": "2025-07-28T19:19:19+0000"
+      "metadata_last_updated": "2025-07-28T19:19:19+0000",
+      "adapter_id": "code.json",
+      "authority": "public-repository",
+      "source_url": "https://github.com/DSACMS/share-it-savings",
+      "retrieved_at": "2026-11-12",
+      "source_as_of": "2025-07-28T19:19:19+0000",
+      "evidence_type": "metadata",
+      "license": null,
+      "access_rights": "public",
+      "limitations": [
+        "Metadata is self-reported in code.json and is not independently verified.",
+        "A public repository does not establish reuse rights, maintenance, or fitness for a procurement need."
+      ]
     }
   ]
 }

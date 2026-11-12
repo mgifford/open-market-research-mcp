@@ -8,20 +8,41 @@ without installing the MCP transport dependency.
 from __future__ import annotations
 
 import json
+
+import yaml
+
+from .adapters import normalize_agency_index, normalize_code_json, normalize_publiccode
 from .engine import (
     build_report,
+    decision_rules,
     evidence_questions,
     market_research_plan,
     search_sources,
     source_catalog,
 )
+from .openacr import parse_openacr_yaml
 
 try:
     from mcp.server import MCPServer
+    from mcp.server.mcpserver.exceptions import ToolError
 except ImportError as exc:
     raise SystemExit("Install the MCP dependencies first: pip install -e .") from exc
 
 mcp = MCPServer("Open Market Research MCP")
+
+
+def _loads_object(raw: str, label: str, max_chars: int) -> dict:
+    if len(raw) > max_chars:
+        raise ToolError(f"{label} exceeds the {max_chars:,}-character input limit.")
+    try:
+        value = json.loads(raw)
+    except json.JSONDecodeError as exc:
+        raise ToolError(
+            f"{label} is not valid JSON: {exc.msg} at line {exc.lineno}, column {exc.colno}."
+        ) from exc
+    if not isinstance(value, dict):
+        raise ToolError(f"{label} must be a JSON object.")
+    return value
 
 
 @mcp.tool()
@@ -45,30 +66,74 @@ def create_research_plan() -> list[dict[str, str]]:
 @mcp.tool()
 def identify_accessibility_evidence_gaps(candidate_json: str) -> list[str]:
     """List verification questions for one candidate, without deciding conformance."""
-    if len(candidate_json) > 50000:
-        raise ValueError("Candidate input exceeds size limit")
-    candidate = json.loads(candidate_json)
-    if not isinstance(candidate, dict):
-        raise ValueError("Candidate must be a JSON object")
+    limits = decision_rules()["limits"]
+    candidate = _loads_object(candidate_json, "candidate_json", limits["max_candidate_json_chars"])
     return evidence_questions(candidate)
 
 
 @mcp.tool()
 def draft_market_research_report(research_json: str) -> str:
     """Render a local research record into an unapproved Markdown draft."""
-    if len(research_json) > 1000000:
-        raise ValueError("Research input exceeds size limit")
-    data = json.loads(research_json)
-    return build_report(data)
+    limits = decision_rules()["limits"]
+    data = _loads_object(research_json, "research_json", limits["max_research_json_chars"])
+    try:
+        return build_report(data)
+    except ValueError as exc:
+        raise ToolError(str(exc)) from exc
 
 
-@mcp.resource("research://sources")
+@mcp.tool()
+def import_openacr_report(openacr_yaml: str) -> dict:
+    """Import OpenACR YAML for inspection. Never creates or certifies an ACR."""
+    if len(openacr_yaml) > 2_000_000:
+        raise ToolError("OpenACR input exceeds the 2,000,000-character limit.")
+    try:
+        return parse_openacr_yaml(openacr_yaml)
+    except ValueError as exc:
+        raise ToolError(str(exc)) from exc
+
+
+@mcp.tool()
+def normalize_public_metadata(
+    metadata_text: str,
+    metadata_format: str,
+    source_url: str = "",
+    repository: str = "",
+) -> dict:
+    """Normalize local code.json, agency-index.json, or publiccode.yml text.
+
+    This performs no network request and does not treat metadata as proof of
+    suitability, reuse rights, or accessibility conformance.
+    """
+    if len(metadata_text) > 500_000:
+        raise ToolError("Metadata input exceeds the 500,000-character limit.")
+    try:
+        if metadata_format == "publiccode":
+            data = yaml.safe_load(metadata_text)
+        elif metadata_format in {"codejson", "agency-index"}:
+            data = json.loads(metadata_text)
+        else:
+            raise ToolError("metadata_format must be codejson, agency-index, or publiccode")
+        if metadata_format == "codejson":
+            if not repository:
+                raise ToolError("repository is required for codejson")
+            return normalize_code_json(data, repository, source_url=source_url or None)
+        if metadata_format == "agency-index":
+            return normalize_agency_index(data, source_url=source_url)
+        return normalize_publiccode(data, source_url=source_url)
+    except ToolError:
+        raise
+    except (ValueError, yaml.YAMLError, json.JSONDecodeError) as exc:
+        raise ToolError(str(exc)) from exc
+
+
+@mcp.resource("research://sources", mime_type="application/json")
 def curated_sources() -> str:
     """Read the source directory and its limitations."""
     return json.dumps(source_catalog(), indent=2)
 
 
-@mcp.resource("research://workflow")
+@mcp.resource("research://workflow", mime_type="application/json")
 def workflow() -> str:
     """Read the deterministic market research workflow."""
     return json.dumps(market_research_plan(), indent=2)

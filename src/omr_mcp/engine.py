@@ -1,16 +1,41 @@
-"""Deterministic, source-aware research helpers. No AI and no network calls."""
+"""Deterministic, source-aware research helpers. No AI and no network calls.
+
+Decision rules live in ``rules.json`` so the browser and Python implementations
+share one versioned source for enums, limits, questions, and report text.
+"""
 
 from __future__ import annotations
 
 import json
+import re
+from functools import lru_cache
 from importlib.resources import files
 from typing import Any
 from urllib.parse import urlparse
 
-APP_VERSION = "0.1.0"
-APPROACHES = ("government-reuse", "open-source", "commercial", "new-build")
-CLAIMS = ("supports", "partially-supports", "does-not-support", "not-evaluated", "unknown")
-EVALUATIONS = ("none", "planned", "completed")
+
+@lru_cache(maxsize=1)
+def decision_rules() -> dict[str, Any]:
+    """Return the bundled decision rules shared with the browser app."""
+    path = files("omr_mcp").joinpath("rules.json")
+    return json.loads(path.read_text(encoding="utf-8"))
+
+
+_RULES = decision_rules()
+APP_VERSION = _RULES["schema_version"]
+APPROACHES = tuple(_RULES["approaches"])
+CLAIMS = tuple(_RULES["claims"])
+EVALUATIONS = tuple(_RULES["evaluations"])
+_CANDIDATE_FIELDS = ("id", "name", *[spec["field"] for spec in _RULES["report"]["candidate_fields"]])
+_PROJECT_FIELDS = ("name", *[spec["field"] for spec in _RULES["report"]["project_fields"]])
+
+
+def _format(template: str, values: dict[str, Any]) -> str:
+    return re.sub(r"\{(\w+)\}", lambda match: str(values.get(match.group(1), match.group(0))), template)
+
+
+def _message(name: str, **values: Any) -> str:
+    return _format(_RULES["messages"][name], values)
 
 
 def source_catalog() -> list[dict[str, str]]:
@@ -30,71 +55,83 @@ def search_sources(term: str = "", category: str = "") -> list[dict[str, str]]:
 
 
 def is_https_link(value: str) -> bool:
-    parsed = urlparse(value)
+    try:
+        parsed = urlparse(value)
+    except ValueError:
+        return False
     return parsed.scheme == "https" and bool(parsed.netloc) and not parsed.username and not parsed.password
+
+
+def _matches(when: dict[str, Any], candidate: dict[str, Any]) -> bool:
+    kind = when.get("type")
+    if kind == "always":
+        return True
+    if kind == "empty":
+        return not candidate.get(when["field"])
+    if kind == "claim":
+        return candidate.get("accessibility_claim", "unknown") == when["value"]
+    if kind == "evaluation":
+        return candidate.get("independent_evaluation", "none") == when["value"]
+    raise ValueError(f"Unknown question rule type: {kind}")
 
 
 def evidence_questions(candidate: dict[str, Any]) -> list[str]:
     """Only emit questions. No vendor rankings or Section 508 determinations."""
-    questions = []
-    if not candidate.get("url"):
-        questions.append("Identify an authoritative product or repository source for this option.")
-    if not candidate.get("version"):
-        questions.append("Confirm the exact product release and configuration being evaluated.")
-    if not candidate.get("acr_url"):
-        questions.append("Request a current, product- and version-matched Accessibility Conformance Report (ACR).")
-    if not candidate.get("acr_date"):
-        questions.append("Confirm the ACR date and the scope of the evaluation.")
-    claim = candidate.get("accessibility_claim", "unknown")
-    if claim == "supports":
-        questions.append("Vendor-reported support is not independently verified; request supporting test evidence.")
-    elif claim == "partially-supports":
-        questions.append("Ask which tasks are affected, the impact on users, and the remediation plan.")
-    elif claim == "does-not-support":
-        questions.append("Document reported barriers, affected tasks, and feasible alternatives; obtain specialist review.")
-    elif claim == "not-evaluated":
-        questions.append("Not evaluated means evidence is missing, not that the option has failed.")
-    else:
-        questions.append("The accessibility claim is unknown; obtain structured evidence before comparing accessibility.")
-    state = candidate.get("independent_evaluation", "none")
-    if state == "none":
-        questions.append("Plan independent evaluation of critical user tasks with appropriate assistive technology.")
-    elif state == "planned":
-        questions.append("Obtain the evaluation plan, methods, coverage, and completion date.")
-    else:
-        questions.append("Locate the actual independent evaluation report; verify its scope, date, and findings.")
-    questions.append("Determine whether agency Section 508 reviewers must assess any possible exceptions.")
-    return questions
+    return [rule["text"] for rule in _RULES["questions"] if _matches(rule["when"], candidate)]
 
 
 def validate_research(data: dict[str, Any]) -> None:
-    """Cheap validation for MCP callers. GitHub Actions runs the full JSON Schema."""
+    """Validate the versioned research record against the shared rules."""
     if not isinstance(data, dict) or data.get("schema_version") != APP_VERSION:
-        raise ValueError("Unsupported research schema version")
+        raise ValueError(_message("schema"))
+    extra_top = next((key for key in data if key not in {"schema_version", "demonstration_only", "project", "candidates"}), None)
+    if extra_top:
+        raise ValueError(_message("extra", field=extra_top))
+    if not isinstance(data.get("demonstration_only", False), bool):
+        raise ValueError(_message("demonstration"))
     project = data.get("project")
     if not isinstance(project, dict):
-        raise ValueError("Missing project")
-    expected = ("name", "need", "users", "constraints", "ict_type")
-    if any(not isinstance(project.get(key), str) for key in expected):
-        raise ValueError("Project fields must be strings")
+        raise ValueError(_message("project"))
+    if any(key not in _PROJECT_FIELDS for key in project) or any(key not in project for key in _PROJECT_FIELDS):
+        raise ValueError(_message("project_fields"))
+    for key, limit in _RULES["limits"]["project"].items():
+        value = project.get(key)
+        if not isinstance(value, str) or len(value) > limit:
+            raise ValueError(_message("project_fields"))
     candidates = data.get("candidates")
-    if not isinstance(candidates, list) or len(candidates) > 100:
-        raise ValueError("Candidates must be a list with at most 100 items")
+    max_candidates = _RULES["limits"]["max_candidates"]
+    if not isinstance(candidates, list) or len(candidates) > max_candidates:
+        raise ValueError(_message("candidates", max=max_candidates))
     for candidate in candidates:
         if not isinstance(candidate, dict):
-            raise ValueError("Candidate must be an object")
+            raise ValueError(_message("candidate_object"))
+        extra = next((key for key in candidate if key not in _CANDIDATE_FIELDS), None)
+        if extra:
+            raise ValueError(_message("extra", field=extra))
+        missing = next((key for key in _CANDIDATE_FIELDS if key not in candidate), None)
+        if missing:
+            raise ValueError(_message("field", field=missing))
+        candidate_id = candidate.get("id")
+        if not isinstance(candidate_id, str) or not candidate_id.strip() or len(candidate_id) > _RULES["limits"]["candidate"]["id"]:
+            raise ValueError(_message("field", field="id"))
         if candidate.get("approach") not in APPROACHES:
-            raise ValueError("Unrecognized approach")
+            raise ValueError(_message("approach"))
         if candidate.get("accessibility_claim") not in CLAIMS:
-            raise ValueError("Unrecognized accessibility claim")
+            raise ValueError(_message("claim"))
         if candidate.get("independent_evaluation") not in EVALUATIONS:
-            raise ValueError("Unrecognized evaluation state")
-        if not isinstance(candidate.get("name"), str) or not candidate["name"].strip():
-            raise ValueError("Candidate name is required")
+            raise ValueError(_message("evaluation"))
+        name = candidate.get("name")
+        name_limit = _RULES["limits"]["candidate"]["name"]
+        if not isinstance(name, str) or not name.strip() or len(name) > name_limit:
+            raise ValueError(_message("name"))
+        for key, limit in _RULES["limits"]["candidate"].items():
+            value = candidate.get(key)
+            if not isinstance(value, str) or len(value) > limit:
+                raise ValueError(_message("field", field=key))
         for key in ("url", "acr_url"):
             value = candidate.get(key, "")
-            if not isinstance(value, str) or (value and not is_https_link(value)):
-                raise ValueError(f"{key} must be an HTTPS URL or empty")
+            if value and not is_https_link(value):
+                raise ValueError(_message("url", field=key))
 
 
 def market_research_plan() -> list[dict[str, str]]:
@@ -111,58 +148,33 @@ def market_research_plan() -> list[dict[str, str]]:
 def build_report(data: dict[str, Any]) -> str:
     """Create a plain-language report for human review. Do not infer compliance."""
     validate_research(data)
+    report = _RULES["report"]
     project = data["project"]
     lines = [
-        f"# Market research working report: {project['name']}",
+        _format(report["title"], {"name": project["name"] or report["untitled"]}),
         "",
-        "**Status:** Draft research notes. Not a solicitation, Section 508 conformance determination, vendor selection, or exception approval.",
+        report["status"],
         "",
-        f"**Demonstration-only data:** {'Yes, fictional examples' if data.get('demonstration_only') else 'No label; validate evidence independently'}",
+        report["demonstration"][str(bool(data.get("demonstration_only"))).lower()],
         "",
-        "## Acquisition context",
-        "",
-        f"- Need: {project['need'] or 'Not described'}",
-        f"- Users: {project['users'] or 'Not described'}",
-        f"- Constraints: {project['constraints'] or 'Not described'}",
-        f"- ICT type: {project['ict_type'] or 'Not described'}",
-        "",
-        "## Market options considered",
+        report["headings"]["context"],
         "",
     ]
+    for spec in report["project_fields"]:
+        value = project.get(spec["field"]) or report["missing"]["project"]
+        lines.append(f"- {spec['label']}: {value}")
+    lines.extend(["", report["headings"]["options"], ""])
     if not data["candidates"]:
-        lines.append("No candidate options have been recorded. A completed market research report needs broader discovery and verified source records.")
-    for i, c in enumerate(data["candidates"], start=1):
-        lines.extend([
-            "",
-            f"### {i}. {c['name']}",
-            "",
-            f"- Approach: {c['approach']}",
-            f"- Version: {c.get('version') or 'Not supplied'}",
-            f"- Scope: {c.get('scope') or 'Not supplied'}",
-            f"- Product source: {c.get('url') or 'Not supplied'}",
-            f"- ACR source: {c.get('acr_url') or 'Not supplied'}",
-            f"- ACR date: {c.get('acr_date') or 'Not supplied'}",
-            f"- Accessibility claim: {c['accessibility_claim']} (unverified claim; not a finding)",
-            f"- Independent evaluation: {c['independent_evaluation']} (self-reported review status)",
-            f"- Notes: {c.get('notes') or 'None'}",
-            "",
-            "**Questions and evidence gaps:**",
-            "",
-        ])
-        lines.extend(f"- {q}" for q in evidence_questions(c))
-    lines.extend([
-        "",
-        "## Required human review",
-        "",
-        "- Confirm source completeness, especially vendors not already in federal award records.",
-        "- Determine applicable Section 508 requirements using GSA ART and agency expertise.",
-        "- Verify ACR claims with appropriate product-specific evidence and user testing.",
-        "- Assess reuse rights, interoperability, maintainability, data portability, and total cost.",
-        "- Consider procurement-specific exceptions only through the agency process; none are approved here.",
-        "- Evaluate applicable digital-first public service expectations.",
-        "",
-        "## Reference sources (not automatically queried)",
-        "",
-    ])
-    lines.extend(f"- [{s['name']}]({s['url']})" for s in source_catalog())
+        lines.append(report["empty_candidates"])
+    for index, candidate in enumerate(data["candidates"], start=1):
+        lines.extend(["", f"### {index}. {candidate['name']}", ""])
+        for spec in report["candidate_fields"]:
+            value = candidate.get(spec["field"]) or report["missing"].get(spec["field"], report["missing"]["default"])
+            lines.append(f"- {spec['label']}: {value}{spec.get('suffix', '')}")
+        lines.extend(["", report["headings"]["questions"], ""])
+        lines.extend(f"- {question}" for question in evidence_questions(candidate))
+    lines.extend(["", report["headings"]["review"], ""])
+    lines.extend(f"- {item}" for item in report["human_review"])
+    lines.extend(["", report["headings"]["sources"], ""])
+    lines.extend(_format(report["source_line"], {"name": source["name"], "url": source["url"]}) for source in source_catalog())
     return "\n".join(lines) + "\n"
