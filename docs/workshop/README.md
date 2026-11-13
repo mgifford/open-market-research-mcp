@@ -11,6 +11,10 @@ meets an agency training requirement until a documented pilot is complete.
 
 ## Files
 
+- [Fictional case](CASE.md) — the reuse conflict, open-source option, commercial
+  ACR, failed and no-result searches, and open decisions.
+- [Assessment rubric](ASSESSMENT.md) — evidence-traceability rubric and automatic
+  zero indicators.
 - [Facilitator guide](FACILITATOR-GUIDE.md) — timing, setup, accessibility,
   debrief, and what not to claim.
 - [Worksheet](WORKSHEET.md) — printable learner record aligned to the five
