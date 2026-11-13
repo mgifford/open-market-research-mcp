@@ -1,8 +1,8 @@
 # Integration proposal: 1102tools federal contracting MCPs
 
-**Status:** proposal for review. No upstream endorsement, no copied code, and
-no upstream issue, branch, or pull request has been opened. Any external
-action needs explicit human approval.
+**Status:** proposal plus a fixture-based USAspending mapping demonstration.
+No live 1102tools connection, upstream endorsement, copied code, or upstream
+issue/branch/pull request. Any external action needs explicit human approval.
 
 ## Why integrate
 
@@ -70,6 +70,59 @@ publiccode.yml, or OpenACR.
 Do not automatically merge a search result into a report. Do not rank results.
 Do not infer a supplier's accessibility, suitability, or responsibility from
 an award record.
+
+## Implemented fixture demonstration
+
+The demonstrator is deliberately offline and narrow:
+
+- `src/omr_mcp/integrations/usaspending.py` maps **one selected** USAspending
+  record into a 0.2.0 search/evidence draft.
+- `examples/integrations/usaspending-award.sample.json` is a fictional record
+  using the field names a host would pass through.
+- `examples/integrations/usaspending-award.mapped.json` is the reviewable draft.
+- `examples/ditap-case-management-with-1102tools.json` and its
+  [report](../examples/ditap-case-management-with-1102tools-report.md) show the
+  record applied only after approval.
+- The MCP tool `map_1102tools_usaspending_record` returns the draft. It makes no
+  network request and does not apply the record.
+
+```bash
+python scripts/map_1102tools_record.py \
+  --file examples/integrations/usaspending-award.sample.json \
+  --question-id rq-commercial \
+  --retrieved-at 2026-11-12T10:00 \
+  --source-url https://example.gov/usaspending/FICTIONAL-AWARD-001 \
+  --out /tmp/mapped.json
+
+python scripts/apply_1102tools_record.py \
+  --research examples/ditap-case-management.json \
+  --mapped /tmp/mapped.json \
+  --out /tmp/research-with-award.json \
+  --approve
+```
+
+`--approve` is required; without it, the application function raises. The
+mapped draft preserves the award identifier, recipient, amount, agency, dates,
+description, source URL, retrieval time, source-as-of date, and limitations.
+It creates a completed search and an `official-record` evidence record, not a
+finding or a candidate ranking.
+
+### Field mapping
+
+| Upstream field | Mapped field |
+| --- | --- |
+| `Award ID` / `generated_internal_id` | Evidence `source_identifier` and stable IDs |
+| `Recipient Name` | Neutral claim text and source record |
+| `Award Amount` | Neutral claim text and source record |
+| `Awarding Agency` | Neutral claim text and source record |
+| `Last Modified Date` / `End Date` | `source_as_of` |
+| Host-provided retrieval time | `retrieved_at` and `searched_at` |
+| Host-provided award URL | Search/evidence `source_url` |
+| Selected record | `source_record` in the draft |
+
+The demo does not establish live compatibility with a specific 1102tools
+version. The host must verify the actual upstream output against this fixture
+contract before claiming a live integration.
 
 ## Mapping examples
 

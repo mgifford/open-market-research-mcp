@@ -20,6 +20,7 @@ from .engine import (
     search_sources,
     source_catalog,
 )
+from .integrations import map_usaspending_award
 from .openacr import parse_openacr_yaml
 
 try:
@@ -127,6 +128,32 @@ def normalize_public_metadata(
     except ToolError:
         raise
     except (ValueError, yaml.YAMLError, json.JSONDecodeError) as exc:
+        raise ToolError(str(exc)) from exc
+
+
+@mcp.tool()
+def map_1102tools_usaspending_record(
+    record_json: str,
+    question_id: str,
+    retrieved_at: str,
+    source_url: str = "",
+    candidate_id: str = "",
+) -> dict:
+    """Map one selected public USAspending record into a reviewable evidence draft.
+
+    This makes no network request and does not apply the record to a research
+    file. The host must obtain explicit human approval before applying it.
+    """
+    record = _loads_object(record_json, "record_json", 200_000)
+    try:
+        return map_usaspending_award(
+            record,
+            question_id=question_id,
+            retrieved_at=retrieved_at,
+            source_url=source_url,
+            candidate_id=candidate_id,
+        )
+    except ValueError as exc:
         raise ToolError(str(exc)) from exc
 
 

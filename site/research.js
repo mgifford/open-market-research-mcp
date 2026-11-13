@@ -555,7 +555,8 @@ export function markdownReport(data, sources = []) {
     lines.push(`- Search ${search.id}: ${search.source_name} (${search.source_url || 'no URL'}), searched ${search.searched_at || 'not recorded'}, source as of ${search.source_as_of || 'not recorded'}, method ${label('search_methods', search.method)}, status ${label('search_statuses', search.status)}.`);
   }
   for (const item of evidence) {
-    lines.push(`- Evidence ${item.id}: ${item.source_name} (${item.source_url || 'no URL'}), retrieved ${item.retrieved_at}, source as of ${item.source_as_of || 'not recorded'}, type ${label('evidence_types', item.evidence_type)}, verification ${label('verification_states', item.verification_state)}.`);
+    lines.push(`- Evidence ${item.id}: ${item.source_name} (${item.source_url || 'no URL'}), identifier ${item.source_identifier || 'not recorded'}, retrieved ${item.retrieved_at}, source as of ${item.source_as_of || 'not recorded'}, type ${label('evidence_types', item.evidence_type)}, verification ${label('verification_states', item.verification_state)}.`);
+    lines.push(`  - Claim: ${item.claim || 'None recorded'}`);
   }
   if (prepared.migration) {
     lines.push(`- Migrated from ${prepared.migration.from_schema_version} on ${prepared.migration.migrated_at}. Fields not recoverable: ${prepared.migration.unavailable_fields.join(', ') || 'none listed'}.`);
