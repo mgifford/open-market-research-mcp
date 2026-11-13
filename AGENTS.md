@@ -18,6 +18,11 @@ Build a small, inclusive, vendor-neutral market research companion useful in DIT
 10. Follow accessible design and test with keyboard, screen reader, zoom, reflow, forced colors, and reduced motion. Accessibility claims must be demonstrated, not assumed.
 11. Avoid publishing government-only source code or information from protected systems. Model permissions and exemptions explicitly.
 12. Require human review of AI outputs and of each externally reported accessibility result.
+13. Every finding must link to supporting evidence. A finding without evidence is an unresolved question or assumption, not a finding.
+14. Keep search states distinct: not searched, completed with results, completed without matching records, partial, and failed. A reference link is not a completed search.
+15. Preserve 0.1.0 imports through the documented migration. Do not invent search dates, evidence, reviewers, or verification results.
+16. Update `schemas/research.schema.json`, `src/omr_mcp/rules.json`, both validators, fixtures, tests, and migration documentation together.
+17. A selected 1102tools or source record may be mapped into a draft only; applying it to a research record needs explicit human approval and preserved source provenance.
 
 ## Repository map
 
@@ -26,7 +31,10 @@ Build a small, inclusive, vendor-neutral market research companion useful in DIT
 - `src/omr_mcp/engine.py`: deterministic Python research and report logic.
 - `src/omr_mcp/server.py`: real local MCP v2 server.
 - `src/omr_mcp/sources.json`: canonical source directory.
-- `schemas/research.schema.json`: data exchange contract.
+- `src/omr_mcp/rules.json`: shared decision rules copied to the Pages build.
+- `schemas/research.schema.json`: 0.2.0 data exchange contract.
+- `schemas/research-0.1.0.schema.json`: archived legacy contract for migration tests.
+- `docs/SCHEMA.md`, `docs/MIGRATION.md`: model and migration documentation.
 - `examples/`: fictional test data. Never label it as a real market scan.
 - `scripts/build_site.py`: copies static site and canonical fixtures to `_site/`.
 - `.github/workflows/pages.yml`: CI and Pages deployment.
@@ -37,7 +45,7 @@ Build a small, inclusive, vendor-neutral market research companion useful in DIT
 1. Confirm a change serves a clearly named procurement user need.
 2. Add or amend an acceptance test before changing logic.
 3. Make the smallest reversible change with clear provenance.
-4. Run `python -m pytest -q`, `node --test tests/research.test.mjs`, and `python scripts/build_site.py`.
+4. Run `python -m pytest -q`, `node --test tests/research.test.mjs`, and `python scripts/build_site.py`. Use `python3` when that is the local interpreter; CI supplies `python`.
 5. Validate the site visually, with keyboard only, and at 400% zoom before claiming production accessibility.
 6. Summarize what changed, what was omitted, assumptions, risks, and tests run.
 

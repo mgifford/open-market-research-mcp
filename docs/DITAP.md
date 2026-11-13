@@ -28,6 +28,8 @@ A learner can:
 - Distinguish vendor claims from independent evaluations.
 - Explain why absent ACR evidence is not itself a finding of nonconformance.
 - Recognize that exceptions require documented, authorized agency decisions.
+- Distinguish a reference link from a performed search and a no-result search from a failed search.
+- Trace each finding to evidence and keep contradictory records separate.
 - Produce transparent, reviewable working notes rather than an AI-issued recommendation.
 
 ## Assessment rubric (0-2 points per dimension)
@@ -44,7 +46,7 @@ A perfect score is not an actual procurement or accessibility approval.
 
 ## Ready-to-use materials
 
-A printable [worksheet](workshop/WORKSHEET.md), [facilitator guide](workshop/FACILITATOR-GUIDE.md), and [pilot protocol](workshop/PILOT-PROTOCOL.md) support this plan. They are prepared but **not yet tested with learners**; do not describe them as validated training or claim learning outcomes until a pilot report exists.
+The [fictional case](workshop/CASE.md), [worksheet](workshop/WORKSHEET.md), [assessment rubric](workshop/ASSESSMENT.md), [facilitator guide](workshop/FACILITATOR-GUIDE.md), and [pilot protocol](workshop/PILOT-PROTOCOL.md) support this plan. They are prepared but **not yet tested with learners**; do not describe them as validated training or claim learning outcomes until a pilot report exists.
 
 ## Extensions
 

@@ -1,6 +1,6 @@
 {
   "name": "open-market-research-mcp-tests",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": true,
   "type": "module",
   "description": "Development-only browser and accessibility regression tests. The static site has no runtime npm dependencies.",

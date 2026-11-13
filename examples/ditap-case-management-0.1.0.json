@@ -1,0 +1,39 @@
+{
+  "schema_version": "0.1.0",
+  "demonstration_only": true,
+  "project": {
+    "name": "DITAP workshop: accessible case management",
+    "need": "A fictional federal team wants to replace a fragmented case management process without excluding people with disabilities.",
+    "users": "Members of the public and agency staff who use assistive technology, mobile devices, and low-bandwidth connections.",
+    "constraints": "Illustrative exercise only. Do not use this as market research evidence or as a supplier shortlist.",
+    "ict_type": "Web application"
+  },
+  "candidates": [
+    {
+      "id": "demo-reuse",
+      "name": "Fictional agency reuse option",
+      "approach": "government-reuse",
+      "version": "unconfirmed",
+      "scope": "Illustrative, unverified solution",
+      "url": "",
+      "acr_url": "",
+      "acr_date": "",
+      "accessibility_claim": "unknown",
+      "independent_evaluation": "none",
+      "notes": "What support, permissions, security review, and maintenance would be needed to reuse this system?"
+    },
+    {
+      "id": "demo-commercial",
+      "name": "Fictional commercial case management system",
+      "approach": "commercial",
+      "version": "4.2 (fictional)",
+      "scope": "Illustrative, unverified product",
+      "url": "",
+      "acr_url": "",
+      "acr_date": "",
+      "accessibility_claim": "partially-supports",
+      "independent_evaluation": "none",
+      "notes": "A hypothetical supplier reports partial support. This is not a real ACR or factual product claim."
+    }
+  ]
+}

@@ -57,6 +57,7 @@ def test_stdio_lists_tools_and_resources():
             "draft_market_research_report",
             "import_openacr_report",
             "normalize_public_metadata",
+            "map_1102tools_usaspending_record",
         }
         resources = await session.list_resources()
         assert {str(resource.uri) for resource in resources.resources} == {
@@ -118,5 +119,20 @@ def test_stdio_calls_tools_and_returns_actionable_errors():
         )
         assert normalized.is_error is False
         assert json.loads(normalized.content[0].text)["adapter_id"] == "code.json"
+
+        award = (ROOT / "examples/integrations/usaspending-award.sample.json").read_text()
+        mapped = await session.call_tool(
+            "map_1102tools_usaspending_record",
+            {
+                "record_json": award,
+                "question_id": "rq-commercial",
+                "retrieved_at": "2026-11-12T10:00",
+                "source_url": "https://example.gov/usaspending/FICTIONAL-AWARD-001",
+            },
+        )
+        assert mapped.is_error is False
+        mapped_payload = json.loads(mapped.content[0].text)
+        assert mapped_payload["evidence"]["source_identifier"] == "FAKE-2020-001"
+        assert mapped_payload["integration"]["requires_user_approval"] is True
 
     _run_session(check)

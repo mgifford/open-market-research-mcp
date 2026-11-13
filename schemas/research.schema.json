@@ -1,13 +1,24 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://example.invalid/open-market-research-mcp/research.schema.json",
-  "title": "Open Market Research exercise data",
-  "description": "Local working record. No compliance or procurement determination is implied.",
+  "$id": "https://example.invalid/open-market-research-mcp/research-0.2.0.schema.json",
+  "title": "Open Market Research evidence-backed research record",
+  "description": "Local working record. No compliance, procurement, or agency determination is implied.",
   "type": "object",
-  "required": ["schema_version", "project", "candidates"],
+  "required": ["schema_version", "project", "accessibility_requirements", "research_questions", "searches", "evidence", "findings", "decisions", "candidates"],
   "properties": {
-    "schema_version": {"const": "0.1.0"},
+    "schema_version": {"const": "0.2.0"},
     "demonstration_only": {"type": "boolean"},
+    "migration": {
+      "type": "object",
+      "required": ["from_schema_version", "migrated_at", "unavailable_fields"],
+      "properties": {
+        "from_schema_version": {"type": "string", "maxLength": 20},
+        "migrated_at": {"type": "string", "maxLength": 100},
+        "unavailable_fields": {"type": "array", "items": {"type": "string", "maxLength": 200}, "maxItems": 100},
+        "notes": {"type": "string", "maxLength": 2000}
+      },
+      "additionalProperties": false
+    },
     "project": {
       "type": "object",
       "required": ["name", "need", "users", "constraints", "ict_type"],
@@ -20,12 +31,137 @@
       },
       "additionalProperties": false
     },
+    "accessibility_requirements": {
+      "type": "object",
+      "required": ["identified", "tool", "reviewer", "as_of", "requirement_ids", "notes"],
+      "properties": {
+        "identified": {"type": "boolean"},
+        "tool": {"type": "string", "maxLength": 300},
+        "reviewer": {"type": "string", "maxLength": 300},
+        "as_of": {"type": "string", "maxLength": 100},
+        "requirement_ids": {"type": "array", "items": {"type": "string", "maxLength": 100}, "maxItems": 500},
+        "notes": {"type": "string", "maxLength": 5000}
+      },
+      "additionalProperties": false
+    },
+    "research_questions": {
+      "type": "array",
+      "maxItems": 100,
+      "items": {
+        "type": "object",
+        "required": ["id", "question", "need_link", "category", "status", "search_ids", "evidence_ids", "uncertainties"],
+        "properties": {
+          "id": {"type": "string", "minLength": 1, "maxLength": 100},
+          "question": {"type": "string", "minLength": 1, "maxLength": 1000},
+          "need_link": {"type": "string", "maxLength": 2000},
+          "category": {"enum": ["government-reuse", "accessibility", "pricing", "supplier-capabilities", "interoperability", "other"]},
+          "status": {"enum": ["not-started", "in-progress", "answered", "unresolved"]},
+          "search_ids": {"type": "array", "items": {"type": "string", "maxLength": 100}, "maxItems": 500},
+          "evidence_ids": {"type": "array", "items": {"type": "string", "maxLength": 100}, "maxItems": 1000},
+          "uncertainties": {"type": "string", "maxLength": 5000}
+        },
+        "additionalProperties": false
+      }
+    },
+    "searches": {
+      "type": "array",
+      "maxItems": 300,
+      "items": {
+        "type": "object",
+        "required": ["id", "question_id", "source_name", "source_url", "source_type", "authority", "query", "filters", "method", "searched_at", "source_as_of", "result_count", "status", "limitations", "coverage_gaps"],
+        "properties": {
+          "id": {"type": "string", "minLength": 1, "maxLength": 100},
+          "question_id": {"type": "string", "minLength": 1, "maxLength": 100},
+          "source_name": {"type": "string", "minLength": 1, "maxLength": 300},
+          "source_url": {"type": "string", "maxLength": 2000, "pattern": "^$|^https://[^\\s]+$"},
+          "source_type": {"enum": ["official", "public-repository", "commercial", "community", "other"]},
+          "authority": {"enum": ["official", "public-repository", "vendor", "community", "unknown"]},
+          "query": {"type": "string", "maxLength": 1000},
+          "filters": {"type": "string", "maxLength": 1000},
+          "method": {"enum": ["manual", "imported", "mcp"]},
+          "searched_at": {"type": "string", "maxLength": 100},
+          "source_as_of": {"type": "string", "maxLength": 100},
+          "result_count": {"type": ["integer", "null"], "minimum": 0},
+          "status": {"enum": ["not-searched", "completed-with-results", "completed-without-results", "partial", "failed"]},
+          "limitations": {"type": "string", "maxLength": 5000},
+          "coverage_gaps": {"type": "string", "maxLength": 5000}
+        },
+        "additionalProperties": false
+      }
+    },
+    "evidence": {
+      "type": "array",
+      "maxItems": 1000,
+      "items": {
+        "type": "object",
+        "required": ["id", "search_id", "source_name", "source_url", "source_identifier", "retrieved_at", "source_as_of", "evidence_type", "candidate_id", "product_version", "requirement_ids", "claim", "limitations", "uncertainties", "verification_state", "reviewer"],
+        "properties": {
+          "id": {"type": "string", "minLength": 1, "maxLength": 100},
+          "search_id": {"type": "string", "minLength": 1, "maxLength": 100},
+          "source_name": {"type": "string", "minLength": 1, "maxLength": 300},
+          "source_url": {"type": "string", "maxLength": 2000, "pattern": "^$|^https://[^\\s]+$"},
+          "source_identifier": {"type": "string", "maxLength": 500},
+          "retrieved_at": {"type": "string", "minLength": 1, "maxLength": 100},
+          "source_as_of": {"type": "string", "maxLength": 100},
+          "evidence_type": {"enum": ["official-record", "supplier-claim", "accessibility-report", "independent-test", "government-software-metadata", "community-evidence", "human-observation"]},
+          "candidate_id": {"type": "string", "maxLength": 100},
+          "product_version": {"type": "string", "maxLength": 300},
+          "requirement_ids": {"type": "array", "items": {"type": "string", "maxLength": 100}, "maxItems": 500},
+          "claim": {"type": "string", "maxLength": 5000},
+          "limitations": {"type": "string", "maxLength": 5000},
+          "uncertainties": {"type": "string", "maxLength": 5000},
+          "verification_state": {"enum": ["unverified", "reviewed", "independently-verified", "withdrawn"]},
+          "reviewer": {"type": "string", "maxLength": 300}
+        },
+        "additionalProperties": false
+      }
+    },
+    "findings": {
+      "type": "array",
+      "maxItems": 500,
+      "items": {
+        "type": "object",
+        "required": ["id", "description", "supporting_evidence_ids", "contradicting_evidence_ids", "evidence_gap", "question_ids", "candidate_ids", "requires_verification", "reviewer_notes"],
+        "properties": {
+          "id": {"type": "string", "minLength": 1, "maxLength": 100},
+          "description": {"type": "string", "minLength": 1, "maxLength": 5000},
+          "supporting_evidence_ids": {"type": "array", "items": {"type": "string", "maxLength": 100}, "minItems": 1, "maxItems": 500},
+          "contradicting_evidence_ids": {"type": "array", "items": {"type": "string", "maxLength": 100}, "maxItems": 500},
+          "evidence_gap": {"type": "string", "maxLength": 5000},
+          "question_ids": {"type": "array", "items": {"type": "string", "maxLength": 100}, "maxItems": 100},
+          "candidate_ids": {"type": "array", "items": {"type": "string", "maxLength": 100}, "maxItems": 100},
+          "requires_verification": {"type": "boolean"},
+          "reviewer_notes": {"type": "string", "maxLength": 5000}
+        },
+        "additionalProperties": false
+      }
+    },
+    "decisions": {
+      "type": "array",
+      "maxItems": 500,
+      "items": {
+        "type": "object",
+        "required": ["id", "description", "decision_type", "status", "owner", "rationale", "evidence_ids", "due_date", "resolved_at"],
+        "properties": {
+          "id": {"type": "string", "minLength": 1, "maxLength": 100},
+          "description": {"type": "string", "minLength": 1, "maxLength": 5000},
+          "decision_type": {"enum": ["supplier-question", "market-engagement", "acr-request", "section-508-review", "reuse-rights", "security-privacy", "exception-review", "other"]},
+          "status": {"enum": ["pending", "under-review", "resolved"]},
+          "owner": {"type": "string", "maxLength": 300},
+          "rationale": {"type": "string", "maxLength": 5000},
+          "evidence_ids": {"type": "array", "items": {"type": "string", "maxLength": 100}, "maxItems": 500},
+          "due_date": {"type": "string", "maxLength": 100},
+          "resolved_at": {"type": "string", "maxLength": 100}
+        },
+        "additionalProperties": false
+      }
+    },
     "candidates": {
       "type": "array",
       "maxItems": 100,
       "items": {
         "type": "object",
-        "required": ["id", "name", "approach", "version", "scope", "url", "acr_url", "acr_date", "accessibility_claim", "independent_evaluation", "notes"],
+        "required": ["id", "name", "approach", "version", "scope", "url", "acr_url", "acr_date", "accessibility_claim", "independent_evaluation", "notes", "acr"],
         "properties": {
           "id": {"type": "string", "minLength": 1, "maxLength": 100},
           "name": {"type": "string", "minLength": 1, "maxLength": 300},
@@ -37,7 +173,22 @@
           "acr_date": {"type": "string", "maxLength": 100},
           "accessibility_claim": {"enum": ["supports", "partially-supports", "does-not-support", "not-evaluated", "unknown"]},
           "independent_evaluation": {"enum": ["none", "planned", "completed"]},
-          "notes": {"type": "string", "maxLength": 5000}
+          "notes": {"type": "string", "maxLength": 5000},
+          "acr": {
+            "type": "object",
+            "required": ["found", "product_version", "functions_covered", "publication_date", "evaluation_methods", "catalog_id", "completeness", "notes"],
+            "properties": {
+              "found": {"type": "boolean"},
+              "product_version": {"type": "string", "maxLength": 300},
+              "functions_covered": {"type": "string", "maxLength": 1000},
+              "publication_date": {"type": "string", "maxLength": 100},
+              "evaluation_methods": {"type": "string", "maxLength": 2000},
+              "catalog_id": {"type": "string", "maxLength": 300},
+              "completeness": {"enum": ["unknown", "complete", "incomplete"]},
+              "notes": {"type": "string", "maxLength": 5000}
+            },
+            "additionalProperties": false
+          }
         },
         "additionalProperties": false
       }
