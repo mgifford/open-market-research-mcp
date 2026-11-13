@@ -1,37 +1,220 @@
 {
-  "version": "1.0.0",
-  "schema_version": "0.1.0",
-  "approaches": ["government-reuse", "open-source", "commercial", "new-build"],
+  "version": "2.0.0",
+  "schema_version": "0.2.0",
+  "approaches": [
+    "government-reuse",
+    "open-source",
+    "commercial",
+    "new-build"
+  ],
   "approach_labels": {
     "government-reuse": "Government reuse",
     "open-source": "Open source",
     "commercial": "Commercial",
     "new-build": "New development"
   },
-  "claims": ["supports", "partially-supports", "does-not-support", "not-evaluated", "unknown"],
-  "evaluations": ["none", "planned", "completed"],
+  "claims": [
+    "supports",
+    "partially-supports",
+    "does-not-support",
+    "not-evaluated",
+    "unknown"
+  ],
+  "evaluations": [
+    "none",
+    "planned",
+    "completed"
+  ],
   "limits": {
-    "project": {"name": 300, "need": 5000, "users": 3000, "constraints": 3000, "ict_type": 300},
-    "candidate": {"id": 100, "name": 300, "version": 300, "scope": 1000, "url": 2000, "acr_url": 2000, "acr_date": 100, "notes": 5000},
+    "project": {
+      "name": 300,
+      "need": 5000,
+      "users": 3000,
+      "constraints": 3000,
+      "ict_type": 300
+    },
+    "candidate": {
+      "id": 100,
+      "name": 300,
+      "version": 300,
+      "scope": 1000,
+      "url": 2000,
+      "acr_url": 2000,
+      "acr_date": 100,
+      "notes": 5000
+    },
     "max_candidates": 100,
-    "max_research_json_chars": 1000000,
+    "max_research_json_chars": 3000000,
     "max_candidate_json_chars": 50000,
-    "max_import_bytes": 1000000
+    "max_import_bytes": 3000000,
+    "question": {
+      "id": 100,
+      "question": 1000,
+      "need_link": 2000,
+      "uncertainties": 5000
+    },
+    "search": {
+      "id": 100,
+      "source_name": 300,
+      "source_url": 2000,
+      "query": 1000,
+      "filters": 1000,
+      "searched_at": 100,
+      "source_as_of": 100,
+      "limitations": 5000,
+      "coverage_gaps": 5000
+    },
+    "evidence": {
+      "id": 100,
+      "source_name": 300,
+      "source_url": 2000,
+      "source_identifier": 500,
+      "retrieved_at": 100,
+      "source_as_of": 100,
+      "product_version": 300,
+      "claim": 5000,
+      "limitations": 5000,
+      "uncertainties": 5000,
+      "reviewer": 300
+    },
+    "finding": {
+      "id": 100,
+      "description": 5000,
+      "evidence_gap": 5000,
+      "reviewer_notes": 5000
+    },
+    "decision": {
+      "id": 100,
+      "description": 5000,
+      "owner": 300,
+      "rationale": 5000,
+      "due_date": 100,
+      "resolved_at": 100
+    },
+    "acr": {
+      "product_version": 300,
+      "functions_covered": 1000,
+      "publication_date": 100,
+      "evaluation_methods": 2000,
+      "catalog_id": 300,
+      "notes": 5000
+    },
+    "accessibility_requirements": {
+      "tool": 300,
+      "reviewer": 300,
+      "as_of": 100,
+      "notes": 5000
+    },
+    "max_questions": 100,
+    "max_searches": 300,
+    "max_evidence": 1000,
+    "max_findings": 500,
+    "max_decisions": 500
   },
   "questions": [
-    {"id": "source-url", "when": {"type": "empty", "field": "url"}, "text": "Identify an authoritative product or repository source for this option."},
-    {"id": "version", "when": {"type": "empty", "field": "version"}, "text": "Confirm the exact product release and configuration being evaluated."},
-    {"id": "acr-url", "when": {"type": "empty", "field": "acr_url"}, "text": "Request a current, product- and version-matched Accessibility Conformance Report (ACR)."},
-    {"id": "acr-date", "when": {"type": "empty", "field": "acr_date"}, "text": "Confirm the ACR date and the scope of the evaluation."},
-    {"id": "claim-supports", "when": {"type": "claim", "value": "supports"}, "text": "Vendor-reported support is not independently verified; request supporting test evidence."},
-    {"id": "claim-partially-supports", "when": {"type": "claim", "value": "partially-supports"}, "text": "Ask which tasks are affected, the impact on users, and the remediation plan."},
-    {"id": "claim-does-not-support", "when": {"type": "claim", "value": "does-not-support"}, "text": "Document reported barriers, affected tasks, and feasible alternatives; obtain specialist review."},
-    {"id": "claim-not-evaluated", "when": {"type": "claim", "value": "not-evaluated"}, "text": "Not evaluated means evidence is missing, not that the option has failed."},
-    {"id": "claim-unknown", "when": {"type": "claim", "value": "unknown"}, "text": "The accessibility claim is unknown; obtain structured evidence before comparing accessibility."},
-    {"id": "evaluation-none", "when": {"type": "evaluation", "value": "none"}, "text": "Plan independent evaluation of critical user tasks with appropriate assistive technology."},
-    {"id": "evaluation-planned", "when": {"type": "evaluation", "value": "planned"}, "text": "Obtain the evaluation plan, methods, coverage, and completion date."},
-    {"id": "evaluation-completed", "when": {"type": "evaluation", "value": "completed"}, "text": "Locate the actual independent evaluation report; verify its scope, date, and findings."},
-    {"id": "exceptions", "when": {"type": "always"}, "text": "Determine whether agency Section 508 reviewers must assess any possible exceptions."}
+    {
+      "id": "source-url",
+      "when": {
+        "type": "empty",
+        "field": "url"
+      },
+      "text": "Identify an authoritative product or repository source for this option."
+    },
+    {
+      "id": "version",
+      "when": {
+        "type": "empty",
+        "field": "version"
+      },
+      "text": "Confirm the exact product release and configuration being evaluated."
+    },
+    {
+      "id": "acr-url",
+      "when": {
+        "type": "empty",
+        "field": "acr_url"
+      },
+      "text": "Request a current, product- and version-matched Accessibility Conformance Report (ACR)."
+    },
+    {
+      "id": "acr-date",
+      "when": {
+        "type": "empty",
+        "field": "acr_date"
+      },
+      "text": "Confirm the ACR date and the scope of the evaluation."
+    },
+    {
+      "id": "claim-supports",
+      "when": {
+        "type": "claim",
+        "value": "supports"
+      },
+      "text": "Vendor-reported support is not independently verified; request supporting test evidence."
+    },
+    {
+      "id": "claim-partially-supports",
+      "when": {
+        "type": "claim",
+        "value": "partially-supports"
+      },
+      "text": "Ask which tasks are affected, the impact on users, and the remediation plan."
+    },
+    {
+      "id": "claim-does-not-support",
+      "when": {
+        "type": "claim",
+        "value": "does-not-support"
+      },
+      "text": "Document reported barriers, affected tasks, and feasible alternatives; obtain specialist review."
+    },
+    {
+      "id": "claim-not-evaluated",
+      "when": {
+        "type": "claim",
+        "value": "not-evaluated"
+      },
+      "text": "Not evaluated means evidence is missing, not that the option has failed."
+    },
+    {
+      "id": "claim-unknown",
+      "when": {
+        "type": "claim",
+        "value": "unknown"
+      },
+      "text": "The accessibility claim is unknown; obtain structured evidence before comparing accessibility."
+    },
+    {
+      "id": "evaluation-none",
+      "when": {
+        "type": "evaluation",
+        "value": "none"
+      },
+      "text": "Plan independent evaluation of critical user tasks with appropriate assistive technology."
+    },
+    {
+      "id": "evaluation-planned",
+      "when": {
+        "type": "evaluation",
+        "value": "planned"
+      },
+      "text": "Obtain the evaluation plan, methods, coverage, and completion date."
+    },
+    {
+      "id": "evaluation-completed",
+      "when": {
+        "type": "evaluation",
+        "value": "completed"
+      },
+      "text": "Locate the actual independent evaluation report; verify its scope, date, and findings."
+    },
+    {
+      "id": "exceptions",
+      "when": {
+        "type": "always"
+      },
+      "text": "Determine whether agency Section 508 reviewers must assess any possible exceptions."
+    }
   ],
   "messages": {
     "schema": "Unsupported research schema version.",
@@ -46,7 +229,26 @@
     "url": "{field} must be an HTTPS URL or empty.",
     "field": "{field} must be a string within its allowed length.",
     "extra": "Unrecognized field: {field}.",
-    "demonstration": "demonstration_only must be a boolean."
+    "demonstration": "demonstration_only must be a boolean.",
+    "question": "Research question is required.",
+    "question_status": "Unrecognized research question status.",
+    "search": "Search record is required.",
+    "search_status": "Unrecognized search status.",
+    "evidence": "Evidence record is required.",
+    "evidence_type": "Unrecognized evidence type.",
+    "verification": "Unrecognized verification state.",
+    "decision": "Decision record is required.",
+    "decision_status": "Unrecognized decision status.",
+    "reference": "{field} references an unknown {kind}: {id}.",
+    "duplicate_id": "Duplicate {kind} identifier: {id}.",
+    "finding_evidence": "Each finding needs at least one supporting evidence record.",
+    "search_date": "A completed or attempted search needs a searched-at value.",
+    "evidence_date": "Evidence needs a retrieval date.",
+    "reviewer": "Reviewed or independently verified evidence needs a reviewer.",
+    "resolved_date": "A resolved decision needs a resolved date.",
+    "accessibility_tool": "Identified accessibility requirements need the tool or reviewer that established them.",
+    "acr_found": "An ACR marked as found needs an ACR URL or a linked accessibility evidence record.",
+    "max_items": "{collection} must be a list with at most {max} items."
   },
   "report": {
     "title": "Market research working report: {name}",
@@ -57,28 +259,83 @@
       "false": "**Fictional DITAP demonstration:** No label; evidence still requires verification"
     },
     "project_fields": [
-      {"field": "need", "label": "Need"},
-      {"field": "users", "label": "Users"},
-      {"field": "constraints", "label": "Constraints"},
-      {"field": "ict_type", "label": "ICT type"}
+      {
+        "field": "need",
+        "label": "Need"
+      },
+      {
+        "field": "users",
+        "label": "Users"
+      },
+      {
+        "field": "constraints",
+        "label": "Constraints"
+      },
+      {
+        "field": "ict_type",
+        "label": "ICT type"
+      }
     ],
     "candidate_fields": [
-      {"field": "approach", "label": "Approach"},
-      {"field": "version", "label": "Version"},
-      {"field": "scope", "label": "Scope"},
-      {"field": "url", "label": "Product source"},
-      {"field": "acr_url", "label": "ACR source"},
-      {"field": "acr_date", "label": "ACR date"},
-      {"field": "accessibility_claim", "label": "Accessibility claim", "suffix": " (unverified claim; not a finding)"},
-      {"field": "independent_evaluation", "label": "Independent evaluation", "suffix": " (self-reported review status)"},
-      {"field": "notes", "label": "Notes"}
+      {
+        "field": "approach",
+        "label": "Approach"
+      },
+      {
+        "field": "version",
+        "label": "Version"
+      },
+      {
+        "field": "scope",
+        "label": "Scope"
+      },
+      {
+        "field": "url",
+        "label": "Product source"
+      },
+      {
+        "field": "acr_url",
+        "label": "ACR source"
+      },
+      {
+        "field": "acr_date",
+        "label": "ACR date"
+      },
+      {
+        "field": "accessibility_claim",
+        "label": "Accessibility claim",
+        "suffix": " (unverified claim; not a finding)"
+      },
+      {
+        "field": "independent_evaluation",
+        "label": "Independent evaluation",
+        "suffix": " (self-reported review status)"
+      },
+      {
+        "field": "notes",
+        "label": "Notes"
+      }
     ],
     "headings": {
       "context": "## Acquisition context",
       "options": "## Market options considered",
       "questions": "**Questions and evidence gaps:**",
       "review": "## Required human review",
-      "sources": "## Reference sources (not automatically queried)"
+      "sources": "## Reference sources (not automatically queried)",
+      "summary": "## Executive summary",
+      "need": "## Acquisition need and intended users",
+      "research_questions": "## Research questions",
+      "methodology": "## Research methodology",
+      "investigated_sources": "## Sources actually investigated",
+      "searches": "## Searches performed and results",
+      "reuse": "## Government reuse and open-source alternatives",
+      "commercial": "## Commercial and development alternatives",
+      "accessibility": "## Accessibility requirements and evidence",
+      "findings": "## Findings, contradictions, and evidence gaps",
+      "supplier_questions": "## Supplier questions and further research",
+      "review_items": "## Items requiring agency or specialist review",
+      "appendix": "## Appendix: source records and reproducibility",
+      "reference_sources": "## Reference sources not yet investigated"
     },
     "missing": {
       "default": "Not supplied",
@@ -95,6 +352,197 @@
       "Consider procurement-specific exceptions only through the agency process; none are approved here.",
       "Evaluate applicable digital-first public service expectations."
     ],
-    "source_line": "- [{name}]({url})"
-  }
+    "source_line": "- [{name}]({url})",
+    "no_data": {
+      "questions": "No research questions have been recorded.",
+      "searches": "No searches have been recorded. A reference link is not evidence that a search was performed.",
+      "evidence": "No evidence records have been recorded.",
+      "findings": "No findings have been recorded. Unresolved questions remain in the research questions section.",
+      "decisions": "No decisions or follow-up items have been recorded.",
+      "candidates": "No candidate options have been recorded.",
+      "accessibility": "No accessibility requirements or ACR evidence have been recorded."
+    },
+    "migration_note": "Migrated from schema {from_schema_version}. Fields that could not be recovered are listed in the appendix; no search, evidence, or verification history was invented."
+  },
+  "legacy_schema_versions": [
+    "0.1.0"
+  ],
+  "question_categories": [
+    "government-reuse",
+    "accessibility",
+    "pricing",
+    "supplier-capabilities",
+    "interoperability",
+    "other"
+  ],
+  "question_statuses": [
+    "not-started",
+    "in-progress",
+    "answered",
+    "unresolved"
+  ],
+  "search_statuses": [
+    "not-searched",
+    "completed-with-results",
+    "completed-without-results",
+    "partial",
+    "failed"
+  ],
+  "search_methods": [
+    "manual",
+    "imported",
+    "mcp"
+  ],
+  "source_types": [
+    "official",
+    "public-repository",
+    "commercial",
+    "community",
+    "other"
+  ],
+  "authorities": [
+    "official",
+    "public-repository",
+    "vendor",
+    "community",
+    "unknown"
+  ],
+  "evidence_types": [
+    "official-record",
+    "supplier-claim",
+    "accessibility-report",
+    "independent-test",
+    "government-software-metadata",
+    "community-evidence",
+    "human-observation"
+  ],
+  "verification_states": [
+    "unverified",
+    "reviewed",
+    "independently-verified",
+    "withdrawn"
+  ],
+  "decision_types": [
+    "supplier-question",
+    "market-engagement",
+    "acr-request",
+    "section-508-review",
+    "reuse-rights",
+    "security-privacy",
+    "exception-review",
+    "other"
+  ],
+  "decision_statuses": [
+    "pending",
+    "under-review",
+    "resolved"
+  ],
+  "acr_completeness": [
+    "unknown",
+    "complete",
+    "incomplete"
+  ],
+  "labels": {
+    "question_categories": {
+      "government-reuse": "Government reuse",
+      "accessibility": "Accessibility",
+      "pricing": "Pricing",
+      "supplier-capabilities": "Supplier capabilities",
+      "interoperability": "Interoperability",
+      "other": "Other"
+    },
+    "question_statuses": {
+      "not-started": "Not started",
+      "in-progress": "In progress",
+      "answered": "Answered",
+      "unresolved": "Unresolved"
+    },
+    "search_statuses": {
+      "not-searched": "Not searched",
+      "completed-with-results": "Completed with results",
+      "completed-without-results": "Completed without matching records",
+      "partial": "Partially completed",
+      "failed": "Failed"
+    },
+    "search_methods": {
+      "manual": "Manual",
+      "imported": "Imported record",
+      "mcp": "MCP tool"
+    },
+    "source_types": {
+      "official": "Official",
+      "public-repository": "Public repository",
+      "commercial": "Commercial",
+      "community": "Community",
+      "other": "Other"
+    },
+    "authorities": {
+      "official": "Official",
+      "public-repository": "Public repository",
+      "vendor": "Vendor",
+      "community": "Community",
+      "unknown": "Unknown"
+    },
+    "evidence_types": {
+      "official-record": "Official record",
+      "supplier-claim": "Supplier claim",
+      "accessibility-report": "Accessibility report",
+      "independent-test": "Independent test",
+      "government-software-metadata": "Government software metadata",
+      "community-evidence": "Community evidence",
+      "human-observation": "Human observation"
+    },
+    "verification_states": {
+      "unverified": "Unverified",
+      "reviewed": "Reviewed",
+      "independently-verified": "Independently verified",
+      "withdrawn": "Withdrawn"
+    },
+    "decision_types": {
+      "supplier-question": "Supplier question",
+      "market-engagement": "Additional market engagement",
+      "acr-request": "ACR or test report request",
+      "section-508-review": "Section 508 specialist review",
+      "reuse-rights": "Reuse rights or licensing review",
+      "security-privacy": "Security and privacy assessment",
+      "exception-review": "Potential exception review",
+      "other": "Other"
+    },
+    "decision_statuses": {
+      "pending": "Pending",
+      "under-review": "Under review",
+      "resolved": "Resolved"
+    },
+    "acr_completeness": {
+      "unknown": "Unknown",
+      "complete": "Complete against a known catalog",
+      "incomplete": "Incomplete"
+    }
+  },
+  "research_question_templates": [
+    {
+      "category": "government-reuse",
+      "text": "Are there existing federal, state, or local government systems that could be reused or adapted?"
+    },
+    {
+      "category": "accessibility",
+      "text": "Which Section 508 requirements apply, and what product- and version-specific ACR evidence exists?"
+    },
+    {
+      "category": "pricing",
+      "text": "What comparable awards, ceiling rates, or wage benchmarks are available, and what do they not tell us?"
+    },
+    {
+      "category": "supplier-capabilities",
+      "text": "Which suppliers or communities have demonstrated the relevant capability, and what evidence supports that?"
+    },
+    {
+      "category": "interoperability",
+      "text": "What integration, data portability, and exit requirements must the solution meet?"
+    },
+    {
+      "category": "other",
+      "text": "What small-business or socioeconomic market research is required for this acquisition?"
+    }
+  ]
 }

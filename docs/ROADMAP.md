@@ -26,6 +26,10 @@ The first release is intentionally an educational prototype, not a procurement s
 - [x] Manual accessibility test pack and learner pilot report templates prepared.
 - [ ] Manual screen-reader, zoom, text-spacing, and cross-browser testing.
 - [x] Make decision rules a single machine-readable source rather than duplicated JS/Python text.
+- [x] 0.2.0 evidence model for questions, searches, evidence, findings, and decisions.
+- [x] 0.1.0 migration that preserves project/candidates and does not invent research history.
+- [ ] Guided seven-stage research interface and evidence-linked report.
+- [ ] Expanded fictional DITAP scenario and pilot acceptance materials.
 - [ ] Add report source selection and retrieval-as-of metadata.
 - [ ] Add more DITAP fixtures, including small-business and open-source reuse scenarios.
 - [ ] Expose issue-friendly data import errors and controlled export filename.

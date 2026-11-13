@@ -2,7 +2,7 @@
 
 An open-source, evidence-first market research companion for digital government acquisition and the [DITAP curriculum](https://github.com/usds/ditap-curriculum-update).
 
-**Version:** 0.1.0, educational starter. Not affiliated with or endorsed by USDS, GSA, CMS, DITAP, or 1102tools.
+**Version:** 0.2.0, educational starter. Not affiliated with or endorsed by USDS, GSA, CMS, DITAP, or 1102tools.
 
 The practical objective is to help an acquisition professional answer:
 
@@ -16,6 +16,7 @@ The practical objective is to help an acquisition professional answer:
 ## What works today
 
 - **GitHub Pages browser app:** Define a need, browse curated research source descriptions and a small CMS public `code.json` example catalog, add market alternatives, track basic ACR metadata and evidence gaps, import/export JSON, and export a Markdown draft report.
+- **Evidence-backed research record (0.2.0):** Research questions, searches, evidence, findings, and pending decisions are linked by stable identifiers. Legacy 0.1.0 records import through a documented migration that does not invent history.
 - **Shared decision rules:** `src/omr_mcp/rules.json` drives the browser and Python questions, validation limits, and report wording from one versioned source.
 - **Local MCP server:** Seven read-only/deterministic tools and two resources for source discovery, research planning, accessibility evidence questions, report drafting, public metadata normalization, and OpenACR import.
 - **Public metadata adapters:** Read-only normalization of public `code.json`, `agency-index.json`, and `publiccode.yml` with source, retrieval date, data-as-of date, license, access rights, and limitations.
@@ -141,7 +142,7 @@ These links are reference sources, not claims that any external program endorses
 
 ## What to build next
 
-See [Roadmap](docs/ROADMAP.md), [DITAP alignment](docs/DITAP.md), [workshop materials](docs/workshop/README.md), [decision rules](docs/DECISION-RULES.md), [public metadata adapters](docs/ADAPTERS.md), [OpenACR import](docs/OPENACR-IMPORT.md), [1102tools integration proposal](docs/INTEGRATION-1102TOOLS.md), [implementation agent prompt](docs/IMPLEMENTATION-PROMPT.md), [security](SECURITY.md), and [contributing](CONTRIBUTING.md).
+See [Roadmap](docs/ROADMAP.md), [research schema](docs/SCHEMA.md), [migration](docs/MIGRATION.md), [DITAP alignment](docs/DITAP.md), [workshop materials](docs/workshop/README.md), [decision rules](docs/DECISION-RULES.md), [public metadata adapters](docs/ADAPTERS.md), [OpenACR import](docs/OPENACR-IMPORT.md), [1102tools integration proposal](docs/INTEGRATION-1102TOOLS.md), [implementation agent prompt](docs/IMPLEMENTATION-PROMPT.md), [security](SECURITY.md), and [contributing](CONTRIBUTING.md).
 
 ## License
 

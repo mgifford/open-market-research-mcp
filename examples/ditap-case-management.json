@@ -1,5 +1,5 @@
 {
-  "schema_version": "0.1.0",
+  "schema_version": "0.2.0",
   "demonstration_only": true,
   "project": {
     "name": "DITAP workshop: accessible case management",
@@ -8,6 +8,19 @@
     "constraints": "Illustrative exercise only. Do not use this as market research evidence or as a supplier shortlist.",
     "ict_type": "Web application"
   },
+  "accessibility_requirements": {
+    "identified": false,
+    "tool": "",
+    "reviewer": "",
+    "as_of": "",
+    "requirement_ids": [],
+    "notes": "The fictional workshop has not yet identified Section 508 requirements."
+  },
+  "research_questions": [],
+  "searches": [],
+  "evidence": [],
+  "findings": [],
+  "decisions": [],
   "candidates": [
     {
       "id": "demo-reuse",
@@ -20,7 +33,17 @@
       "acr_date": "",
       "accessibility_claim": "unknown",
       "independent_evaluation": "none",
-      "notes": "What support, permissions, security review, and maintenance would be needed to reuse this system?"
+      "notes": "What support, permissions, security review, and maintenance would be needed to reuse this system?",
+      "acr": {
+        "found": false,
+        "product_version": "unconfirmed",
+        "functions_covered": "Illustrative, unverified solution",
+        "publication_date": "",
+        "evaluation_methods": "",
+        "catalog_id": "",
+        "completeness": "unknown",
+        "notes": ""
+      }
     },
     {
       "id": "demo-commercial",
@@ -33,7 +56,17 @@
       "acr_date": "",
       "accessibility_claim": "partially-supports",
       "independent_evaluation": "none",
-      "notes": "A hypothetical supplier reports partial support. This is not a real ACR or factual product claim."
+      "notes": "A hypothetical supplier reports partial support. This is not a real ACR or factual product claim.",
+      "acr": {
+        "found": false,
+        "product_version": "4.2 (fictional)",
+        "functions_covered": "Illustrative, unverified product",
+        "publication_date": "",
+        "evaluation_methods": "",
+        "catalog_id": "",
+        "completeness": "unknown",
+        "notes": ""
+      }
     }
   ]
 }
