@@ -29,6 +29,8 @@ _RULES = decision_rules()
 APP_VERSION = _RULES["schema_version"]
 LEGACY_VERSIONS = tuple(_RULES.get("legacy_schema_versions", ()))
 PROJECT_FIELDS = ("name", *[spec["field"] for spec in _RULES["report"]["project_fields"]])
+OPTIONAL_PROJECT_FIELDS = tuple(spec["field"] for spec in _RULES["report"].get("optional_project_fields", []))
+PROJECT_ALL_FIELDS = (*PROJECT_FIELDS, *OPTIONAL_PROJECT_FIELDS)
 CANDIDATE_FIELDS = ("id", "name", *[spec["field"] for spec in _RULES["report"]["candidate_fields"]], "acr")
 LEGACY_CANDIDATE_FIELDS = (
     "id", "name", "approach", "version", "scope", "url", "acr_url", "acr_date",
@@ -158,9 +160,9 @@ def _validate_legacy(data: dict[str, Any]) -> None:
     project = data.get("project")
     if not isinstance(project, dict) or any(key not in PROJECT_FIELDS for key in project) or any(key not in project for key in PROJECT_FIELDS):
         raise ValueError(_message("project"))
-    for key, limit in _RULES["limits"]["project"].items():
+    for key in PROJECT_FIELDS:
         value = project.get(key)
-        if not isinstance(value, str) or len(value) > limit:
+        if not isinstance(value, str) or len(value) > _RULES["limits"]["project"][key]:
             raise ValueError(_message("project_fields"))
     candidates = data.get("candidates")
     max_candidates = _RULES["limits"]["max_candidates"]
@@ -327,12 +329,24 @@ def _validate_current(data: dict[str, Any]) -> None:
         raise ValueError(_message("demonstration"))
 
     project = data.get("project")
-    if not isinstance(project, dict) or any(key not in PROJECT_FIELDS for key in project) or any(key not in project for key in PROJECT_FIELDS):
+    if (
+        not isinstance(project, dict)
+        or any(key not in PROJECT_ALL_FIELDS for key in project)
+        or any(key not in project for key in PROJECT_FIELDS)
+    ):
         raise ValueError(_message("project"))
-    for key, limit in _RULES["limits"]["project"].items():
+    for key in PROJECT_FIELDS:
         value = project.get(key)
-        if not isinstance(value, str) or len(value) > limit:
+        if not isinstance(value, str) or len(value) > _RULES["limits"]["project"][key]:
             raise ValueError(_message("project_fields"))
+    for key in OPTIONAL_PROJECT_FIELDS:
+        if key not in project:
+            continue
+        value = project[key]
+        if not isinstance(value, str) or len(value) > _RULES["limits"]["project"][key]:
+            raise ValueError(_message("project_fields"))
+    if project.get("research_mode") and project["research_mode"] not in _RULES["research_modes"]:
+        raise ValueError(_message("field", field="research_mode"))
 
     accessibility = data.get("accessibility_requirements")
     if (
@@ -520,6 +534,10 @@ def validate_research(data: dict[str, Any]) -> None:
 def prepare_research(data: dict[str, Any]) -> dict[str, Any]:
     """Migrate, relink, validate, and return a 0.2.0 record."""
     prepared = migrate_research(data)
+    project = prepared.get("project")
+    if isinstance(project, dict):
+        for field in OPTIONAL_PROJECT_FIELDS:
+            project.setdefault(field, "")
     relink(prepared)
     _validate_current(prepared)
     return prepared
@@ -599,6 +617,13 @@ def build_report(data: dict[str, Any]) -> str:
     lines.extend([report["headings"]["need"], ""])
     for spec in report["project_fields"]:
         value = project.get(spec["field"]) or report["missing"]["project"]
+        lines.append(f"- {spec['label']}: {value}")
+    for spec in report.get("optional_project_fields", []):
+        value = project.get(spec["field"])
+        if not value:
+            continue
+        if spec.get("labels"):
+            value = _label(spec["labels"], value)
         lines.append(f"- {spec['label']}: {value}")
     lines.extend(["", report["headings"]["research_questions"], ""])
     if not questions:

@@ -2,7 +2,13 @@ import { expect } from '@playwright/test';
 
 export async function openApp(page) {
   await page.goto('/');
+  await expect(page.getByRole('heading', { level: 1, name: 'Research a government purchase' })).toBeVisible();
   await expect(page.locator('#source-count')).toContainText('sources');
+}
+
+export async function openAbout(page) {
+  await page.goto('/about.html');
+  await expect(page.getByRole('heading', { level: 1, name: 'About this tool and developer options' })).toBeVisible();
 }
 
 export async function fillCandidate(page, { name, url = '', acrUrl = '' }) {

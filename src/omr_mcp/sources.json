@@ -1,5 +1,50 @@
 [
   {
+    "id": "sam-gov",
+    "name": "SAM.gov",
+    "category": "procurement-data",
+    "url": "https://sam.gov/",
+    "purpose": "Find contract opportunities, entity registrations, and exclusion records in the official federal system.",
+    "limitations": "A registration or notice is not proof of capability, past performance, or accessibility. Some records require sign-in or government access.",
+    "method": "Search the public opportunity and entity pages, then record the notice or entity identifier, date, and what you actually searched."
+  },
+  {
+    "id": "acquisition-gov",
+    "name": "Acquisition.gov",
+    "category": "acquisition-policy",
+    "url": "https://www.acquisition.gov/",
+    "purpose": "Read the current FAR, agency supplements, and acquisition policy text.",
+    "limitations": "Policy text does not decide applicability or create a legal determination; agency deviations and effective dates still need verification.",
+    "method": "Record the part, section, effective date, and any deviation you checked."
+  },
+  {
+    "id": "usaspending-gov",
+    "name": "USAspending.gov",
+    "category": "procurement-data",
+    "url": "https://www.usaspending.gov/",
+    "purpose": "Find comparable federal awards, recipients, agencies, amounts, and periods of performance.",
+    "limitations": "A past award does not establish current fitness, availability, price, or accessibility. Data lags and scope vary.",
+    "method": "Use the award search and record the award identifier, filters, date, and limitations."
+  },
+  {
+    "id": "ecfr-gov",
+    "name": "eCFR",
+    "category": "acquisition-policy",
+    "url": "https://www.ecfr.gov/",
+    "purpose": "Read the operative electronic Code of Federal Regulations text as of a chosen date.",
+    "limitations": "The eCFR is not a legal determination; verify currentness and agency-specific guidance.",
+    "method": "Record the title, part, section, and as-of date."
+  },
+  {
+    "id": "section508-gov",
+    "name": "Section508.gov",
+    "category": "accessibility-requirements",
+    "url": "https://www.section508.gov/",
+    "purpose": "Use GSA's official Section 508 acquisition, ACR, and accessibility guidance.",
+    "limitations": "Guidance does not determine conformance or approve an exception for a specific product.",
+    "method": "Follow the applicable acquisition or ACR guidance and record the page and date."
+  },
+  {
     "id": "gsa-art",
     "name": "GSA Accessibility Requirements Tool (ART)",
     "category": "accessibility-requirements",
@@ -63,7 +108,7 @@
     "method": "Record ACR URLs and metadata now; add upstream OpenACR validation in the next phase."
   },
   {
-    "id": "sam-gov",
+    "id": "sam-gov-mcp",
     "name": "SAM.gov via 1102tools",
     "category": "contracting-data",
     "url": "https://github.com/1102tools-dev/federal-contracting-mcps/tree/main/servers/sam-gov-mcp",
@@ -72,7 +117,7 @@
     "method": "Use the existing MCP through an AI host; record exact records, retrieval dates, and source dates."
   },
   {
-    "id": "usaspending",
+    "id": "usaspending-gov-mcp",
     "name": "USAspending via 1102tools",
     "category": "contracting-data",
     "url": "https://github.com/1102tools-dev/federal-contracting-mcps/tree/main/servers/usaspending-gov-mcp",
@@ -81,7 +126,7 @@
     "method": "Search comparables, inspect award scopes, and retain record links."
   },
   {
-    "id": "gsa-calc",
+    "id": "gsa-calc-mcp",
     "name": "GSA CALC+ via 1102tools",
     "category": "pricing-data",
     "url": "https://github.com/1102tools-dev/federal-contracting-mcps/tree/main/servers/gsa-calc-mcp",
@@ -90,7 +135,7 @@
     "method": "Match labor categories, contract conditions, and geographic assumptions."
   },
   {
-    "id": "bls",
+    "id": "bls-oews-mcp",
     "name": "BLS OEWS via 1102tools",
     "category": "pricing-data",
     "url": "https://github.com/1102tools-dev/federal-contracting-mcps/tree/main/servers/bls-oews-mcp",
@@ -99,7 +144,7 @@
     "method": "Record occupation, geography, year, and any data suppression caveat."
   },
   {
-    "id": "acquisition-gov",
+    "id": "acquisition-gov-mcp",
     "name": "Acquisition.gov via 1102tools",
     "category": "regulatory-research",
     "url": "https://github.com/1102tools-dev/federal-contracting-mcps/tree/main/servers/acquisition-gov-mcp",
@@ -108,7 +153,7 @@
     "method": "Inspect dates, agency-specific deviations, and operative authority."
   },
   {
-    "id": "ecfr",
+    "id": "ecfr-mcp",
     "name": "eCFR via 1102tools",
     "category": "regulatory-research",
     "url": "https://github.com/1102tools-dev/federal-contracting-mcps/tree/main/servers/ecfr-mcp",

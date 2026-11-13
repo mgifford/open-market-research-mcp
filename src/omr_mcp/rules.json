@@ -31,7 +31,9 @@
       "need": 5000,
       "users": 3000,
       "constraints": 3000,
-      "ict_type": 300
+      "ict_type": 300,
+      "agency_context": 300,
+      "research_mode": 30
     },
     "candidate": {
       "id": 100,
@@ -362,7 +364,18 @@
       "candidates": "No candidate options have been recorded.",
       "accessibility": "No accessibility requirements or ACR evidence have been recorded."
     },
-    "migration_note": "Migrated from schema {from_schema_version}. Fields that could not be recovered are listed in the appendix; no search, evidence, or verification history was invented."
+    "migration_note": "Migrated from schema {from_schema_version}. Fields that could not be recovered are listed in the appendix; no search, evidence, or verification history was invented.",
+    "optional_project_fields": [
+      {
+        "field": "agency_context",
+        "label": "Agency or procurement context"
+      },
+      {
+        "field": "research_mode",
+        "label": "Research approach",
+        "labels": "research_modes"
+      }
+    ]
   },
   "legacy_schema_versions": [
     "0.1.0"
@@ -517,6 +530,11 @@
       "unknown": "Unknown",
       "complete": "Complete against a known catalog",
       "incomplete": "Incomplete"
+    },
+    "research_modes": {
+      "guided": "Guided research",
+      "manual": "Manual research",
+      "ai-assisted": "Assisted by an approved AI tool"
     }
   },
   "research_question_templates": [
@@ -544,5 +562,10 @@
       "category": "other",
       "text": "What small-business or socioeconomic market research is required for this acquisition?"
     }
+  ],
+  "research_modes": [
+    "guided",
+    "manual",
+    "ai-assisted"
   ]
 }

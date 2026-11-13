@@ -12,6 +12,14 @@ Schema 0.1.0 records remain importable. Import runs through
 
 The archived schema is `schemas/research-0.1.0.schema.json`.
 
+## Additive project context
+
+The later 0.2.0 interface adds optional `project.agency_context` and
+`project.research_mode`. They are not part of the 0.1.0 schema and are not
+invented during migration. The legacy project object is preserved exactly;
+`prepare_research()` adds empty optional values to the in-memory current record
+so the form can show them. Reports omit them when empty.
+
 ## What is preserved
 
 - project name, need, users, constraints, and ICT type;

@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
 import { readFileSync } from 'node:fs';
-import { openApp } from './helpers.js';
+import { openAbout, openApp } from './helpers.js';
 
 const legacy = readFileSync(new URL('../../examples/ditap-case-management-0.1.0.json', import.meta.url));
 
@@ -124,7 +124,7 @@ test('accessibility requirements save and appear in the report', async ({ page }
 });
 
 test('the About local MCP section is static and does not imply live data', async ({ page }) => {
-  await openApp(page);
+  await openAbout(page);
   const section = page.locator('#local-mcp');
   await expect(section).toContainText('About the local MCP');
   await expect(section).toContainText('This page does not display live MCP data');
@@ -134,7 +134,7 @@ test('the About local MCP section is static and does not imply live data', async
   await expect(section).toContainText('LM Studio');
   await expect(section).toContainText('Ollama is a model runtime, not an MCP host');
   await expect(section).not.toContainText('live MCP connection');
-  await page.getByRole('link', { name: 'MCP', exact: true }).click();
+  await page.getByRole('link', { name: 'Local MCP', exact: true }).click();
   await expect(page).toHaveURL(/#local-mcp$/);
 });
 
@@ -157,13 +157,57 @@ test('expanded fictional case shows conflicts, missing ACRs, and search states',
 });
 
 test('the AI engagement guide is static and separates AI output from evidence', async ({ page }) => {
-  await openApp(page);
+  await openAbout(page);
   const section = page.locator('#ai-engagement');
   await expect(section).toContainText('Engaging an AI on this research');
   await expect(section).toContainText('No AI is run by this page');
   await expect(section).toContainText('Do not accept invented sources');
   await expect(section).toContainText('Do not ask an AI to rank suppliers');
   await expect(section).toContainText('what would remain unverified');
-  await page.getByRole('link', { name: 'AI', exact: true }).click();
+  await page.getByRole('link', { name: 'AI guidance', exact: true }).click();
   await expect(page).toHaveURL(/#ai-engagement$/);
+});
+
+
+test('zero-install start and save flow produces a resumable file', async ({ page }) => {
+  await openApp(page);
+  await expect(page.getByRole('button', { name: 'Start new research' })).toBeVisible();
+  await page.click('#start-new');
+  await expect(page.locator('#need')).toBeFocused();
+  await page.fill('#need', 'A fictional need for a case management service.');
+  await page.fill('#ict-type', 'Web application');
+  await page.fill('#agency-context', 'A fictional federal agency');
+  await page.selectOption('#research-mode', 'manual');
+  await page.click('#project-form button[type=submit]');
+  await expect(page.locator('#preview')).toContainText('Agency or procurement context: A fictional federal agency');
+  await expect(page.locator('#preview')).toContainText('Research approach: Manual research');
+
+  const downloadPromise = page.waitForEvent('download');
+  await page.click('#save-research');
+  const download = await downloadPromise;
+  expect(download.suggestedFilename()).toMatch(/^a-fictional-need.*-\d{4}-\d{2}-\d{2}\.json$/);
+  const saved = JSON.parse(readFileSync(await download.path(), 'utf8'));
+  expect(saved.project.agency_context).toBe('A fictional federal agency');
+  expect(saved.project.research_mode).toBe('manual');
+  await expect(page.locator('#status')).toContainText('downloaded, not uploaded');
+});
+
+test('continue research opens a file chooser', async ({ page }) => {
+  await openApp(page);
+  const chooserPromise = page.waitForEvent('filechooser');
+  await page.click('#continue-research');
+  const chooser = await chooserPromise;
+  expect(chooser.isMultiple()).toBe(false);
+});
+
+test('a source launcher fills a not-searched draft without recording a search', async ({ page }) => {
+  await openApp(page);
+  page.once('dialog', dialog => dialog.accept());
+  await page.click('#demo');
+  await expect(page.locator('#search-table tr')).toHaveCount(7);
+  await page.locator('#source-list button').first().click();
+  await expect(page.locator('#search-source-name')).not.toHaveValue('');
+  await expect(page.locator('#search-status')).toHaveValue('not-searched');
+  await expect(page.locator('#status')).toContainText('not searched');
+  await expect(page.locator('#search-table tr')).toHaveCount(7);
 });

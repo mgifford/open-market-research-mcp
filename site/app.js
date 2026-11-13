@@ -42,10 +42,16 @@ function dateTimeValue(value) {
 }
 function dateValue(value) { return value ? value.slice(0, 10) : ''; }
 
-function fillSelect(id, values, group) {
+function fillSelect(id, values, group, blankText = '') {
   const select = byId(id);
   const current = select.value;
   select.replaceChildren();
+  if (blankText) {
+    const blank = document.createElement('option');
+    blank.value = '';
+    blank.textContent = blankText;
+    select.append(blank);
+  }
   for (const value of values) {
     const option = document.createElement('option');
     option.value = value;
@@ -125,7 +131,7 @@ function syncAccessibilityForm() {
   byId('accessibility-notes').value = item.notes;
 }
 function hasWorkInProgress() {
-  const formHasValues = [...byId('project-form').elements].some(el => el.name && String(el.value).trim());
+  const formHasValues = [...byId('project-form').elements].some(el => el.name && el.type !== 'select-one' && String(el.value).trim());
   return research.candidates.length > 0 || research.research_questions.length > 0 ||
     research.searches.length > 0 || research.evidence.length > 0 ||
     research.findings.length > 0 || research.decisions.length > 0 || formHasValues;
@@ -344,6 +350,24 @@ function renderCandidates() {
   }
 }
 
+function useSource(source) {
+  if (!research.research_questions.length) {
+    status('Plan a research question first. A source is a reference, not a completed search.');
+    byId('questions-heading').focus();
+    return;
+  }
+  const form = byId('search-form');
+  form.reset();
+  byId('search-question').value = research.research_questions[0].id;
+  byId('search-source-name').value = source.name;
+  byId('search-source-url').value = source.url;
+  byId('search-status').value = 'not-searched';
+  setFieldError('search-source-url', '');
+  byId('searches').scrollIntoView({ block: 'start' });
+  byId('search-source-name').focus();
+  status(`${source.name} added to the search form as not searched. Record it only after you perform the search.`);
+}
+
 function renderSources() {
   const search = byId('source-search').value.toLocaleLowerCase().trim();
   const category = byId('source-category').value;
@@ -364,8 +388,13 @@ function renderSources() {
     article.className = 'source-card';
     const h3 = document.createElement('h3');
     h3.append(createLink(s.name, s.url));
+    const use = createText('button', 'Use this source');
+    use.type = 'button';
+    use.className = 'secondary';
+    use.setAttribute('aria-label', `Use this source: ${s.name}`);
+    use.addEventListener('click', () => useSource(s));
     article.append(createText('p', s.category.replaceAll('-', ' '), 'category'), h3,
-      createText('p', s.purpose), createText('p', `Limit: ${s.limitations}`, 'small'));
+      createText('p', s.purpose), createText('p', `Limit: ${s.limitations}`, 'small'), use);
     list.append(article);
   }
   if (!filtered.length) list.append(createText('p', 'No sources match this filter.'));
@@ -724,7 +753,7 @@ function saveAccessibility(event) {
 
 function saveScope(event) {
   event.preventDefault();
-  commit(data => { applyProjectForm(data); }, 'Research scope saved in this tab. Export a JSON file to keep a copy.', 'scope-heading');
+  commit(data => { applyProjectForm(data); }, 'Research scope saved. Add a research question next; save a research file to keep a copy.', 'questions-heading');
 }
 
 function renderReport() {
@@ -753,6 +782,32 @@ function download(content, filename, type) {
   setTimeout(() => URL.revokeObjectURL(url), 5000);
 }
 
+function researchFilename(extension) {
+  const base = research.project.name || research.project.need || 'market-research';
+  const slug = String(base).normalize('NFKD').toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '').slice(0, 60) || 'market-research';
+  return `${slug}-${new Date().toISOString().slice(0, 10)}.${extension}`;
+}
+
+function startNewResearch() {
+  if (hasWorkInProgress() && !window.confirm('Start a new research record? Unsaved changes in this tab will be lost.')) return;
+  research = emptyResearch();
+  for (const form of document.querySelectorAll('form')) form.reset();
+  for (const kind of Object.keys(editing)) clearEditing(kind);
+  for (const id of ['candidate-url', 'acr-url', 'search-source-url', 'evidence-source-url']) setFieldError(id, '');
+  renderAll({ syncForms: true });
+  byId('scope').scrollIntoView({ block: 'start' });
+  byId('need').focus();
+  status('Started a blank research record. Save a research file to keep it.');
+}
+
+function saveResearchFile() {
+  if (!renderReport()) return;
+  const filename = researchFilename('json');
+  download(JSON.stringify(research, null, 2) + '\n', filename, 'application/json');
+  status(`Research file saved as ${filename}. It was downloaded, not uploaded.`);
+}
+
 async function loadDemo() {
   if (!confirmReplace('Replace the research in this tab with the fictional exercise? Unsaved changes will be lost.')) return;
   try {
@@ -760,6 +815,7 @@ async function loadDemo() {
     if (!response.ok) throw new Error('Demo file unavailable.');
     research = prepareResearch(await response.json());
     renderAll({ syncForms: true });
+    byId('scope-heading').focus();
     status('Fictional DITAP exercise loaded. It must not be presented as real procurement evidence.');
   } catch (error) { status(`Could not load demonstration: ${error.message}`); }
 }
@@ -775,6 +831,7 @@ async function importFile(event) {
     if (!confirmReplace('Replace the research in this tab with the imported file? Unsaved changes will be lost.')) return;
     research = prepared;
     renderAll({ syncForms: true });
+    byId('scope-heading').focus();
     const migrationNote = prepared.migration ? ` Migrated from schema ${prepared.migration.from_schema_version}.` : '';
     status(`Research JSON imported in this tab.${migrationNote} Review all unverified claims.`);
   } catch (error) { status(`Import failed: ${error.message}`); }
@@ -801,6 +858,7 @@ async function init() {
   fillSelect('decision-type', getRules().decision_types, 'decision_types');
   fillSelect('decision-status', getRules().decision_statuses, 'decision_statuses');
   fillSelect('acr-completeness', getRules().acr_completeness, 'acr_completeness');
+  fillSelect('research-mode', getRules().research_modes, 'research_modes', 'Not specified');
 
   try {
     const response = await fetch('./data/sources.json');
@@ -842,26 +900,20 @@ async function init() {
   }
   for (const id of ['candidate-url', 'acr-url', 'search-source-url', 'evidence-source-url']) byId(id).addEventListener('input', () => setFieldError(id, ''));
   byId('demo').addEventListener('click', loadDemo);
-  byId('reset').addEventListener('click', () => {
-    if (window.confirm('Discard unsaved research from this tab?')) {
-      research = emptyResearch();
-      for (const form of document.querySelectorAll('form')) form.reset();
-      for (const kind of Object.keys(editing)) clearEditing(kind);
-      for (const id of ['candidate-url', 'acr-url', 'search-source-url', 'evidence-source-url']) setFieldError(id, '');
-      renderAll({ syncForms: true });
-      status('Started a blank research record.');
-    }
-  });
+  byId('start-new').addEventListener('click', startNewResearch);
+  byId('save-research').addEventListener('click', saveResearchFile);
   byId('import-file').addEventListener('change', importFile);
   byId('export-json').addEventListener('click', () => {
     if (!renderReport()) return;
-    download(JSON.stringify(research, null, 2) + '\n', 'market-research.json', 'application/json');
-    status('Research JSON exported. Store it according to agency information policy.');
+    const filename = researchFilename('json');
+    download(JSON.stringify(research, null, 2) + '\n', filename, 'application/json');
+    status(`Research file saved as ${filename}. It was downloaded, not uploaded.`);
   });
   byId('export-md').addEventListener('click', () => {
     if (!renderReport()) return;
-    download(markdownReport(research, sources), 'market-research-report.md', 'text/markdown');
-    status('Draft Markdown report exported. It requires human review.');
+    const filename = researchFilename('md');
+    download(markdownReport(research, sources), filename, 'text/markdown');
+    status(`Draft Markdown report saved as ${filename}. It requires human review.`);
   });
   byId('show-preview').addEventListener('click', () => {
     if (renderReport()) status('Draft report preview refreshed.');

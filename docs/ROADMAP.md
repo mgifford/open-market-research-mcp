@@ -1,60 +1,80 @@
 # Roadmap
 
-The first release is intentionally an educational prototype, not a procurement system.
+The public application is a static, zero-install research workspace. The local MCP server, OpenACR import, and source adapters remain optional. Automated checks are not a substitute for manual accessibility or procurement-officer testing.
 
-## Phase 0: shipped starter
+## Shipped foundation
 
-- [x] Accessible-oriented static Pages interface (not yet independently accessibility tested)
-- [x] Fictional DITAP scenario and exportable working record
-- [x] Curated official and upstream source directory
-- [x] Small allowlisted CMS public code.json example snapshot, optionally refreshed by Actions
-- [x] Deterministic source search, evidence questions, and Markdown drafts
-- [x] Python MCP tools for local AI clients
-- [x] CI test/build/deploy GitHub Pages workflow
-- [x] Optional manual HF fiction-only Action
-- [x] Shared versioned decision rules for browser and Python
-- [x] Read-only public `code.json`, `agency-index.json`, and `publiccode.yml` adapters with provenance
-- [x] OpenACR YAML import prototype, validated with the pinned upstream CLI
-- [x] MCP stdio protocol smoke test against the v2 SDK
-- [x] Playwright/axe/keyboard browser regression suite
-- [x] DITAP workshop facilitator guide, worksheet, and pilot protocol (not yet learner-tested)
+- [x] Static GitHub Pages workspace with local-only data and portable JSON/Markdown.
+- [x] Evidence-backed 0.2.0 record: questions, searches, evidence, findings, decisions, accessibility requirements.
+- [x] 0.1.0 migration that preserves project/candidates and invents no research history.
+- [x] Seven-stage guided workflow with evidence-linked findings and decisions.
+- [x] Government reuse, open-source, commercial, and new-build alternatives; ACR scope and claims.
+- [x] Shared decision rules for browser and Python; deterministic validation and report draft.
+- [x] Source directory, public metadata adapters, OpenACR import prototype, optional 1102tools/USAspending fixture mapping.
+- [x] Local stdio MCP server (8 tools, 2 resources) and local-LLM guide.
+- [x] Automated Python, Node, Playwright, MCP, OpenACR, build, and axe/keyboard/reflow checks.
+- [x] Expanded fictional DITAP case, worksheet, facilitator guide, rubric, pilot protocol, and sample reports.
 
-## Phase 1: complete educational pilot
+## Phase 1 — zero-install usability (implemented, validation pending)
 
-- [ ] Involve acquisition professionals and disabled participants in co-design and usability tests.
-- [x] Automated axe, keyboard, reflow, and forced-colors regression checks.
-- [x] Manual accessibility test pack and learner pilot report templates prepared.
-- [ ] Manual screen-reader, zoom, text-spacing, and cross-browser testing.
-- [x] Make decision rules a single machine-readable source rather than duplicated JS/Python text.
-- [x] 0.2.0 evidence model for questions, searches, evidence, findings, and decisions.
-- [x] 0.1.0 migration that preserves project/candidates and does not invent research history.
-- [x] Guided seven-stage research interface and evidence-linked report.
-- [x] Expanded fictional DITAP scenario, worksheet, rubric, and pilot acceptance materials (not yet learner-tested).
-- [ ] Add report source selection and retrieval-as-of metadata.
-- [ ] Add more DITAP fixtures, including small-business and open-source reuse scenarios.
-- [ ] Expose issue-friendly data import errors and controlled export filename.
-- [x] Validate MCP protocol with a real client over stdio. The SDK is constrained to `mcp>=2.3,<3` and tested against 2.3.0; consider an exact pin after a release review.
+- [x] Landing page **Research a government purchase** with Start, Continue, and fictional-example actions.
+- [x] Simplified start questions: problem, product/service, agency context, and guided/manual/AI-assisted preference.
+- [x] Progressive disclosure for title, users, and constraints; incomplete answers allowed.
+- [x] Optional `agency_context` and `research_mode` record fields, backward-compatible with existing 0.2.0 records.
+- [x] Visible **Save research file** and **Continue existing research** with human-readable dated JSON filenames and resume guidance.
+- [x] Technical MCP/local-LLM/AI guidance moved to a secondary About page.
+- [x] Direct government source links (SAM.gov, USAspending, Acquisition.gov, eCFR, Section508.gov) and source cards that prefill a **not-searched** search form without creating a search record.
+- [x] Phase 1 assessment, accessibility design plan, and procurement usability test plan.
+- [ ] Manual NVDA/JAWS/VoiceOver, zoom, text-spacing, forced-colors, and cross-browser testing.
+- [ ] Procurement-officer usability sessions on restricted devices.
 
-## Phase 2: public-source discovery and ACR integration
+Completion criterion: a nontechnical officer can begin and save research without an account or installation. This is implemented but not yet demonstrated with users.
 
-- [x] Prototype read-only `code.json`, `agency-index.json`, and `publiccode.yml` adapters without inventing replacement standards.
-- [x] Prepare an integration proposal for 1102tools with a minimal adapter boundary; no upstream connection or copied code.
-- [ ] Build a read-only discovery adapter for ACR URLs, with source/version/time metadata.
-- [x] Prototype machine-readable OpenACR import using GSA's upstream schema, pinned CLI validation, and optional catalog completeness checks.
-- [ ] Support Word/PDF ACR only with documented parsing limitations and human confirmation.
-- [ ] Support ART outputs and product-specific criteria mapping, subject to API compatibility.
-- [ ] Preserve a clear separation between claims, third-party tests, and procurement judgments.
+## Phase 2 — source discovery and AI assistance
 
-## Phase 3: acquisition evidence package
+- [ ] Expand source cards with what the source answers, authentication expectations, and recording guidance.
+- [ ] Add prepared, documented search strategies without fabricating deep links or API behavior.
+- [ ] Generate context-sensitive prompts for **Plan my research**, **Review my evidence**, and **Draft my report**.
+- [ ] Add preview and one-click copy with sensitive-information warnings.
+- [ ] Record AI assistance in the research methodology when it materially contributes.
+- [ ] Keep proposed searches distinct from performed searches.
+- [ ] Add automated tests for generated prompts and copy behavior.
 
-- [ ] Research report with source attachments, coverage notes, and reproducibility manifest.
-- [ ] Compare total cost, reuse rights, sustainability, accessibility evidence, and digital-first fit without an automatic winner.
-- [ ] Gather GSA Issue Detail Supplement data and remediation questions.
-- [ ] Document possible exceptions and route to agency reviewers; never issue determinations.
-- [ ] Add reviewed, optional language-model synthesis, with provenance and redaction gates.
+## Phase 3 — evidence and reporting
 
-## Phase 4: production decision
+- [ ] Plain-language findings dashboard linking summaries to evidence and source dates.
+- [ ] Clearer evidence-gap explanations and supplier/specialist questions.
+- [ ] DOCX and PDF export, accessible print layout, and optional comparison CSV.
+- [ ] Human review and approval fields with draft-status labeling.
+- [ ] Generate all formats deterministically in the browser; no hosted backend.
+- [ ] Preserve provenance, verification status, limitations, and open decisions in every export.
 
-- [ ] Decide whether hosted MCP is justified by demonstrated use.
-- [ ] Complete threat model, privacy assessment, operational ownership, rate limits, and accessibility verification.
-- [ ] Explore upstream contributions with 1102tools, GSA, and CMS before creating competing services.
+## Phase 4 — policy context and pilot validation
+
+- [ ] Configurable jurisdiction, agency, acquisition category, policies, deviations, effective dates, and reviewer.
+- [ ] Current FAR/FAR Overhaul and agency sources, with binding/policy/recommendation/educational distinctions.
+- [ ] Test with DITAP participants and practicing procurement officers.
+- [ ] Complete manual accessibility testing and document observed problems.
+- [ ] Revise the interface from pilot evidence and record limitations.
+
+Completion criterion: pilot evidence shows nontechnical procurement professionals can complete the principal workflow with limited assistance.
+
+## Phase 5 — optional institutional integrations
+
+Only after demonstrated demand:
+
+- [ ] Explore a Microsoft 365 Copilot agent integration with agency approval.
+- [ ] Explore a centrally hosted, read-only MCP service with an authentication, authorization, privacy, security, and operations model.
+- [ ] Coordinate with 1102tools maintainers; do not copy implementations.
+- [ ] Investigate approved government API integrations and secure organizational storage.
+- [ ] Establish governance for shared templates and research records.
+
+None of these may become a prerequisite for the public application.
+
+## Deferred or explicitly not planned
+
+- No supplier ranking, automatic winner, Best Meets decision, Section 508 conformance determination, or exception approval.
+- No fabricated confidence score or research-completeness percentage.
+- No mandatory account, database, API key, hosted model, or installation.
+- No claim that automated tests establish WCAG conformance.
+- No publication of confidential research records through public Actions.

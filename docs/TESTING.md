@@ -34,10 +34,12 @@ protocol tests through `pytest`.
   workflow; edit/remove focus; legacy import migration; and accessibility
   requirement entry; the expanded fictional case's reuse conflict,
   no-result/failed/not-searched search states, missing ACRs, and open decisions;
-  the static About-the-local-MCP boundary section; and 1102tools/USAspending
-  fixture-based mapping, provenance preservation, explicit approval,
-  duplicate/unknown-question rejection, and report inclusion without a network
-  call.
+  the static About-the-local-MCP boundary section; the zero-install landing,
+  focused Start action, start-new discard warning, optional
+  agency/research-mode fields, human-readable JSON download, file chooser,
+  source-prefill without a recorded search, and About-page axe scan; and 1102tools/USAspending fixture-based mapping,
+  provenance preservation, explicit approval, duplicate/unknown-question
+  rejection, and report inclusion without a network call.
 - OpenACR: every import validated against the pinned upstream JSON schema;
   optional catalog comparison for missing/unexpected criteria; fixture
   validated by `@openacr/openacr@0.3.8` against the
@@ -57,7 +59,7 @@ Before the hardening changes, the local browser audit found:
 - repeated “Record as research option” button names.
 
 The regression suite covers each of those behaviors. The current local run
-(2026-11-12) is green: **50 Python tests**, **8 Node unit tests**, **27
+(2026-11-13) is green: **51 Python tests**, **9 Node unit tests**, **32
 Playwright browser tests**, the upstream OpenACR fixture validation, the
 build, and Ruff. axe reports no automated WCAG A/AA violations in the tested
 states, but axe covers only a subset of WCAG and is not a conformance result.
@@ -66,6 +68,9 @@ states, but axe covers only a subset of WCAG and is not a conformance result.
 
 Use the [manual accessibility test pack](accessibility/MANUAL-TEST-PACK.md) and
 copy [RESULTS-TEMPLATE.md](accessibility/RESULTS-TEMPLATE.md) for a real audit.
+The Phase 1 [accessibility design plan](a11y-plans/2026-11-13-phase1-landing-a11y-plan.md)
+and [procurement usability test plan](USABILITY-TEST-PLAN.md) record the
+remaining manual and user-validation work.
 The status table below describes what has actually been run, not what the pack
 makes possible.
 
