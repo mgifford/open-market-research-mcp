@@ -6,7 +6,7 @@ from urllib.parse import urlparse
 from urllib.request import HTTPRedirectHandler, Request, build_opener
 
 ALLOWED_HOSTS = frozenset({"raw.githubusercontent.com", "raw.github.com"})
-USER_AGENT = "open-market-research-mcp/0.1.0"
+USER_AGENT = "open-market-research-mcp/0.2.0"
 
 
 def _allowed(url: str, allowed_hosts: frozenset[str]) -> bool:

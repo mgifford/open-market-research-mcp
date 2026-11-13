@@ -5,9 +5,28 @@ the repository must describe the materials as **untested**.
 
 ## Purpose
 
-Learn whether the fictional exercise helps learners distinguish user needs,
-market alternatives, ACR claims, missing evidence, and agency decision points.
-The pilot is not a procurement evaluation and does not test a real product.
+Learn whether [the fictional case](CASE.md) helps learners distinguish user
+needs, market alternatives, ACR claims, missing evidence, and agency decision
+points. The pilot is not a procurement evaluation and does not test a real
+product. Use [the assessment rubric](ASSESSMENT.md) for the evidence
+traceability review.
+
+## Pilot acceptance checks
+
+Use these checks with the loaded fixture:
+
+- The learner can explain the conflict between the production listing and the
+  archive record without choosing one as the answer.
+- The learner distinguishes the no-matching-records search from the failed
+  search and the not-searched plan.
+- The learner finds the commercial ACR, identifies its scope and methods, and
+  does not treat partial support as conformance or as a failed test.
+- The learner notices that the reuse and open-source options have no ACR.
+- Every finding the learner keeps has a supporting evidence record.
+- The learner routes the ACR request, reuse-rights question, Section 508
+  review, small-business follow-up, and potential exception question to
+  people rather than deciding them.
+- The exported report separates investigated sources from reference links.
 
 ## Participants
 

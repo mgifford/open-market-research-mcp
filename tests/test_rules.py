@@ -19,7 +19,7 @@ RULES = decision_rules()
 
 def test_rules_have_versioned_unique_questions():
     assert RULES["version"]
-    assert RULES["schema_version"] == "0.1.0"
+    assert RULES["schema_version"] == "0.2.0"
     ids = [rule["id"] for rule in RULES["questions"]]
     assert len(ids) == len(set(ids))
     for rule in RULES["questions"]:
@@ -28,7 +28,7 @@ def test_rules_have_versioned_unique_questions():
 
 
 def test_validator_field_lists_are_derived_from_rules():
-    assert set(_CANDIDATE_FIELDS) == {"id", "name"} | {
+    assert set(_CANDIDATE_FIELDS) == {"id", "name", "acr"} | {
         spec["field"] for spec in RULES["report"]["candidate_fields"]
     }
     assert set(_PROJECT_FIELDS) == {"name"} | {
@@ -59,14 +59,20 @@ def test_question_text_comes_from_rules():
 
 def test_report_text_comes_from_rules():
     data = {
-        "schema_version": "0.1.0",
+        "schema_version": "0.2.0",
         "project": {"name": "", "need": "", "users": "", "constraints": "", "ict_type": ""},
+        "accessibility_requirements": {"identified": False, "tool": "", "reviewer": "", "as_of": "", "requirement_ids": [], "notes": ""},
+        "research_questions": [],
+        "searches": [],
+        "evidence": [],
+        "findings": [],
+        "decisions": [],
         "candidates": [],
     }
     report = build_report(data)
     assert RULES["report"]["untitled"] in report
     assert RULES["report"]["status"] in report
-    assert RULES["report"]["empty_candidates"] in report
+    assert RULES["report"]["no_data"]["candidates"] in report
 
 
 def test_python_validator_enforces_shared_limits_and_fields():

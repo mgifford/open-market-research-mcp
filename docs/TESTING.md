@@ -18,8 +18,9 @@ protocol tests through `pytest`.
 
 ### Coverage added in the pilot-hardening pass
 
-- Python: shared decision rules, schema/limits parity, adapters, OpenACR
-  parser, MCP stdio protocol, safe URL handling, report language.
+- Python: shared decision rules, 0.2.0 schema and migration, reference
+  validation, search-status distinctions, provenance dates/reviewers, report
+  language, adapters, OpenACR parser, and MCP stdio protocol.
 - Node: rules-driven validation, required fields and limits, questions, report
   content, safe URLs.
 - Browser: axe scans in default and loaded states; 320 CSS px reflow; table
@@ -27,7 +28,14 @@ protocol tests through `pytest`.
   forced-colors focus; unsaved-field retention; demo/import confirmation;
   import without a runtime error; focus after row removal; unique accessible
   names; URL error association; no cross-origin requests; debounced source
-  result announcements.
+  result announcements; the full question-search-evidence-finding-decision
+  workflow; edit/remove focus; legacy import migration; and accessibility
+  requirement entry; the expanded fictional case's reuse conflict,
+  no-result/failed/not-searched search states, missing ACRs, and open decisions;
+  the static About-the-local-MCP boundary section; and 1102tools/USAspending
+  fixture-based mapping, provenance preservation, explicit approval,
+  duplicate/unknown-question rejection, and report inclusion without a network
+  call.
 - OpenACR: every import validated against the pinned upstream JSON schema;
   optional catalog comparison for missing/unexpected criteria; fixture
   validated by `@openacr/openacr@0.3.8` against the
@@ -47,7 +55,7 @@ Before the hardening changes, the local browser audit found:
 - repeated “Record as research option” button names.
 
 The regression suite covers each of those behaviors. The current local run
-(2026-11-12) is green: **35 Python tests**, **5 Node unit tests**, **18
+(2026-11-12) is green: **50 Python tests**, **8 Node unit tests**, **26
 Playwright browser tests**, the upstream OpenACR fixture validation, the
 build, and Ruff. axe reports no automated WCAG A/AA violations in the tested
 states, but axe covers only a subset of WCAG and is not a conformance result.

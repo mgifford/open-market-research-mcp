@@ -69,3 +69,26 @@ code { background:#e8edf0; padding:.1em .2em; }
 @media (prefers-contrast:more) { :root { --line:#36474e; --muted:#30434b; --accent:#063d39; --focus:#000; } .panel,.source-card { border-width:2px; } }
 @media (forced-colors:active) { :focus-visible,.file-button:focus-within { outline-color:Highlight; } input[aria-invalid="true"] { border-color:Mark; } }
 @media print { .site-header, .actions, .file-button, button, .site-footer { display:none!important; } body { background:#fff; } .panel { box-shadow:none; } }
+
+/* Phase 2 guided research interface */
+.guidance { margin:1rem 0 0; padding:.9rem 1rem; border:1px solid var(--line); border-radius:.5rem; background:var(--surface); }
+.guidance summary { cursor:pointer; font-weight:750; color:var(--accent-strong); }
+.guidance p,.guidance dd { max-width:80ch; }
+.guidance dl { margin:.7rem 0 0; }
+.guidance dt { font-weight:750; margin-top:.6rem; }
+.guidance dd { margin:.15rem 0 0 0; color:var(--muted); }
+.next-action { border-left:4px solid var(--accent); background:var(--soft); padding:.55rem .75rem; max-width:80ch; }
+.next-action a { font-weight:750; }
+.panel-inset { border:1px solid var(--line); border-radius:.45rem; padding:1rem; margin:0 0 1rem; background:#fbfcfc; }
+.panel-inset legend { font-weight:750; padding:0 .35rem; }
+.record-form { border-left:4px solid var(--line); }
+fieldset { border:1px solid var(--line); border-radius:.35rem; padding:.75rem; margin:0; min-width:0; }
+fieldset legend { font-weight:750; padding:0 .3rem; }
+.checkbox-field { flex-direction:row; align-items:flex-start; gap:.55rem; }
+.checkbox-field input { margin-top:.3rem; }
+.checkbox-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:.35rem .9rem; }
+.checkbox-grid label { display:flex; gap:.45rem; align-items:flex-start; font-weight:400; }
+.checkbox-grid input { margin-top:.35rem; flex-shrink:0; }
+input[type=checkbox],input[type=radio] { width:auto; min-width:1.1rem; min-height:1.1rem; }
+button.secondary[hidden],[hidden] { display:none!important; }
+@media (max-width:760px) { .checkbox-grid { grid-template-columns:1fr; } }

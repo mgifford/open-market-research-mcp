@@ -17,11 +17,15 @@
         <p class="eyebrow">OPEN MARKET RESEARCH MCP</p>
         <p class="brand">Evidence first. Human decisions.</p>
       </div>
-      <nav aria-label="Sections">
-        <a href="#scope">Scope</a>
-        <a href="#sources">Sources</a>
-        <a href="#candidates">Options</a>
+      <nav aria-label="Research stages">
+        <a href="#scope">Need</a>
+        <a href="#questions">Questions</a>
+        <a href="#searches">Search</a>
+        <a href="#candidates">Alternatives</a>
+        <a href="#accessibility">Accessibility</a>
+        <a href="#findings">Findings</a>
         <a href="#report">Report</a>
+        <a href="#local-mcp">MCP</a>
       </nav>
     </div>
   </header>
@@ -30,7 +34,7 @@
     <section class="hero" aria-labelledby="intro-heading">
       <p class="eyebrow">A practical DITAP companion</p>
       <h1 id="intro-heading">Research the market, not just the incumbent.</h1>
-      <p class="lede">Document the need, discover government and open-source reuse opportunities, compare alternatives, and identify accessibility evidence gaps before writing the solicitation.</p>
+      <p class="lede">Document the need, plan the questions, record what you actually searched, compare alternatives, and trace findings back to evidence before writing the solicitation.</p>
       <p>This is a local, educational research workspace. It does not query live procurement systems, certify accessibility, approve exceptions, or select vendors.</p>
       <div class="actions">
         <button id="demo" class="primary" type="button">Load fictional DITAP exercise</button>
@@ -41,10 +45,32 @@
       </div>
       <p class="small"><strong>Privacy:</strong> Your inputs stay in this browser tab unless you explicitly export them. There is no automatic storage, telemetry, or external AI request.</p>
       <p id="status" role="status" aria-live="polite" class="status">Ready to begin.</p>
+      <p id="next-action" class="next-action"><strong>Next:</strong> define the need below.</p>
+      <details class="guidance">
+        <summary>Key terms and how this tool treats them</summary>
+        <dl>
+          <dt>Market research vs. market intelligence</dt>
+          <dd>Market research is a deliberate process of defining questions, searching sources, and recording evidence. Market intelligence is ongoing information gathering. This tool records the research you performed; it does not continuously monitor markets.</dd>
+          <dt>Government software reuse</dt>
+          <dd>Adapting software already developed by a government body. Listing or finding code does not establish reuse rights, maintenance, security, or fitness.</dd>
+          <dt>Supplier vs. software product</dt>
+          <dd>A supplier is an organization; a product is a specific offering and version. Evidence should identify which one a claim is about.</dd>
+          <dt>Accessibility Conformance Report (ACR)</dt>
+          <dd>A report of an author's accessibility claims, usually mapped to a catalog. An ACR is not an independent test and a valid ACR is not a Section 508 conformance determination.</dd>
+          <dt>Vendor claim vs. independent evaluation</dt>
+          <dd>A supplier claim describes what the supplier says. Independent testing is evidence produced separately. Keep them distinct in the record.</dd>
+          <dt>Best Meets and Undue Burden</dt>
+          <dd>Section 508 exception concepts that require the agency's authorized process. This tool can help assemble questions and evidence; it cannot approve an exception.</dd>
+          <dt>Total cost of ownership</dt>
+          <dd>Acquisition, integration, operation, maintenance, accessibility remediation, exit, and other lifecycle costs. A purchase price alone is not total cost.</dd>
+          <dt>Evidence provenance</dt>
+          <dd>The source URL, retrieval date, source-as-of date, limitations, and verification state that let another person retrace a claim.</dd>
+        </dl>
+      </details>
     </section>
 
     <section id="scope" aria-labelledby="scope-heading">
-      <div class="section-title"><span class="step">01</span><div><h2 id="scope-heading">Define the government need</h2><p>Start from users and outcomes, not an incumbent product.</p></div></div>
+      <div class="section-title"><span class="step">01</span><div><h2 id="scope-heading" tabindex="-1">Define the need</h2><p>Start from users and outcomes, not an incumbent product.</p></div></div>
       <form id="project-form" class="panel">
         <div class="field-grid">
           <div class="field"><label for="project-name">Research title</label><input id="project-name" name="name" maxlength="300" placeholder="Example: modern case management" required></div>
@@ -57,9 +83,69 @@
       </form>
     </section>
 
-    <section id="sources" aria-labelledby="sources-heading">
-      <div class="section-title"><span class="step">02</span><div><h2 id="sources-heading">Find the appropriate research sources</h2><p>These are links to real sources. No live data has been searched on your behalf.</p></div></div>
+    <section id="questions" aria-labelledby="questions-heading">
+      <div class="section-title"><span class="step">02</span><div><h2 id="questions-heading" tabindex="-1">Plan research questions</h2><p>Write the questions that must be answered before the research can support a decision.</p></div></div>
+      <details class="guidance">
+        <summary>What makes a useful research question?</summary>
+        <p>Name the uncertainty, not a preferred product. Good questions point to a source or a person who could answer them. “Are there reusable government systems for this function?” is researchable; “Which vendor is best?” is a selection decision.</p>
+      </details>
+      <form id="question-form" class="panel record-form">
+        <div class="field-grid">
+          <div class="field span-2"><label for="question-text">Research question</label><textarea id="question-text" name="question" rows="2" maxlength="1000" required></textarea></div>
+          <div class="field span-2"><label for="question-need-link">Relationship to the acquisition need</label><input id="question-need-link" name="need_link" maxlength="2000" placeholder="How an answer would change the research or acquisition plan"></div>
+          <div class="field"><label for="question-category">Category</label><select id="question-category" name="category"></select></div>
+          <div class="field"><label for="question-status">Status</label><select id="question-status" name="status"></select></div>
+          <div class="field span-2"><label for="question-uncertainties">Remaining uncertainties</label><textarea id="question-uncertainties" name="uncertainties" rows="2" maxlength="5000"></textarea></div>
+        </div>
+        <div class="actions">
+          <button type="submit" class="primary">Add research question</button>
+          <button type="button" class="secondary cancel-edit" data-kind="question" hidden>Cancel edit</button>
+        </div>
+      </form>
+      <div class="table-wrap panel" role="region" aria-label="Research questions table" tabindex="0">
+        <h3>Research questions</h3>
+        <p id="question-count" class="small"></p>
+        <table><caption>Research questions, status, and linked records</caption><thead><tr><th scope="col">Question</th><th scope="col">Category</th><th scope="col">Status</th><th scope="col">Links</th><th scope="col">Actions</th></tr></thead><tbody id="question-table"><tr><td colspan="5">No research questions recorded yet.</td></tr></tbody></table>
+      </div>
+    </section>
+
+    <section id="searches" aria-labelledby="searches-heading">
+      <div class="section-title"><span class="step">03</span><div><h2 id="searches-heading" tabindex="-1">Search the market</h2><p>Record what you actually searched, how, and what happened. A reference link is not a search.</p></div></div>
+      <details class="guidance">
+        <summary>No result, no matching record, partial, and failed</summary>
+        <p>These are different states. “No matching records” means the search completed and found nothing relevant. “Failed” means the search was attempted but did not complete. A source you have not searched remains “not started.”</p>
+      </details>
+      <form id="search-form" class="panel record-form">
+        <div class="field-grid">
+          <div class="field"><label for="search-question">Research question</label><select id="search-question" name="question_id" required></select></div>
+          <div class="field"><label for="search-source-name">Source name</label><input id="search-source-name" name="source_name" maxlength="300" required></div>
+          <div class="field"><label for="search-source-url">Source URL (HTTPS)</label><input id="search-source-url" name="source_url" type="url" maxlength="2000" placeholder="https://"><p id="search-source-url-error" class="field-error" hidden></p></div>
+          <div class="field"><label for="search-source-type">Source type</label><select id="search-source-type" name="source_type"></select></div>
+          <div class="field"><label for="search-authority">Authority</label><select id="search-authority" name="authority"></select></div>
+          <div class="field"><label for="search-method">Search method</label><select id="search-method" name="method"></select></div>
+          <div class="field"><label for="search-query">Search query</label><input id="search-query" name="query" maxlength="1000"></div>
+          <div class="field"><label for="search-filters">Filters</label><input id="search-filters" name="filters" maxlength="1000"></div>
+          <div class="field"><label for="search-date">Date and time searched</label><input id="search-date" name="searched_at" type="datetime-local"></div>
+          <div class="field"><label for="search-as-of">Source data as of</label><input id="search-as-of" name="source_as_of" type="date"></div>
+          <div class="field"><label for="search-result-count">Result count, if known</label><input id="search-result-count" name="result_count" type="number" min="0" step="1"></div>
+          <div class="field"><label for="search-status">Status</label><select id="search-status" name="status"></select></div>
+          <div class="field span-2"><label for="search-limitations">Limitations</label><textarea id="search-limitations" name="limitations" rows="2" maxlength="5000"></textarea></div>
+          <div class="field span-2"><label for="search-gaps">Coverage gaps</label><textarea id="search-gaps" name="coverage_gaps" rows="2" maxlength="5000"></textarea></div>
+        </div>
+        <div class="actions">
+          <button type="submit" class="primary">Record search</button>
+          <button type="button" class="secondary cancel-edit" data-kind="search" hidden>Cancel edit</button>
+        </div>
+      </form>
+      <div class="table-wrap panel" role="region" aria-label="Searches and results table" tabindex="0">
+        <h3>Searches and results</h3>
+        <p id="search-count" class="small"></p>
+        <table><caption>Searches performed, source, date, status, and result</caption><thead><tr><th scope="col">Source</th><th scope="col">Question</th><th scope="col">Status</th><th scope="col">Searched</th><th scope="col">Result</th><th scope="col">Actions</th></tr></thead><tbody id="search-table"><tr><td colspan="6">No searches recorded yet.</td></tr></tbody></table>
+      </div>
+
       <div class="panel" aria-label="Source directory filters">
+        <h3>Source directory</h3>
+        <p class="small">These are links to real sources. They are not live results. Searching one is recorded above; listing it here is not a completed search.</p>
         <div class="field-grid">
           <div class="field"><label for="source-search">Search sources</label><input id="source-search" type="search" placeholder="Try accessibility, reuse, procurement"></div>
           <div class="field"><label for="source-category">Source category</label><select id="source-category"><option value="">All source categories</option></select></div>
@@ -70,22 +156,17 @@
       </div>
     </section>
 
-    <section id="inventory" aria-labelledby="inventory-heading">
-      <div class="section-title"><span class="step">02b</span><div><h2 id="inventory-heading">Explore public software metadata examples</h2><p>Small, curated CMS code.json sample. These are not matches to your acquisition, and this is not a government-wide search.</p></div></div>
-      <div class="panel">
-        <p class="small" id="software-status" role="status">Loading the published metadata snapshot.</p>
-        <div id="software-list" class="source-grid"></div>
-        <p class="small">Use these entries to practice investigating reuse rights and version, ownership, and maintenance. Adding an entry does not establish suitability.</p>
-      </div>
-    </section>
-
     <section id="candidates" aria-labelledby="candidates-heading">
-      <div class="section-title"><span class="step">03</span><div><h2 id="candidates-heading" tabindex="-1">Record market options</h2><p>Investigate government reuse, open-source, commercial, and new-build approaches without treating any as a default winner.</p></div></div>
+      <div class="section-title"><span class="step">04</span><div><h2 id="candidates-heading" tabindex="-1">Evaluate alternatives</h2><p>Record government reuse, open-source, commercial, and new-build options. These are research alternatives, not a ranking.</p></div></div>
+      <details class="guidance">
+        <summary>Government code is not automatically open source</summary>
+        <p>Government-owned code may not be publicly released, may have reuse conditions, and may be unmaintained. Record ownership, source availability, license, version, maintenance, interoperability, and total cost separately from accessibility claims.</p>
+      </details>
       <form id="candidate-form" class="panel">
         <div class="field-grid">
           <div class="field"><label for="candidate-name">Option name</label><input id="candidate-name" name="name" maxlength="300" required></div>
           <div class="field"><label for="approach">Approach</label><select id="approach" name="approach"><option value="government-reuse">Government software reuse</option><option value="open-source">Open-source adoption or adaptation</option><option value="commercial">Commercial product or service</option><option value="new-build">New development</option></select></div>
-          <div class="field"><label for="version">Exact version or release, if known</label><input id="version" name="version" maxlength="300"></div>
+          <div class="field"><label for="version">Exact product version or release, if known</label><input id="version" name="version" maxlength="300"></div>
           <div class="field"><label for="scope-text">Functions or scope considered</label><input id="scope-text" name="scope" maxlength="1000"></div>
           <div class="field"><label for="candidate-url">Source URL (HTTPS)</label><input id="candidate-url" type="url" name="url" maxlength="2000" placeholder="https://"><p id="candidate-url-error" class="field-error" hidden></p></div>
           <div class="field"><label for="acr-url">ACR URL (HTTPS), if found</label><input id="acr-url" type="url" name="acr_url" maxlength="2000" placeholder="https://"><p id="acr-url-error" class="field-error" hidden></p></div>
@@ -94,31 +175,145 @@
           <div class="field"><label for="evaluation">Independent evaluation status</label><select id="evaluation" name="independent_evaluation"><option value="none">None documented</option><option value="planned">Planned</option><option value="completed">Completed, report not checked here</option></select></div>
           <div class="field span-2"><label for="notes">Evidence notes and questions</label><textarea id="notes" name="notes" rows="3" maxlength="5000"></textarea></div>
         </div>
+        <fieldset class="panel-inset">
+          <legend>ACR scope and methods</legend>
+          <div class="field-grid">
+            <div class="field checkbox-field span-2"><input id="acr-found" name="acr_found" type="checkbox"><label for="acr-found">A product-specific ACR was found</label></div>
+            <div class="field"><label for="acr-product-version">ACR product version</label><input id="acr-product-version" name="acr_product_version" maxlength="300"></div>
+            <div class="field"><label for="acr-functions">Functions the ACR covers</label><input id="acr-functions" name="acr_functions_covered" maxlength="1000"></div>
+            <div class="field"><label for="acr-methods">Evaluation methods used</label><input id="acr-methods" name="acr_evaluation_methods" maxlength="2000"></div>
+            <div class="field"><label for="acr-catalog">Catalog identifier</label><input id="acr-catalog" name="acr_catalog_id" maxlength="300" placeholder="For example, a WCAG edition catalog"></div>
+            <div class="field"><label for="acr-completeness">Catalog completeness</label><select id="acr-completeness" name="acr_completeness"></select></div>
+            <div class="field span-2"><label for="acr-acr-notes">ACR notes and unresolved questions</label><textarea id="acr-acr-notes" name="acr_notes" rows="2" maxlength="5000"></textarea></div>
+          </div>
+        </fieldset>
         <button type="submit" class="primary">Add option to comparison</button>
       </form>
       <div class="table-wrap panel" role="region" aria-label="Recorded market options table" tabindex="0">
         <h3>Options and evidence gaps</h3>
         <p id="candidate-count" class="small"></p>
-        <table><caption>Recorded market options and next accessibility research questions</caption><thead><tr><th scope="col">Option</th><th scope="col">Approach</th><th scope="col">Accessibility evidence</th><th scope="col">Next step</th><th scope="col">Remove</th></tr></thead><tbody id="candidate-table"></tbody></table>
+        <table><caption>Recorded market options and next accessibility research questions</caption><thead><tr><th scope="col">Option</th><th scope="col">Approach</th><th scope="col">Accessibility evidence</th><th scope="col">Next step</th><th scope="col">Remove</th></tr></thead><tbody id="candidate-table"><tr><td colspan="5">No options recorded yet.</td></tr></tbody></table>
+      </div>
+
+      <div class="panel">
+        <h3>Explore public software metadata examples</h3>
+        <p class="small" id="software-status" role="status">Loading the published metadata snapshot.</p>
+        <p class="small">These are curated CMS code.json examples, not matches to your acquisition. Adding one does not establish suitability, maintenance, reuse rights, or accessibility.</p>
+        <div id="software-list" class="source-grid"></div>
       </div>
     </section>
 
-    <section id="requirements" aria-labelledby="requirements-heading">
-      <div class="section-title"><span class="step">04</span><div><h2 id="requirements-heading">Check the evidence and approvals</h2><p>Use authoritative requirements tools and agency reviewers. Checking an item does not establish compliance.</p></div></div>
+    <section id="accessibility" aria-labelledby="accessibility-heading">
+      <div class="section-title"><span class="step">05</span><div><h2 id="accessibility-heading" tabindex="-1">Review accessibility evidence</h2><p>Record requirements, ACR scope, claims, and independent evidence separately.</p></div></div>
+      <details class="guidance">
+        <summary>Missing is not failed, and a valid ACR is not conformance</summary>
+        <p>If an ACR is missing or a criterion is not evaluated, record that as missing information. Do not convert it into a failed test. A supplier-authored ACR is a claim; independent testing and agency review are separate. Use <a href="https://www.section508.gov/buy-sell/">GSA Section 508 Buy/Sell</a>, <a href="https://www.section508.gov/art/">ART</a>, the <a href="https://acreditor.section508.gov/">ACR Editor</a>, and <a href="https://github.com/GSA/openacr">OpenACR</a> rather than duplicating them.</p>
+      </details>
+      <form id="accessibility-form" class="panel">
+        <div class="field-grid">
+          <div class="field checkbox-field span-2"><input id="accessibility-identified" name="identified" type="checkbox"><label for="accessibility-identified">Section 508 requirements have been identified for this acquisition</label></div>
+          <div class="field"><label for="accessibility-tool">Tool or process used</label><input id="accessibility-tool" name="tool" maxlength="300" placeholder="GSA ART, agency checklist, specialist review"></div>
+          <div class="field"><label for="accessibility-reviewer">Reviewer or specialist</label><input id="accessibility-reviewer" name="reviewer" maxlength="300"></div>
+          <div class="field"><label for="accessibility-as-of">Requirements as of</label><input id="accessibility-as-of" name="as_of" type="date"></div>
+          <div class="field"><label for="accessibility-requirements">Requirement identifiers</label><input id="accessibility-requirements" name="requirement_ids" maxlength="2000" placeholder="Comma-separated identifiers"></div>
+          <div class="field span-2"><label for="accessibility-notes">Notes and open questions</label><textarea id="accessibility-notes" name="notes" rows="2" maxlength="5000"></textarea></div>
+        </div>
+        <button type="submit" class="primary">Save accessibility requirements</button>
+      </form>
       <div class="panel checklist">
+        <h3>Evidence checks</h3>
         <ul>
           <li><strong>Accessibility:</strong> Determine applicable Section 508 criteria with <a href="https://www.section508.gov/art/">GSA ART</a>, and examine product-specific ACR claims.</li>
           <li><strong>Independent checks:</strong> Plan testing of critical tasks, including assistive technologies, where appropriate.</li>
           <li><strong>Exceptions:</strong> Use the <a href="https://www.section508.gov/buy/determine-ict-exceptions/">GSA exceptions guide</a> and <a href="https://www.section508.gov/manage/exceptions-request-and-approval-process/">agency approval process</a>. This app cannot approve an exception.</li>
-          <li><strong>Digital first:</strong> Check applicability of <a href="https://digital.gov/resources/delivering-digital-first-public-experience">digital-first public experience guidance</a>, including mobile, content, usability, and service delivery.</li>
+          <li><strong>Digital first:</strong> Check applicability of <a href="https://digital.gov/resources/delivering-digital-first-public-experience">digital-first public experience guidance</a>.</li>
           <li><strong>Reuse:</strong> Investigate government software indexes, SHARE IT metadata, open source, and commercial offerings.</li>
-          <li><strong>Procurement:</strong> Record industry engagement and the basis for decisions under applicable rules and agency policy.</li>
         </ul>
       </div>
     </section>
 
+    <section id="findings" aria-labelledby="findings-heading">
+      <div class="section-title"><span class="step">06</span><div><h2 id="findings-heading" tabindex="-1">Document findings and decisions</h2><p>Attach evidence to claims, record contradictions, and name the decisions that still need a person.</p></div></div>
+      <details class="guidance">
+        <summary>What is evidence, what is a finding, and what is a decision?</summary>
+        <p>Evidence is a source-backed record with a URL and retrieval date. A finding is a plain-language conclusion linked to evidence; if it has no evidence, it is an unresolved question or assumption. A decision is an action for a human, such as requesting an ACR or routing an exception question. None of these is an agency approval.</p>
+      </details>
+      <form id="evidence-form" class="panel record-form">
+        <div class="field-grid">
+          <div class="field"><label for="evidence-search">Linked search</label><select id="evidence-search" name="search_id" required></select></div>
+          <div class="field"><label for="evidence-candidate">Related candidate, if any</label><select id="evidence-candidate" name="candidate_id"></select></div>
+          <div class="field"><label for="evidence-source-name">Source name</label><input id="evidence-source-name" name="source_name" maxlength="300" required></div>
+          <div class="field"><label for="evidence-source-url">Source URL (HTTPS)</label><input id="evidence-source-url" name="source_url" type="url" maxlength="2000" placeholder="https://"><p id="evidence-source-url-error" class="field-error" hidden></p></div>
+          <div class="field"><label for="evidence-source-id">Source identifier</label><input id="evidence-source-id" name="source_identifier" maxlength="500"></div>
+          <div class="field"><label for="evidence-retrieved">Retrieved at</label><input id="evidence-retrieved" name="retrieved_at" type="datetime-local" required></div>
+          <div class="field"><label for="evidence-as-of">Source data as of</label><input id="evidence-as-of" name="source_as_of" type="date"></div>
+          <div class="field"><label for="evidence-type">Evidence type</label><select id="evidence-type" name="evidence_type"></select></div>
+          <div class="field"><label for="evidence-version">Product version</label><input id="evidence-version" name="product_version" maxlength="300"></div>
+          <div class="field"><label for="evidence-requirements">Requirement identifiers</label><input id="evidence-requirements" name="requirement_ids" maxlength="2000" placeholder="Comma-separated identifiers"></div>
+          <div class="field"><label for="evidence-verification">Verification state</label><select id="evidence-verification" name="verification_state"></select></div>
+          <div class="field"><label for="evidence-reviewer">Reviewer, if reviewed</label><input id="evidence-reviewer" name="reviewer" maxlength="300"></div>
+          <div class="field span-2"><label for="evidence-claim">Claim or observation supported</label><textarea id="evidence-claim" name="claim" rows="2" maxlength="5000"></textarea></div>
+          <div class="field span-2"><label for="evidence-limitations">Limitations</label><textarea id="evidence-limitations" name="limitations" rows="2" maxlength="5000"></textarea></div>
+          <div class="field span-2"><label for="evidence-uncertainties">Uncertainties</label><textarea id="evidence-uncertainties" name="uncertainties" rows="2" maxlength="5000"></textarea></div>
+        </div>
+        <div class="actions">
+          <button type="submit" class="primary">Add evidence</button>
+          <button type="button" class="secondary cancel-edit" data-kind="evidence" hidden>Cancel edit</button>
+        </div>
+      </form>
+      <div class="table-wrap panel" role="region" aria-label="Evidence records table" tabindex="0">
+        <h3>Evidence records</h3>
+        <p id="evidence-count" class="small"></p>
+        <table><caption>Evidence, source, retrieval date, type, and verification</caption><thead><tr><th scope="col">Evidence</th><th scope="col">Source</th><th scope="col">Type</th><th scope="col">Retrieved</th><th scope="col">Verification</th><th scope="col">Actions</th></tr></thead><tbody id="evidence-table"><tr><td colspan="6">No evidence recorded yet.</td></tr></tbody></table>
+      </div>
+
+      <form id="finding-form" class="panel record-form">
+        <div class="field-grid">
+          <div class="field span-2"><label for="finding-description">Finding</label><textarea id="finding-description" name="description" rows="2" maxlength="5000" required></textarea></div>
+          <div class="field span-2"><fieldset><legend>Supporting evidence</legend><div id="finding-supporting" class="checkbox-grid"></div></fieldset></div>
+          <div class="field span-2"><fieldset><legend>Contradictory evidence</legend><div id="finding-contradicting" class="checkbox-grid"></div></fieldset></div>
+          <div class="field span-2"><label for="finding-gap">Evidence gaps</label><textarea id="finding-gap" name="evidence_gap" rows="2" maxlength="5000"></textarea></div>
+          <div class="field span-2"><fieldset><legend>Related questions</legend><div id="finding-questions" class="checkbox-grid"></div></fieldset></div>
+          <div class="field span-2"><fieldset><legend>Related candidates</legend><div id="finding-candidates" class="checkbox-grid"></div></fieldset></div>
+          <div class="field checkbox-field span-2"><input id="finding-verify" name="requires_verification" type="checkbox"><label for="finding-verify">Further verification is required</label></div>
+          <div class="field span-2"><label for="finding-notes">Reviewer notes</label><textarea id="finding-notes" name="reviewer_notes" rows="2" maxlength="5000"></textarea></div>
+        </div>
+        <div class="actions">
+          <button type="submit" class="primary">Add finding</button>
+          <button type="button" class="secondary cancel-edit" data-kind="finding" hidden>Cancel edit</button>
+        </div>
+      </form>
+      <div class="table-wrap panel" role="region" aria-label="Findings table" tabindex="0">
+        <h3>Findings</h3>
+        <p id="finding-count" class="small"></p>
+        <table><caption>Findings linked to evidence</caption><thead><tr><th scope="col">Finding</th><th scope="col">Evidence</th><th scope="col">Questions</th><th scope="col">Verification</th><th scope="col">Actions</th></tr></thead><tbody id="finding-table"><tr><td colspan="5">No findings recorded yet.</td></tr></tbody></table>
+      </div>
+
+      <form id="decision-form" class="panel record-form">
+        <div class="field-grid">
+          <div class="field span-2"><label for="decision-description">Decision or follow-up</label><textarea id="decision-description" name="description" rows="2" maxlength="5000" required></textarea></div>
+          <div class="field"><label for="decision-type">Type</label><select id="decision-type" name="decision_type"></select></div>
+          <div class="field"><label for="decision-status">Status</label><select id="decision-status" name="status"></select></div>
+          <div class="field"><label for="decision-owner">Owner</label><input id="decision-owner" name="owner" maxlength="300"></div>
+          <div class="field"><label for="decision-due">Due date</label><input id="decision-due" name="due_date" type="date"></div>
+          <div class="field span-2"><label for="decision-rationale">Rationale</label><textarea id="decision-rationale" name="rationale" rows="2" maxlength="5000"></textarea></div>
+          <div class="field span-2"><fieldset><legend>Related evidence</legend><div id="decision-evidence" class="checkbox-grid"></div></fieldset></div>
+          <div class="field"><label for="decision-resolved">Resolved at</label><input id="decision-resolved" name="resolved_at" type="datetime-local"></div>
+        </div>
+        <div class="actions">
+          <button type="submit" class="primary">Add decision</button>
+          <button type="button" class="secondary cancel-edit" data-kind="decision" hidden>Cancel edit</button>
+        </div>
+      </form>
+      <div class="table-wrap panel" role="region" aria-label="Decisions and follow-up table" tabindex="0">
+        <h3>Decisions and follow-up</h3>
+        <p id="decision-count" class="small"></p>
+        <table><caption>Decisions requiring human action</caption><thead><tr><th scope="col">Decision</th><th scope="col">Type</th><th scope="col">Status</th><th scope="col">Owner</th><th scope="col">Actions</th></tr></thead><tbody id="decision-table"><tr><td colspan="5">No decisions recorded yet.</td></tr></tbody></table>
+      </div>
+    </section>
+
     <section id="report" aria-labelledby="report-heading">
-      <div class="section-title"><span class="step">05</span><div><h2 id="report-heading">Export the working research record</h2><p>Document evidence and uncertainties. The report is a draft for human review.</p></div></div>
+      <div class="section-title"><span class="step">07</span><div><h2 id="report-heading" tabindex="-1">Prepare the report</h2><p>Export an auditable draft. The report separates what was searched from reference links not yet investigated.</p></div></div>
       <div class="panel">
         <div class="actions">
           <button type="button" id="export-json" class="primary">Export JSON</button>
@@ -130,12 +325,29 @@
         <p class="small">Import/export is local to this browser. Reports contain research notes and may require handling under agency information policies.</p>
       </div>
     </section>
+    <section id="local-mcp" aria-labelledby="local-mcp-heading">
+      <div class="section-title"><span class="step">MCP</span><div><h2 id="local-mcp-heading" tabindex="-1">About the local MCP</h2><p>The browser workspace is static. The deterministic MCP server runs separately on your computer.</p></div></div>
+      <div class="panel">
+        <p><strong>This page does not display live MCP data.</strong> GitHub Pages cannot start or reach a local stdio MCP server. The browser uses bundled JSON files for rules, sources, the fictional demo, and the public metadata snapshot.</p>
+        <p>The local server is optional. It adds deterministic tools and two JSON resources for an MCP-capable client; the browser does not need it, and the core workflow has no AI or network dependency.</p>
+        <h3>Run it locally</h3>
+        <pre><code>python -m pip install -e '.[dev]'
+omr-mcp</code></pre>
+        <p>Point your MCP client at the absolute path of the virtual environment's <code>omr-mcp</code> executable. The server uses local stdio and makes no live procurement or model requests.</p>
+        <h3>What it exposes</h3>
+        <ul>
+          <li><strong>Eight read-only tools:</strong> source discovery, research planning, accessibility evidence questions, deterministic report drafting, public metadata normalization, OpenACR import, and USAspending record mapping.</li>
+          <li><strong>Two JSON resources:</strong> <code>research://sources</code> and <code>research://workflow</code>.</li>
+        </ul>
+        <p><strong>Boundaries:</strong> OpenACR import preserves supplier/author claims and does not certify conformance. Public metadata and USAspending mapping preserve provenance; mapping a selected record into a research file requires explicit human approval. See the repository README and <code>docs/ARCHITECTURE.md</code> for the local setup and limitations.</p>
+      </div>
+    </section>
     <section class="end-note" aria-label="Project information">
       <h2>What this starter does not do</h2>
       <p>It cannot search live procurement records, discover ACRs automatically, assess conformance, determine exceptions, or decide which supplier to choose. The browser does not parse ACR files; a local OpenACR YAML import prototype exists in the repository CLI and MCP server, for human review only. These integrations require further development and responsible validation.</p>
       <p>Source code and technical documentation are included in the GitHub repository. This prototype is independent of GSA, DITAP, and 1102tools.</p>
     </section>
   </main>
-  <footer class="site-footer"><div class="container"><p>Open Market Research MCP, prototype 0.1.0. Not official U.S. government guidance. MIT-licensed starter.</p></div></footer>
+  <footer class="site-footer"><div class="container"><p>Open Market Research MCP, prototype 0.2.0. Not official U.S. government guidance. MIT-licensed starter.</p></div></footer>
 </body>
 </html>
