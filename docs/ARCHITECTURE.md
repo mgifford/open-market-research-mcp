@@ -2,7 +2,7 @@
 
 ## Two ways to use the same research methodology
 
-**GitHub Pages** serves static HTML, JavaScript, and JSON. The browser operates locally, and users intentionally import or export their records. There is no database, remote MCP endpoint, or AI API from the site.
+**GitHub Pages** serves static HTML, JavaScript, and JSON. The browser operates locally, and users intentionally import or export their records. There is no database, remote MCP endpoint, or AI API from the site. The seven stages are: define the need, plan questions, search the market, evaluate alternatives, review accessibility, document findings/decisions, and prepare the report.
 
 **Local MCP** runs on the user's device through the official Python MCP SDK. It exposes curated public reference sources and deterministic helpers. The local MCP server does not call live government APIs or an LLM. An MCP host can use it alongside 1102tools.
 
