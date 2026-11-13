@@ -332,9 +332,26 @@
         <p><strong>This page does not display live MCP data.</strong> GitHub Pages cannot start or reach a local stdio MCP server. The browser uses bundled JSON files for rules, sources, the fictional demo, and the public metadata snapshot.</p>
         <p>The local server is optional. It adds deterministic tools and two JSON resources for an MCP-capable client; the browser does not need it, and the core workflow has no AI or network dependency.</p>
         <h3>Run it locally</h3>
-        <pre><code>python -m pip install -e '.[dev]'
+        <pre><code>python3 -m venv .venv
+source .venv/bin/activate
+python3 -m pip install -e .
 omr-mcp</code></pre>
-        <p>Point your MCP client at the absolute path of the virtual environment's <code>omr-mcp</code> executable. The server uses local stdio and makes no live procurement or model requests.</p>
+        <p>Point your MCP client at the absolute path of the virtual environment's <code>omr-mcp</code> executable. The server uses local stdio and makes no live procurement or model requests. On Windows, activate with <code>.venv\Scripts\activate</code>.</p>
+        <details class="guidance">
+          <summary>Connect a local LLM</summary>
+          <p><strong>LM Studio 0.3.17+</strong> reads Cursor-style <code>mcp.json</code>. Use <strong>Program → Install → Edit mcp.json</strong> and add:</p>
+          <pre><code>{
+  "mcpServers": {
+    "open-market-research": {
+      "command": "/absolute/path/to/open-market-research-mcp/.venv/bin/omr-mcp",
+      "args": []
+    }
+  }
+}</code></pre>
+          <p><strong>Jan</strong> supports MCP natively: <strong>Settings → MCP Servers → + Add MCP Server</strong>, transport <code>STDIO</code>, the absolute command, no arguments. Enable it and use a tool-capable model.</p>
+          <p><strong>Ollama is a model runtime, not an MCP host.</strong> Use an MCP host such as <code>mcphost</code> with Ollama, or use LM Studio or Jan. No API key is needed for this server.</p>
+          <p>The full host-by-host setup, troubleshooting, and the no-MCP prompt-only option are in <code>docs/LOCAL-LLM.md</code> in the repository.</p>
+        </details>
         <h3>What it exposes</h3>
         <ul>
           <li><strong>Eight read-only tools:</strong> source discovery, research planning, accessibility evidence questions, deterministic report drafting, public metadata normalization, OpenACR import, and USAspending record mapping.</li>

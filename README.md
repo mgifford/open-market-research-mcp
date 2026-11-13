@@ -61,9 +61,9 @@ Open `http://localhost:8000`. Opening the source HTML with `file://` will not lo
 Requires Python 3.11+, network access to install packages, and an MCP-compatible client.
 
 ```bash
-python -m venv .venv
+python3 -m venv .venv
 source .venv/bin/activate
-pip install -e '.[dev]'
+python3 -m pip install -e .
 omr-mcp
 ```
 
@@ -80,6 +80,8 @@ An MCP client's **stdio** configuration should point to the absolute path of the
 ```
 
 The server uses the official MCP Python SDK v2 API. Its tool code is testable without a running model. It does not call 1102tools automatically. Use a client that connects both MCP servers, or add a future adapter with clear provenance.
+
+For host-specific setup with **LM Studio**, **Jan**, or **mcphost + Ollama**, see [Connect the local MCP server to a local LLM](docs/LOCAL-LLM.md). That guide also covers the no-MCP option of copying the static prompts and exported records.
 
 ### Run tests
 
