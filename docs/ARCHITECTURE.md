@@ -63,6 +63,8 @@ A future adapter should be an optional module with at least:
 
 This is an illustrative envelope, not a proposed replacement for code.json, OpenACR, publiccode.yml, or other established schemas. Preserve raw records or stable source references and map only the fields needed for comparison.
 
-## Hosted MCP, if needed later
+## Optional remote MCP starter
 
-A separate Cloudflare Worker or approved HTTPS host can expose Streamable HTTP with the official SDK's transport layer. It must have a documented authentication/authorization model, abuse safeguards, provenance checks, separate secrets, and agency approval before receiving non-public records. Nothing in the first release implements this endpoint.
+`remote-mcp/` contains a disabled-by-default Cloudflare Worker using the official MCP server SDK and the Cloudflare Agents MCP handler. It exposes five public, read-only reference and planning tools over Streamable HTTP. It imports the canonical source catalog, performs no live searches, has no storage, model calls, or application logging, and is not deployed.
+
+Public mode is anonymous and is not approved for protected procurement content. Deployment requires an explicit human decision, dependency review, Cloudflare abuse controls, operational ownership, and client interoperability testing. A production service for non-public records would require OAuth/organizational authorization, retention, audit, threat modeling, and tenant isolation; do not treat the public flag or Cloudflare Access as a substitute.

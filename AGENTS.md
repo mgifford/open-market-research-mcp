@@ -29,6 +29,7 @@ Build a small, inclusive, vendor-neutral market research companion useful in DIT
 - `site/`: static HTML/CSS/JS, no build framework.
 - `site/research.js`: browser research and report logic.
 - `site/about.html`: optional local MCP, local-LLM, and AI guidance moved out of the primary workflow.
+- `remote-mcp/`: optional Cloudflare Worker starter for public, read-only remote MCP tools; disabled by default and not deployed.
 - `src/omr_mcp/engine.py`: deterministic Python research and report logic.
 - `src/omr_mcp/server.py`: real local MCP v2 server.
 - `src/omr_mcp/sources.json`: canonical source directory.

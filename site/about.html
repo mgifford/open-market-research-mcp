@@ -62,6 +62,7 @@ omr-mcp</code></pre>
           <li><strong>Two JSON resources:</strong> <code>research://sources</code> and <code>research://workflow</code>.</li>
         </ul>
         <p><strong>Boundaries:</strong> OpenACR import preserves supplier/author claims and does not certify conformance. Public metadata and USAspending mapping preserve provenance; mapping a selected record into a research file requires explicit human approval. See the repository README and <code>docs/ARCHITECTURE.md</code> for the local setup and limitations.</p>
+        <p><strong>Optional remote MCP:</strong> A separate Cloudflare Worker starter is documented in <code>docs/REMOTE-MCP.md</code>. It is disabled by default, public-reference-only, and not deployed. It is not required for this page or the research workflow.</p>
       </div>
     </section>
     <section id="ai-engagement" aria-labelledby="ai-heading">

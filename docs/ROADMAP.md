@@ -65,7 +65,8 @@ Completion criterion: pilot evidence shows nontechnical procurement professional
 Only after demonstrated demand:
 
 - [ ] Explore a Microsoft 365 Copilot agent integration with agency approval.
-- [ ] Explore a centrally hosted, read-only MCP service with an authentication, authorization, privacy, security, and operations model.
+- [x] Add a reviewable, disabled-by-default Cloudflare Worker starter for public read-only MCP tools; not deployed.
+- [ ] Deploy and operate a centrally hosted, read-only MCP service with an authentication, authorization, privacy, security, and operations model.
 - [ ] Coordinate with 1102tools maintainers; do not copy implementations.
 - [ ] Investigate approved government API integrations and secure organizational storage.
 - [ ] Establish governance for shared templates and research records.
