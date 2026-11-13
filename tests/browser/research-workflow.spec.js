@@ -152,3 +152,15 @@ test('expanded fictional case shows conflicts, missing ACRs, and search states',
   await expect(page.locator('#preview')).toContainText('without matching records: 1');
   await expect(page.locator('#preview')).toContainText('failed: 1');
 });
+
+test('the AI engagement guide is static and separates AI output from evidence', async ({ page }) => {
+  await openApp(page);
+  const section = page.locator('#ai-engagement');
+  await expect(section).toContainText('Engaging an AI on this research');
+  await expect(section).toContainText('No AI is run by this page');
+  await expect(section).toContainText('Do not accept invented sources');
+  await expect(section).toContainText('Do not ask an AI to rank suppliers');
+  await expect(section).toContainText('what would remain unverified');
+  await page.getByRole('link', { name: 'AI', exact: true }).click();
+  await expect(page).toHaveURL(/#ai-engagement$/);
+});

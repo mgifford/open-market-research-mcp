@@ -45,7 +45,7 @@ Build a small, inclusive, vendor-neutral market research companion useful in DIT
 1. Confirm a change serves a clearly named procurement user need.
 2. Add or amend an acceptance test before changing logic.
 3. Make the smallest reversible change with clear provenance.
-4. Run `python -m pytest -q`, `node --test tests/research.test.mjs`, and `python scripts/build_site.py`.
+4. Run `python -m pytest -q`, `node --test tests/research.test.mjs`, and `python scripts/build_site.py`. Use `python3` when that is the local interpreter; CI supplies `python`.
 5. Validate the site visually, with keyboard only, and at 400% zoom before claiming production accessibility.
 6. Summarize what changed, what was omitted, assumptions, risks, and tests run.
 

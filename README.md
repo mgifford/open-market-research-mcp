@@ -17,7 +17,7 @@ The practical objective is to help an acquisition professional answer:
 
 - **GitHub Pages browser app:** Seven guided stages from defining the need through questions, searches, alternatives, accessibility evidence, findings/decisions, and report export. Record what was actually searched, attach evidence to candidates, and export JSON or a Markdown draft.
 - **Evidence-backed research record (0.2.0):** Research questions, searches, evidence, findings, and pending decisions are linked by stable identifiers. Legacy 0.1.0 records import through a documented migration that does not invent history.
-- **Static About the local MCP:** The Pages app explains the local stdio server, its tools/resources, and its boundaries without claiming live MCP data.
+- **Static About the local MCP and AI guidance:** The Pages app explains the local stdio server, its tools/resources, and its boundaries without claiming live MCP data, and provides copyable AI prompt patterns that do not execute a model.
 - **Shared decision rules:** `src/omr_mcp/rules.json` drives the browser and Python questions, validation limits, and report wording from one versioned source.
 - **Local MCP server:** Eight read-only/deterministic tools and two resources for source discovery, research planning, accessibility evidence questions, report drafting, public metadata normalization, OpenACR import, and fixture-based USAspending record mapping.
 - **Public metadata adapters:** Read-only normalization of public `code.json`, `agency-index.json`, and `publiccode.yml` with source, retrieval date, data-as-of date, license, access rights, and limitations.
@@ -44,6 +44,8 @@ The practical objective is to help an acquisition professional answer:
 The deployment uses only relative URLs, so the repository name is not hard-coded.
 
 ## Run locally
+
+**Interpreter note:** commands in this README use `python`. If your local interpreter is `python3`, substitute `python3` (and `python3 -m pip`) throughout. CI uses the interpreter installed by `actions/setup-python`.
 
 ### Static app
 

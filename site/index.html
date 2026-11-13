@@ -26,6 +26,7 @@
         <a href="#findings">Findings</a>
         <a href="#report">Report</a>
         <a href="#local-mcp">MCP</a>
+        <a href="#ai-engagement">AI</a>
       </nav>
     </div>
   </header>
@@ -340,6 +341,68 @@ omr-mcp</code></pre>
           <li><strong>Two JSON resources:</strong> <code>research://sources</code> and <code>research://workflow</code>.</li>
         </ul>
         <p><strong>Boundaries:</strong> OpenACR import preserves supplier/author claims and does not certify conformance. Public metadata and USAspending mapping preserve provenance; mapping a selected record into a research file requires explicit human approval. See the repository README and <code>docs/ARCHITECTURE.md</code> for the local setup and limitations.</p>
+      </div>
+    </section>
+    <section id="ai-engagement" aria-labelledby="ai-heading">
+      <div class="section-title"><span class="step">AI</span><div><h2 id="ai-heading" tabindex="-1">Engaging an AI on this research</h2><p>Use AI to structure questions, critique evidence, and identify gaps. Keep the evidence and the decision with people.</p></div></div>
+      <div class="panel">
+        <p><strong>No AI is run by this page.</strong> This is static guidance for an AI conversation you choose to have elsewhere. The page does not send your research to a model, and the local MCP server is optional.</p>
+        <h3>Where AI can help</h3>
+        <ul>
+          <li>Turn a user need into researchable questions and possible source types.</li>
+          <li>Critique whether a finding is actually supported by the evidence record.</li>
+          <li>Surface contradictions, missing provenance, and unanswered questions.</li>
+          <li>Suggest neutral supplier or agency questions for human review.</li>
+          <li>Draft a report outline without adding facts or citations.</li>
+        </ul>
+        <h3>What not to delegate</h3>
+        <ul>
+          <li>Do not accept invented sources, dates, reviewers, or test results.</li>
+          <li>Do not turn a supplier claim into an independent finding.</li>
+          <li>Do not ask an AI to rank suppliers or choose a winner.</li>
+          <li>Do not ask an AI to declare Section 508 conformance or approve an exception.</li>
+          <li>Do not paste CUI, PII, vendor-proprietary, or procurement-sensitive material into a service without agency authorization and a retention decision.</li>
+        </ul>
+        <h3>Prompt patterns</h3>
+        <details>
+          <summary>Structure the research questions</summary>
+          <pre><code>You are helping structure public-sector market research. Do not invent sources or citations.
+Acquisition need: [paste the neutral need and user description]
+Known constraints: [paste constraints]
+Questions I have: [paste your draft questions]
+For each question, propose:
+1. the uncertainty it tests;
+2. a source type that could answer it;
+3. a concrete search query;
+4. what evidence would answer it;
+5. what would remain unverified.
+Do not recommend a supplier or conclude Section 508 conformance.</code></pre>
+        </details>
+        <details>
+          <summary>Critique the evidence and find gaps</summary>
+          <pre><code>Here are my research questions, searches, evidence records, and findings: [paste the JSON or a summary]
+Identify:
+- claims that are not supported by the cited evidence;
+- contradictions between records;
+- missing source, retrieval, or as-of dates;
+- searches described as completed when they are only reference links;
+- findings that should be unresolved questions.
+Do not add facts. Ask me for missing evidence instead.</code></pre>
+        </details>
+        <details>
+          <summary>Draft a neutral report structure</summary>
+          <pre><code>Given these findings and open decisions: [paste the JSON or a summary]
+Draft a neutral report outline that separates:
+- what was investigated;
+- what was found;
+- supplier claims;
+- missing or contradictory evidence;
+- questions for suppliers or specialists;
+- decisions that remain with people.
+Do not rank suppliers or state that an exception is approved.</code></pre>
+        </details>
+        <h3>If you connect the local MCP</h3>
+        <p>An MCP-capable client can call the local deterministic tools for source discovery, research planning, evidence questions, report drafting, metadata normalization, OpenACR import, and USAspending mapping. The AI still needs human review; the tools do not decide conformance or supplier suitability. See <a href="#local-mcp">About the local MCP</a>.</p>
       </div>
     </section>
     <section class="end-note" aria-label="Project information">
