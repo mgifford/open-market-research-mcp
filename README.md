@@ -32,6 +32,7 @@ The practical objective is to help an acquisition professional answer:
 - **Evidence-backed research record (0.2.0):** Research questions, searches, evidence, findings, and pending decisions are linked by stable identifiers. Legacy 0.1.0 records import through a documented migration that does not invent history.
 - **Static About the local MCP and AI guidance:** The About page explains the local stdio server, its tools/resources, and its boundaries without claiming live MCP data, and provides copyable AI prompt patterns that do not execute a model.
 - **Shared decision rules:** `src/omr_mcp/rules.json` drives the browser and Python questions, validation limits, and report wording from one versioned source.
+- **Optional remote MCP starter:** A separate Cloudflare Worker under `remote-mcp/` exposes 5 public read-only reference/planning tools. `PUBLIC_MCP_ENABLED` is false by default; it is not deployed. See [remote MCP deployment boundaries](docs/REMOTE-MCP.md).
 - **Local MCP server:** Eight read-only/deterministic tools and two resources for source discovery, research planning, accessibility evidence questions, report drafting, public metadata normalization, OpenACR import, and fixture-based USAspending record mapping.
 - **Public metadata adapters:** Read-only normalization of public `code.json`, `agency-index.json`, and `publiccode.yml` with source, retrieval date, data-as-of date, license, access rights, and limitations.
 - **OpenACR import prototype:** Local CLI and MCP import of OpenACR YAML for human review, checked against the pinned upstream schema and optionally compared with a catalog for missing criteria. It distinguishes supports, partial support, non-support, not applicable, not evaluated, and missing claims, and does not create or certify an ACR.
@@ -161,7 +162,7 @@ These links are reference sources, not claims that any external program endorses
 
 ## What to build next
 
-See [Phase 1 assessment](docs/PHASE1-ASSESSMENT.md), [Phase 2 assessment](docs/PHASE2-ASSESSMENT.md), [procurement usability test plan](docs/USABILITY-TEST-PLAN.md), [Roadmap](docs/ROADMAP.md), [research schema](docs/SCHEMA.md), [migration](docs/MIGRATION.md), [DITAP alignment](docs/DITAP.md), [workshop materials](docs/workshop/README.md), [decision rules](docs/DECISION-RULES.md), [public metadata adapters](docs/ADAPTERS.md), [OpenACR import](docs/OPENACR-IMPORT.md), [1102tools integration proposal](docs/INTEGRATION-1102TOOLS.md), [implementation agent prompt](docs/IMPLEMENTATION-PROMPT.md), [security](SECURITY.md), and [contributing](CONTRIBUTING.md).
+See [Phase 1 assessment](docs/PHASE1-ASSESSMENT.md), [Phase 2 assessment](docs/PHASE2-ASSESSMENT.md), [procurement usability test plan](docs/USABILITY-TEST-PLAN.md), [Roadmap](docs/ROADMAP.md), [research schema](docs/SCHEMA.md), [migration](docs/MIGRATION.md), [DITAP alignment](docs/DITAP.md), [workshop materials](docs/workshop/README.md), [decision rules](docs/DECISION-RULES.md), [public metadata adapters](docs/ADAPTERS.md), [OpenACR import](docs/OPENACR-IMPORT.md), [1102tools integration proposal](docs/INTEGRATION-1102TOOLS.md), [remote MCP deployment](docs/REMOTE-MCP.md), [implementation agent prompt](docs/IMPLEMENTATION-PROMPT.md), [security](SECURITY.md), and [contributing](CONTRIBUTING.md).
 
 ## License
 

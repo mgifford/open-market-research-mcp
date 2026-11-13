@@ -18,6 +18,21 @@ npm test
 validation, and the Playwright/axe browser suite. CI also runs the MCP stdio
 protocol tests through `pytest`.
 
+The optional remote Worker has its own checks:
+
+```bash
+cd remote-mcp
+npm ci
+npm test
+npm run check
+npx wrangler deploy --dry-run --outdir /tmp/omr-worker-dryrun
+```
+
+The Worker currently has **8 passing core tests**, a successful Wrangler
+dry-run, and local checks that disabled `/mcp` returns 503 and enabled
+`/healthz`, initialize, and `tools/list` respond. It has not been deployed and
+has not been tested with Claude, ChatGPT, or Microsoft 365 Copilot.
+
 ### Coverage added in the pilot-hardening pass
 
 - Python: shared decision rules, 0.2.0 schema and migration, reference

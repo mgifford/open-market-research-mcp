@@ -1,0 +1,36 @@
+name: Test optional remote MCP
+
+on:
+  pull_request:
+    paths:
+      - 'remote-mcp/**'
+      - 'docs/REMOTE-MCP.md'
+      - 'src/omr_mcp/sources.json'
+      - '.github/workflows/test-remote-mcp.yml'
+  push:
+    paths:
+      - 'remote-mcp/**'
+      - 'docs/REMOTE-MCP.md'
+      - 'src/omr_mcp/sources.json'
+      - '.github/workflows/test-remote-mcp.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install dependencies and create test environment
+        working-directory: remote-mcp
+        run: npm ci --no-audit --no-fund
+      - name: Test deterministic core and syntax
+        working-directory: remote-mcp
+        run: npm test && npm run check
+      - name: Verify Cloudflare bundle without deploying
+        working-directory: remote-mcp
+        run: npx wrangler deploy --dry-run --outdir /tmp/omr-worker-dryrun
