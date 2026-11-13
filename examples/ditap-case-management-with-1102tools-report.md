@@ -19,6 +19,8 @@ Market research working report: DITAP workshop: accessible case management
 - Users: Members of the public and agency staff who use assistive technology, mobile devices, and low-bandwidth connections.
 - Constraints: Illustrative exercise only. Do not use this as market research evidence or as a supplier shortlist.
 - ICT type: Web application
+- Agency or procurement context: Fictional federal agency
+- Research approach: Guided research
 
 ## Research questions
 

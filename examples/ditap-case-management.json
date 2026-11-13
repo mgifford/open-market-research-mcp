@@ -6,7 +6,9 @@
     "need": "A fictional federal team wants to replace a fragmented case management process without excluding people with disabilities.",
     "users": "Members of the public and agency staff who use assistive technology, mobile devices, and low-bandwidth connections.",
     "constraints": "Illustrative exercise only. Do not use this as market research evidence or as a supplier shortlist.",
-    "ict_type": "Web application"
+    "ict_type": "Web application",
+    "agency_context": "Fictional federal agency",
+    "research_mode": "guided"
   },
   "accessibility_requirements": {
     "identified": true,

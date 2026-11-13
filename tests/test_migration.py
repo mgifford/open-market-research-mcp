@@ -198,3 +198,23 @@ def test_duplicate_ids_are_rejected():
     data["research_questions"].append(copy.deepcopy(data["research_questions"][0]))
     with pytest.raises(ValueError, match="Duplicate research question"):
         validate_research(data)
+
+def test_optional_procurement_context_is_backward_compatible():
+    data = load(CURRENT)
+    data["project"].pop("agency_context", None)
+    data["project"].pop("research_mode", None)
+    assert "agency_context" not in data["project"]
+    prepared = prepare_research(data)
+    assert prepared["project"]["agency_context"] == ""
+    assert prepared["project"]["research_mode"] == ""
+
+    data["project"]["agency_context"] = "A fictional federal agency"
+    data["project"]["research_mode"] = "guided"
+    validate_research(data)
+    report = build_report(data)
+    assert "Agency or procurement context: A fictional federal agency" in report
+    assert "Research approach: Guided research" in report
+
+    data["project"]["research_mode"] = "automatic"
+    with pytest.raises(ValueError):
+        validate_research(data)

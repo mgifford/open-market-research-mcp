@@ -4,8 +4,8 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="color-scheme" content="light">
-  <meta name="description" content="An open-source, evidence-first market research companion for digital government acquisition and DITAP.">
-  <title>Open Market Research | DITAP Companion</title>
+  <meta name="description" content="A zero-install market research workspace for government procurement: define the need, investigate sources, compare evidence, and prepare a draft report.">
+  <title>Research a government purchase | Open Market Research</title>
   <link rel="stylesheet" href="./style.css">
   <script type="module" src="./app.js"></script>
 </head>
@@ -14,7 +14,7 @@
   <header class="site-header">
     <div class="container masthead">
       <div>
-        <p class="eyebrow">OPEN MARKET RESEARCH MCP</p>
+        <p class="eyebrow">OPEN MARKET RESEARCH</p>
         <p class="brand">Evidence first. Human decisions.</p>
       </div>
       <nav aria-label="Research stages">
@@ -25,28 +25,34 @@
         <a href="#accessibility">Accessibility</a>
         <a href="#findings">Findings</a>
         <a href="#report">Report</a>
-        <a href="#local-mcp">MCP</a>
-        <a href="#ai-engagement">AI</a>
+        <a href="./about.html">About</a>
       </nav>
     </div>
   </header>
   <noscript><div class="container"><p>JavaScript is required to use this local research workspace. You can still consult the source documentation in the GitHub repository.</p></div></noscript>
   <main id="main" class="container" tabindex="-1">
-    <section class="hero" aria-labelledby="intro-heading">
-      <p class="eyebrow">A practical DITAP companion</p>
-      <h1 id="intro-heading">Research the market, not just the incumbent.</h1>
-      <p class="lede">Document the need, plan the questions, record what you actually searched, compare alternatives, and trace findings back to evidence before writing the solicitation.</p>
-      <p>This is a local, educational research workspace. It does not query live procurement systems, certify accessibility, approve exceptions, or select vendors.</p>
-      <div class="actions">
-        <button id="demo" class="primary" type="button">Load fictional DITAP exercise</button>
-        <button id="reset" class="secondary" type="button">Start blank research</button>
-        <label for="import-file" class="file-button">Import saved research JSON
-          <input id="import-file" class="visually-hidden" type="file" accept=".json,application/json">
-        </label>
+    <section id="start" class="hero landing" aria-labelledby="intro-heading">
+      <p class="eyebrow">Market research for government purchases</p>
+      <h1 id="intro-heading">Research a government purchase</h1>
+      <p class="lede">Describe what your agency needs. We'll help you identify available solutions, investigate the market, compare evidence, and prepare a market research report.</p>
+      <p>No account, installation, API key, or AI subscription is required. Work stays in this browser tab until you save a research file.</p>
+      <div class="actions landing-actions">
+        <button id="start-new" class="primary" type="button">Start new research</button>
+        <label id="continue-research" class="file-button" for="import-file">Continue existing research<input id="import-file" class="visually-hidden" type="file" accept=".json,application/json"></label>
+        <button id="demo" class="secondary" type="button">Try a fictional DITAP example</button>
       </div>
-      <p class="small"><strong>Privacy:</strong> Your inputs stay in this browser tab unless you explicitly export them. There is no automatic storage, telemetry, or external AI request.</p>
       <p id="status" role="status" aria-live="polite" class="status">Ready to begin.</p>
-      <p id="next-action" class="next-action"><strong>Next:</strong> define the need below.</p>
+      <p id="next-action" class="next-action"><strong>Next:</strong> describe the need below.</p>
+      <div class="panel file-panel">
+        <h2>Save or resume your work</h2>
+        <p><strong>Save research file</strong> downloads a versioned JSON file. <strong>Continue existing research</strong> opens a saved file. The app does not upload or store your research.</p>
+        <div class="actions">
+          <button id="save-research" class="primary" type="button">Save research file</button>
+        </div>
+        <p class="small">A downloaded file is the dependable way to resume after closing the browser. Keep it under your agency's information-handling rules. Use <strong>Continue existing research</strong> above to reopen it.</p>
+      </div>
+      <p class="small"><strong>Privacy:</strong> Your inputs stay in this browser tab unless you explicitly save them. There is no automatic storage, telemetry, or external AI request. <a href="./about.html">About this tool and developer options</a>.</p>
+      <p class="small">This is an educational research workspace. It does not query live procurement systems, certify accessibility, approve exceptions, or select vendors.</p>
       <details class="guidance">
         <summary>Key terms and how this tool treats them</summary>
         <dl>
@@ -73,14 +79,22 @@
     <section id="scope" aria-labelledby="scope-heading">
       <div class="section-title"><span class="step">01</span><div><h2 id="scope-heading" tabindex="-1">Define the need</h2><p>Start from users and outcomes, not an incumbent product.</p></div></div>
       <form id="project-form" class="panel">
+        <p id="start-hint" class="hint">Start with what you know. You can leave fields blank and add detail later. Unknown is a valid answer.</p>
         <div class="field-grid">
-          <div class="field"><label for="project-name">Research title</label><input id="project-name" name="name" maxlength="300" placeholder="Example: modern case management" required></div>
-          <div class="field"><label for="ict-type">ICT category</label><input id="ict-type" name="ict_type" maxlength="300" placeholder="Web application, hardware, service..." required></div>
-          <div class="field span-2"><label for="need">User need and intended outcomes</label><textarea id="need" name="need" rows="3" maxlength="5000" required></textarea></div>
-          <div class="field span-2"><label for="users">Who must be able to use it?</label><textarea id="users" name="users" rows="2" maxlength="3000" placeholder="Include users with disabilities and other access needs"></textarea></div>
-          <div class="field span-2"><label for="constraints">Constraints and what is still unknown</label><textarea id="constraints" name="constraints" rows="2" maxlength="3000"></textarea></div>
+          <div class="field span-2"><label for="need">What problem are you trying to solve?</label><p id="need-hint" class="hint">Describe the service or operational problem, who it affects, and the outcome you want.</p><textarea id="need" name="need" rows="3" maxlength="5000" aria-describedby="need-hint"></textarea></div>
+          <div class="field"><label for="ict-type">What type of product or service are you researching?</label><input id="ict-type" name="ict_type" maxlength="300" placeholder="Web application, service, hardware..."></div>
+          <div class="field"><label for="agency-context">Which government or agency procurement context applies?</label><input id="agency-context" name="agency_context" maxlength="300" placeholder="Agency, bureau, or acquisition context"></div>
+          <div class="field"><label for="research-mode">How would you like to work?</label><select id="research-mode" name="research_mode"></select></div>
+          <div class="field"><label for="project-name">Research title (optional)</label><input id="project-name" name="name" maxlength="300" placeholder="Example: modern case management"></div>
         </div>
-        <button type="submit" class="primary">Save research scope</button>
+        <details class="guidance">
+          <summary>More context (optional): users and constraints</summary>
+          <div class="field-grid">
+            <div class="field span-2"><label for="users">Who must be able to use it?</label><textarea id="users" name="users" rows="2" maxlength="3000" placeholder="Include users with disabilities and other access needs"></textarea></div>
+            <div class="field span-2"><label for="constraints">Constraints and what is still unknown</label><textarea id="constraints" name="constraints" rows="2" maxlength="3000"></textarea></div>
+          </div>
+        </details>
+        <button type="submit" class="primary">Save need and continue</button>
       </form>
     </section>
 
@@ -326,108 +340,13 @@
         <p class="small">Import/export is local to this browser. Reports contain research notes and may require handling under agency information policies.</p>
       </div>
     </section>
-    <section id="local-mcp" aria-labelledby="local-mcp-heading">
-      <div class="section-title"><span class="step">MCP</span><div><h2 id="local-mcp-heading" tabindex="-1">About the local MCP</h2><p>The browser workspace is static. The deterministic MCP server runs separately on your computer.</p></div></div>
-      <div class="panel">
-        <p><strong>This page does not display live MCP data.</strong> GitHub Pages cannot start or reach a local stdio MCP server. The browser uses bundled JSON files for rules, sources, the fictional demo, and the public metadata snapshot.</p>
-        <p>The local server is optional. It adds deterministic tools and two JSON resources for an MCP-capable client; the browser does not need it, and the core workflow has no AI or network dependency.</p>
-        <h3>Run it locally</h3>
-        <pre><code>python3 -m venv .venv
-source .venv/bin/activate
-python3 -m pip install -e .
-omr-mcp</code></pre>
-        <p>Point your MCP client at the absolute path of the virtual environment's <code>omr-mcp</code> executable. The server uses local stdio and makes no live procurement or model requests. On Windows, activate with <code>.venv\Scripts\activate</code>.</p>
-        <details class="guidance">
-          <summary>Connect a local LLM</summary>
-          <p><strong>LM Studio 0.3.17+</strong> reads Cursor-style <code>mcp.json</code>. Use <strong>Program → Install → Edit mcp.json</strong> and add:</p>
-          <pre><code>{
-  "mcpServers": {
-    "open-market-research": {
-      "command": "/absolute/path/to/open-market-research-mcp/.venv/bin/omr-mcp",
-      "args": []
-    }
-  }
-}</code></pre>
-          <p><strong>Jan</strong> supports MCP natively: <strong>Settings → MCP Servers → + Add MCP Server</strong>, transport <code>STDIO</code>, the absolute command, no arguments. Enable it and use a tool-capable model.</p>
-          <p><strong>Ollama is a model runtime, not an MCP host.</strong> Use an MCP host such as <code>mcphost</code> with Ollama, or use LM Studio or Jan. No API key is needed for this server.</p>
-          <p>The full host-by-host setup, troubleshooting, and the no-MCP prompt-only option are in <code>docs/LOCAL-LLM.md</code> in the repository.</p>
-        </details>
-        <h3>What it exposes</h3>
-        <ul>
-          <li><strong>Eight read-only tools:</strong> source discovery, research planning, accessibility evidence questions, deterministic report drafting, public metadata normalization, OpenACR import, and USAspending record mapping.</li>
-          <li><strong>Two JSON resources:</strong> <code>research://sources</code> and <code>research://workflow</code>.</li>
-        </ul>
-        <p><strong>Boundaries:</strong> OpenACR import preserves supplier/author claims and does not certify conformance. Public metadata and USAspending mapping preserve provenance; mapping a selected record into a research file requires explicit human approval. See the repository README and <code>docs/ARCHITECTURE.md</code> for the local setup and limitations.</p>
-      </div>
-    </section>
-    <section id="ai-engagement" aria-labelledby="ai-heading">
-      <div class="section-title"><span class="step">AI</span><div><h2 id="ai-heading" tabindex="-1">Engaging an AI on this research</h2><p>Use AI to structure questions, critique evidence, and identify gaps. Keep the evidence and the decision with people.</p></div></div>
-      <div class="panel">
-        <p><strong>No AI is run by this page.</strong> This is static guidance for an AI conversation you choose to have elsewhere. The page does not send your research to a model, and the local MCP server is optional.</p>
-        <h3>Where AI can help</h3>
-        <ul>
-          <li>Turn a user need into researchable questions and possible source types.</li>
-          <li>Critique whether a finding is actually supported by the evidence record.</li>
-          <li>Surface contradictions, missing provenance, and unanswered questions.</li>
-          <li>Suggest neutral supplier or agency questions for human review.</li>
-          <li>Draft a report outline without adding facts or citations.</li>
-        </ul>
-        <h3>What not to delegate</h3>
-        <ul>
-          <li>Do not accept invented sources, dates, reviewers, or test results.</li>
-          <li>Do not turn a supplier claim into an independent finding.</li>
-          <li>Do not ask an AI to rank suppliers or choose a winner.</li>
-          <li>Do not ask an AI to declare Section 508 conformance or approve an exception.</li>
-          <li>Do not paste CUI, PII, vendor-proprietary, or procurement-sensitive material into a service without agency authorization and a retention decision.</li>
-        </ul>
-        <h3>Prompt patterns</h3>
-        <details>
-          <summary>Structure the research questions</summary>
-          <pre><code>You are helping structure public-sector market research. Do not invent sources or citations.
-Acquisition need: [paste the neutral need and user description]
-Known constraints: [paste constraints]
-Questions I have: [paste your draft questions]
-For each question, propose:
-1. the uncertainty it tests;
-2. a source type that could answer it;
-3. a concrete search query;
-4. what evidence would answer it;
-5. what would remain unverified.
-Do not recommend a supplier or conclude Section 508 conformance.</code></pre>
-        </details>
-        <details>
-          <summary>Critique the evidence and find gaps</summary>
-          <pre><code>Here are my research questions, searches, evidence records, and findings: [paste the JSON or a summary]
-Identify:
-- claims that are not supported by the cited evidence;
-- contradictions between records;
-- missing source, retrieval, or as-of dates;
-- searches described as completed when they are only reference links;
-- findings that should be unresolved questions.
-Do not add facts. Ask me for missing evidence instead.</code></pre>
-        </details>
-        <details>
-          <summary>Draft a neutral report structure</summary>
-          <pre><code>Given these findings and open decisions: [paste the JSON or a summary]
-Draft a neutral report outline that separates:
-- what was investigated;
-- what was found;
-- supplier claims;
-- missing or contradictory evidence;
-- questions for suppliers or specialists;
-- decisions that remain with people.
-Do not rank suppliers or state that an exception is approved.</code></pre>
-        </details>
-        <h3>If you connect the local MCP</h3>
-        <p>An MCP-capable client can call the local deterministic tools for source discovery, research planning, evidence questions, report drafting, metadata normalization, OpenACR import, and USAspending mapping. The AI still needs human review; the tools do not decide conformance or supplier suitability. See <a href="#local-mcp">About the local MCP</a>.</p>
-      </div>
-    </section>
     <section class="end-note" aria-label="Project information">
       <h2>What this starter does not do</h2>
       <p>It cannot search live procurement records, discover ACRs automatically, assess conformance, determine exceptions, or decide which supplier to choose. The browser does not parse ACR files; a local OpenACR YAML import prototype exists in the repository CLI and MCP server, for human review only. These integrations require further development and responsible validation.</p>
+      <p>Optional local MCP, local-LLM setup, and AI guidance are on <a href="./about.html">About this tool and developer options</a>. The research workflow itself requires no installation.</p>
       <p>Source code and technical documentation are included in the GitHub repository. This prototype is independent of GSA, DITAP, and 1102tools.</p>
     </section>
   </main>
-  <footer class="site-footer"><div class="container"><p>Open Market Research MCP, prototype 0.2.0. Not official U.S. government guidance. MIT-licensed starter.</p></div></footer>
+  <footer class="site-footer"><div class="container"><p>Open Market Research, prototype 0.2.0. Not official U.S. government guidance. MIT-licensed starter.</p></div></footer>
 </body>
 </html>

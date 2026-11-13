@@ -2,7 +2,7 @@
 
 ## Two ways to use the same research methodology
 
-**GitHub Pages** serves static HTML, JavaScript, and JSON. The browser operates locally, and users intentionally import or export their records. There is no database, remote MCP endpoint, or AI API from the site. The seven stages are: define the need, plan questions, search the market, evaluate alternatives, review accessibility, document findings/decisions, and prepare the report.
+**GitHub Pages** serves static HTML, JavaScript, and JSON. The browser operates locally, and users intentionally import or export their records. There is no database, remote MCP endpoint, or AI API from the site. The primary page is a zero-install landing and save/resume workspace. The seven stages are: define the need, plan questions, search the market, evaluate alternatives, review accessibility, document findings/decisions, and prepare the report. Optional MCP, local-LLM, and AI guidance live on `site/about.html`.
 
 **Local MCP** runs on the user's device through the official Python MCP SDK. It exposes curated public reference sources and deterministic helpers. The local MCP server does not call live government APIs or an LLM. An MCP host can use it alongside 1102tools.
 
@@ -22,7 +22,10 @@ A browser-only Pages app cannot securely proxy requests containing Hugging Face 
 - `src/omr_mcp/engine.py`: MCP server's deterministic research helpers.
 - `src/omr_mcp/openacr.py`: tolerant OpenACR YAML import for human inspection; it does not create or certify an ACR.
 - `src/omr_mcp/adapters/`: read-only normalization for public `code.json`, `agency-index.json`, and `publiccode.yml`, with a thin provenance envelope.
+- `site/index.html`: zero-install landing, simplified start, save/resume, and the research workspace.
+- `site/about.html`: secondary page for optional local MCP, local-LLM, and AI guidance.
 - `site/research.js` and `site/rules.js`: browser validation, questions, report draft, and rules loader.
+- `site/app.js`: browser interaction, source prefill, and human-readable file save/open.
 
 The browser and Python implementations now share question, validation, and
 report content through `rules.json`. The remaining duplication is the small

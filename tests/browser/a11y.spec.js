@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
-import { contrastRatio, fillCandidate, openApp } from './helpers.js';
+import { contrastRatio, fillCandidate, openAbout, openApp } from './helpers.js';
 
 const WCAG_TAGS = ['wcag2a', 'wcag2aa', 'wcag21aa', 'wcag22aa'];
 
@@ -86,4 +86,11 @@ test('focus remains visible in forced-colors mode', async ({ page }) => {
   });
   expect(outline.style).not.toBe('none');
   expect(outline.width).toBeGreaterThanOrEqual(2);
+});
+
+
+test('About page has no automated WCAG A/AA violations', async ({ page }) => {
+  await openAbout(page);
+  const results = await new AxeBuilder({ page }).withTags(WCAG_TAGS).analyze();
+  expect(results.violations).toEqual([]);
 });

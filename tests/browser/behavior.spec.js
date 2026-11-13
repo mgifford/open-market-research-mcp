@@ -101,3 +101,14 @@ test('candidate source and ACR links name the candidate', async ({ page }) => {
   );
   expect(names).toEqual(['View source: Named option', 'Open ACR link: Named option']);
 });
+
+test('starting a new record asks before discarding unsaved work', async ({ page }) => {
+  await openApp(page);
+  await page.fill('#need', 'UNSAVED START FLOW');
+  page.once('dialog', dialog => dialog.dismiss());
+  await page.click('#start-new');
+  await expect(page.locator('#need')).toHaveValue('UNSAVED START FLOW');
+  page.once('dialog', dialog => dialog.accept());
+  await page.click('#start-new');
+  await expect(page.locator('#need')).toHaveValue('');
+});

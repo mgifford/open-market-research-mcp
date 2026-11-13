@@ -92,3 +92,10 @@ fieldset legend { font-weight:750; padding:0 .3rem; }
 input[type=checkbox],input[type=radio] { width:auto; min-width:1.1rem; min-height:1.1rem; }
 button.secondary[hidden],[hidden] { display:none!important; }
 @media (max-width:760px) { .checkbox-grid { grid-template-columns:1fr; } }
+
+/* Zero-install landing and save/resume affordances */
+.landing .lede { max-width: 62ch; }
+.file-panel { margin-top: 1.25rem; }
+.file-panel h2 { margin-top: 0; font-size: 1.1rem; }
+.hint { color: var(--muted); font-size: .9rem; margin: .15rem 0 .45rem; max-width: 62ch; }
+.source-card button { margin-top: .25rem; }

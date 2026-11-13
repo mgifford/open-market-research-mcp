@@ -4,6 +4,16 @@ An open-source, evidence-first market research companion for digital government 
 
 **Version:** 0.2.0, educational starter. Not affiliated with or endorsed by USDS, GSA, CMS, DITAP, or 1102tools.
 
+## Start here
+
+Open the published GitHub Pages site. You do not need an account, installation, API key, or AI subscription.
+
+- **Start new research** asks for the problem, the product or service type, the agency context, and whether you prefer guided, manual, or approved-AI-assisted work.
+- **Continue existing research** opens a saved JSON file.
+- **Try a fictional DITAP example** loads the teaching case.
+
+The browser workspace is static. Save a research file to resume after closing the browser; nothing is uploaded automatically. Optional local MCP, local-LLM, and AI guidance are on the **About** page and are not required for the workflow.
+
 The practical objective is to help an acquisition professional answer:
 
 1. What problem are we trying to solve, and for whom?
@@ -15,9 +25,10 @@ The practical objective is to help an acquisition professional answer:
 
 ## What works today
 
-- **GitHub Pages browser app:** Seven guided stages from defining the need through questions, searches, alternatives, accessibility evidence, findings/decisions, and report export. Record what was actually searched, attach evidence to candidates, and export JSON or a Markdown draft.
+- **Zero-install GitHub Pages app:** A plain-language landing page, simplified starting questions, and the seven-stage research workflow. Save or reopen a human-readable JSON file, use source cards to prefill a **not-searched** search form, and export JSON or a Markdown draft. No account or installation.
+- **Optional technical About page:** Local MCP, local-LLM, and AI prompt guidance are separated from the primary research task.
 - **Evidence-backed research record (0.2.0):** Research questions, searches, evidence, findings, and pending decisions are linked by stable identifiers. Legacy 0.1.0 records import through a documented migration that does not invent history.
-- **Static About the local MCP and AI guidance:** The Pages app explains the local stdio server, its tools/resources, and its boundaries without claiming live MCP data, and provides copyable AI prompt patterns that do not execute a model.
+- **Static About the local MCP and AI guidance:** The About page explains the local stdio server, its tools/resources, and its boundaries without claiming live MCP data, and provides copyable AI prompt patterns that do not execute a model.
 - **Shared decision rules:** `src/omr_mcp/rules.json` drives the browser and Python questions, validation limits, and report wording from one versioned source.
 - **Local MCP server:** Eight read-only/deterministic tools and two resources for source discovery, research planning, accessibility evidence questions, report drafting, public metadata normalization, OpenACR import, and fixture-based USAspending record mapping.
 - **Public metadata adapters:** Read-only normalization of public `code.json`, `agency-index.json`, and `publiccode.yml` with source, retrieval date, data-as-of date, license, access rights, and limitations.
@@ -148,7 +159,7 @@ These links are reference sources, not claims that any external program endorses
 
 ## What to build next
 
-See [Roadmap](docs/ROADMAP.md), [research schema](docs/SCHEMA.md), [migration](docs/MIGRATION.md), [DITAP alignment](docs/DITAP.md), [workshop materials](docs/workshop/README.md), [decision rules](docs/DECISION-RULES.md), [public metadata adapters](docs/ADAPTERS.md), [OpenACR import](docs/OPENACR-IMPORT.md), [1102tools integration proposal](docs/INTEGRATION-1102TOOLS.md), [implementation agent prompt](docs/IMPLEMENTATION-PROMPT.md), [security](SECURITY.md), and [contributing](CONTRIBUTING.md).
+See [Phase 1 assessment](docs/PHASE1-ASSESSMENT.md), [procurement usability test plan](docs/USABILITY-TEST-PLAN.md), [Roadmap](docs/ROADMAP.md), [research schema](docs/SCHEMA.md), [migration](docs/MIGRATION.md), [DITAP alignment](docs/DITAP.md), [workshop materials](docs/workshop/README.md), [decision rules](docs/DECISION-RULES.md), [public metadata adapters](docs/ADAPTERS.md), [OpenACR import](docs/OPENACR-IMPORT.md), [1102tools integration proposal](docs/INTEGRATION-1102TOOLS.md), [implementation agent prompt](docs/IMPLEMENTATION-PROMPT.md), [security](SECURITY.md), and [contributing](CONTRIBUTING.md).
 
 ## License
 

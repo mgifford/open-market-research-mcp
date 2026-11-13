@@ -15,7 +15,7 @@ in this environment.
 Use this when your local model cannot call tools yet, or when you only want help
 structuring the research.
 
-1. Open the published site and read **Engaging an AI on this research**.
+1. Open the published site, choose **About**, and read **Engaging an AI on this research**.
 2. Copy one of the prompt patterns.
 3. Replace the placeholders with your neutral need, questions, and constraints.
 4. To discuss evidence, export the research JSON or Markdown from the site and

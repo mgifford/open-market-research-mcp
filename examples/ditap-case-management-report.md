@@ -19,6 +19,8 @@ Market research working report: DITAP workshop: accessible case management
 - Users: Members of the public and agency staff who use assistive technology, mobile devices, and low-bandwidth connections.
 - Constraints: Illustrative exercise only. Do not use this as market research evidence or as a supplier shortlist.
 - ICT type: Web application
+- Agency or procurement context: Fictional federal agency
+- Research approach: Guided research
 
 ## Research questions
 
@@ -379,10 +381,14 @@ A missing or not-evaluated ACR claim is not a failed accessibility test. A valid
 - Search s-acr: Fictional ACR index (https://example.gov/acr-index), searched 2026-11-07T09:00, source as of 2026-10-20, method Manual, status Completed with results.
 - Search s-small-business: Fictional small-business portal (https://example.gov/small-business), searched 2026-11-07T10:00, source as of not recorded, method Manual, status Failed.
 - Search s-interoperability: Fictional standards library (https://example.gov/standards), searched not recorded, source as of not recorded, method Manual, status Not searched.
-- Evidence ev-reuse-inventory: Fictional government software inventory (https://example.gov/inventory/record-1), retrieved 2026-11-05T09:10, source as of 2026-10-01, type Government software metadata, verification Unverified.
-- Evidence ev-reuse-archive: Fictional archived system index (https://example.gov/archive-index/record-1), retrieved 2026-11-05T09:25, source as of 2025-12-01, type Government software metadata, verification Unverified.
-- Evidence ev-open: Fictional OpenCase project (https://example.gov/open-source-index/opencase), retrieved 2026-11-06T10:10, source as of 2026-10-15, type Government software metadata, verification Unverified.
-- Evidence ev-acr-commercial: Fictional commercial ACR (https://example.gov/acr/commercial-4.2), retrieved 2026-11-07T09:10, source as of 2026-09-15, type Accessibility report, verification Unverified.
+- Evidence ev-reuse-inventory: Fictional government software inventory (https://example.gov/inventory/record-1), identifier record-1, retrieved 2026-11-05T09:10, source as of 2026-10-01, type Government software metadata, verification Unverified.
+  - Claim: A fictional case management system is listed as production.
+- Evidence ev-reuse-archive: Fictional archived system index (https://example.gov/archive-index/record-1), identifier record-1, retrieved 2026-11-05T09:25, source as of 2025-12-01, type Government software metadata, verification Unverified.
+  - Claim: A second fictional index marks the system archived.
+- Evidence ev-open: Fictional OpenCase project (https://example.gov/open-source-index/opencase), identifier opencase, retrieved 2026-11-06T10:10, source as of 2026-10-15, type Government software metadata, verification Unverified.
+  - Claim: Repository metadata reports version 3.2 and recent maintenance activity.
+- Evidence ev-acr-commercial: Fictional commercial ACR (https://example.gov/acr/commercial-4.2), identifier acr-4.2, retrieved 2026-11-07T09:10, source as of 2026-09-15, type Accessibility report, verification Unverified.
+  - Claim: The vendor ACR reports partial support for 2.4.7, does not support 1.1.1, and leaves several criteria not evaluated.
 
 ## Required human review
 

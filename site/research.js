@@ -17,6 +17,8 @@ const TOP_LEVEL_FIELDS = ['schema_version', 'demonstration_only', 'migration', '
 const message = (name, values = {}) => format(getRules().messages[name], values);
 const isObject = value => value !== null && typeof value === 'object' && !Array.isArray(value);
 const projectFields = () => ['name', ...getRules().report.project_fields.map(spec => spec.field)];
+const optionalProjectFields = () => (getRules().report.optional_project_fields || []).map(spec => spec.field);
+const projectAllowedFields = () => [...projectFields(), ...optionalProjectFields()];
 const candidateFields = () => ['id', 'name', ...getRules().report.candidate_fields.map(spec => spec.field), 'acr'];
 const label = (group, value) => getRules().labels[group]?.[value] || String(value).replaceAll('-', ' ');
 
@@ -49,7 +51,7 @@ function uniqueIds(records, kind) {
 export const emptyResearch = () => ({
   schema_version: getRulesOrNull()?.schema_version || SCHEMA_VERSION,
   demonstration_only: false,
-  project: { name: '', need: '', users: '', constraints: '', ict_type: '' },
+  project: { name: '', need: '', users: '', constraints: '', ict_type: '', agency_context: '', research_mode: 'guided' },
   accessibility_requirements: {
     identified: false,
     tool: '',
@@ -241,12 +243,21 @@ function validateCurrent(data) {
   if (!isObject(data.project)) throw new Error(message('project'));
   const projects = projectFields();
   for (const key of Object.keys(data.project)) {
-    if (!projects.includes(key)) throw new Error(message('extra', { field: key }));
+    if (!projectAllowedFields().includes(key)) throw new Error(message('extra', { field: key }));
   }
   for (const field of projects) {
     if (typeof data.project[field] !== 'string' || data.project[field].length > rules.limits.project[field]) {
       throw new Error(message('project_fields'));
     }
+  }
+  for (const field of optionalProjectFields()) {
+    if (!(field in data.project)) continue;
+    if (typeof data.project[field] !== 'string' || data.project[field].length > rules.limits.project[field]) {
+      throw new Error(message('project_fields'));
+    }
+  }
+  if (data.project.research_mode && !rules.research_modes.includes(data.project.research_mode)) {
+    throw new Error(message('field', { field: 'research_mode' }));
   }
 
   const accessibility = data.accessibility_requirements;
@@ -386,6 +397,7 @@ export function validateResearch(data) {
 
 export function prepareResearch(data) {
   const prepared = relink(migrateResearch(data));
+  prepared.project = { ...Object.fromEntries(optionalProjectFields().map(field => [field, ''])), ...prepared.project };
   validateCurrent(prepared);
   return prepared;
 }
@@ -440,6 +452,11 @@ export function markdownReport(data, sources = []) {
   lines.push(report.headings.need, '');
   for (const spec of report.project_fields) {
     lines.push(`- ${spec.label}: ${project[spec.field] || report.missing.project}`);
+  }
+  for (const spec of report.optional_project_fields || []) {
+    const value = project[spec.field];
+    if (!value) continue;
+    lines.push(`- ${spec.label}: ${spec.labels ? label(spec.labels, value) : value}`);
   }
   lines.push('', report.headings.research_questions, '');
   if (!questions.length) lines.push(report.no_data.questions);

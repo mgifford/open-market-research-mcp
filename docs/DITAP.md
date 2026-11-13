@@ -11,9 +11,13 @@ The exercise supplements, and does not replace, the existing syllabus or agency-
 
 A fictional federal program needs to modernize case management. The team must define intended users and tasks, search the market broadly, recognize government reuse and open-source alternatives, request appropriate ACR evidence, and document uncertainties.
 
+## Zero-install classroom start
+
+Open the published site and use **Try a fictional DITAP example**, or choose **Start new research**. No installation or account is needed. Ask learners to save a research file before closing the browser; **Continue existing research** reopens it. Optional local MCP and AI guidance are on the **About** page and are not prerequisites.
+
 ## 45-minute workshop plan
 
-1. (5 minutes) Define the service need and identify the affected users.
+1. (5 minutes) Define the service need, the agency context, and the affected users.
 2. (10 minutes) Search source directories and decide which live systems should be queried externally. Note that the starter does not run these searches itself.
 3. (10 minutes) Create at least three research options across different approaches. Use fictional names or defensible published sources; do not imply a result was independently verified.
 4. (10 minutes) Record any available ACR links, product versions, partial claims, and planned testing. Identify missing evidence, and generate an appropriate follow-up question.

@@ -112,7 +112,7 @@ test('legacy 0.1.0 records migrate without invented history', () => {
   assert.equal(validateResearch(legacy), true);
   const migrated = prepareResearch(legacy);
   assert.equal(migrated.schema_version, '0.2.0');
-  assert.deepEqual(migrated.project, legacy.project);
+  assert.deepEqual(migrated.project, { ...legacy.project, agency_context: '', research_mode: '' });
   assert.equal(migrated.searches.length, 0);
   assert.equal(migrated.evidence.length, 0);
   assert.equal(migrated.migration.from_schema_version, '0.1.0');
@@ -156,4 +156,15 @@ test('no-result and failed searches remain distinct', () => {
   data.searches[0].status = 'failed';
   data.searches[0].result_count = null;
   assert.match(markdownReport(data), /failed: 1/);
+});
+
+test('optional procurement context is backward compatible', () => {
+  const data = emptyResearch();
+  data.project.agency_context = 'A fictional federal agency';
+  data.project.research_mode = 'guided';
+  assert.equal(validateResearch(data), true);
+  assert.match(markdownReport(data), /Agency or procurement context: A fictional federal agency/);
+  assert.match(markdownReport(data), /Research approach: Guided research/);
+  data.project.research_mode = 'automatic';
+  assert.throws(() => validateResearch(data), /research_mode/);
 });

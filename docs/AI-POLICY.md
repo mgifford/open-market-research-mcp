@@ -4,6 +4,10 @@
 
 AI is not necessary to perform the starter's core tasks. The browser never sends user inputs to external services. The local MCP server performs deterministic operations without a model, including public metadata normalization and OpenACR YAML import.
 
+## Phase 1: static guidance only
+
+The zero-install workspace does not call an AI service. Copyable prompt patterns and AI guardrails live on the secondary About page. Generated, context-specific prompts and one-click copying are deferred to Phase 2. No model, API key, or hosted AI endpoint is required for the core workflow.
+
 ## Experiment included
 
 `.github/workflows/hf-demo.yml` is a manually triggered GitHub Action that sends only the explicitly fictional, public DITAP fixture to Hugging Face Inference Providers. It requires a repository secret `HF_TOKEN` and the selected model ID. The output is marked unverified and delivered as an Action artifact. It is never deployed to the website.

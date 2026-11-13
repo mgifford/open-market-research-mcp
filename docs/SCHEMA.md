@@ -8,7 +8,7 @@ browser and Python engine share the validation values and report wording in
 
 | Field | Purpose |
 | --- | --- |
-| `project` | Acquisition need, intended users, constraints, and ICT category |
+| `project` | Acquisition need, intended users, constraints, ICT category, and optional agency/research context |
 | `accessibility_requirements` | Whether Section 508 requirements were identified, by which tool/reviewer, and as of when |
 | `research_questions` | Questions that must be answered before the research can support a decision |
 | `searches` | What was actually searched, how, when, and with what result |
@@ -16,6 +16,15 @@ browser and Python engine share the validation values and report wording in
 | `findings` | Traceable conclusions linked to supporting and contradictory evidence |
 | `decisions` | Human follow-up, specialist review, or unresolved decisions |
 | `candidates` | Government reuse, open-source, commercial, and new-build alternatives |
+
+### Optional project context
+
+`project.agency_context` and `project.research_mode` are optional additive
+0.2.0 properties. Existing records without them remain valid. `research_mode`
+is one of `guided`, `manual`, or `ai-assisted`; an empty string means the user
+has not chosen. `prepareResearch()` / `prepare_research()` add empty values
+when a record is loaded so the browser form can display them without inventing
+a choice. Reports include these lines only when a value is present.
 
 ## Search status
 
