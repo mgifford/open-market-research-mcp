@@ -168,3 +168,19 @@ test('optional procurement context is backward compatible', () => {
   data.project.research_mode = 'automatic';
   assert.throws(() => validateResearch(data), /research_mode/);
 });
+
+test('AI assistance is optional and disclosed only when used', () => {
+  const data = emptyResearch();
+  assert.deepEqual(data.ai_assistance, { used: false, tool: '', actions: [], notes: '' });
+  assert.doesNotMatch(markdownReport(data), /AI assistance recorded/);
+  data.ai_assistance = {
+    used: true,
+    tool: 'Fictional approved assistant',
+    actions: ['plan'],
+    notes: 'A person checked the sources.'
+  };
+  validateResearch(data);
+  assert.match(markdownReport(data), /AI assistance recorded: Fictional approved assistant/);
+  data.ai_assistance.actions = ['automatic'];
+  assert.throws(() => validateResearch(data), /ai_assistance/);
+});

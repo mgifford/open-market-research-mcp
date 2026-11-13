@@ -218,3 +218,25 @@ def test_optional_procurement_context_is_backward_compatible():
     data["project"]["research_mode"] = "automatic"
     with pytest.raises(ValueError):
         validate_research(data)
+
+def test_ai_assistance_is_optional_and_disclosed():
+    data = load(CURRENT)
+    data.pop("ai_assistance", None)
+    prepared = prepare_research(data)
+    assert prepared["ai_assistance"] == {"used": False, "tool": "", "actions": [], "notes": ""}
+
+    data["ai_assistance"] = {
+        "used": True,
+        "tool": "Fictional approved assistant",
+        "actions": ["plan", "review"],
+        "notes": "A person checked the sources.",
+    }
+    validate_research(data)
+    report = build_report(data)
+    assert "AI assistance recorded: Fictional approved assistant" in report
+    assert "Plan my research" in report
+    assert "AI output is assistance, not evidence" in report
+
+    data["ai_assistance"]["actions"] = ["automatic"]
+    with pytest.raises(ValueError):
+        validate_research(data)

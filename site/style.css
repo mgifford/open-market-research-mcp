@@ -99,3 +99,9 @@ button.secondary[hidden],[hidden] { display:none!important; }
 .file-panel h2 { margin-top: 0; font-size: 1.1rem; }
 .hint { color: var(--muted); font-size: .9rem; margin: .15rem 0 .45rem; max-width: 62ch; }
 .source-card button { margin-top: .25rem; }
+
+.source-details { margin: .4rem 0 .7rem; }
+.source-details summary { color: var(--accent-strong); font-weight: 700; }
+.source-details dl { margin: .45rem 0 0; }
+.source-details dt { font-weight: 750; margin-top: .4rem; }
+.source-details dd { margin: .1rem 0 0; }

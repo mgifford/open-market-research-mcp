@@ -12,7 +12,7 @@ Open the published GitHub Pages site. You do not need an account, installation, 
 - **Continue existing research** opens a saved JSON file.
 - **Try a fictional DITAP example** loads the teaching case.
 
-The browser workspace is static. Save a research file to resume after closing the browser; nothing is uploaded automatically. Optional local MCP, local-LLM, and AI guidance are on the **About** page and are not required for the workflow.
+The browser workspace is static. Save a research file to resume after closing the browser; nothing is uploaded automatically. Use **AI help** to generate a prompt for an approved agency assistant, or open the **About** page for optional local MCP and local-LLM setup. None of these is required.
 
 The practical objective is to help an acquisition professional answer:
 
@@ -25,8 +25,10 @@ The practical objective is to help an acquisition professional answer:
 
 ## What works today
 
-- **Zero-install GitHub Pages app:** A plain-language landing page, simplified starting questions, and the seven-stage research workflow. Save or reopen a human-readable JSON file, use source cards to prefill a **not-searched** search form, and export JSON or a Markdown draft. No account or installation.
-- **Optional technical About page:** Local MCP, local-LLM, and AI prompt guidance are separated from the primary research task.
+- **Zero-install GitHub Pages app:** A plain-language landing page, simplified starting questions, source guidance, an approved-AI prompt assistant, and the seven-stage research workflow. Save or reopen a human-readable JSON file, use source cards to prefill a **not-searched** search form, and export JSON or a Markdown draft. No account or installation.
+- **Approved-AI prompt assistant:** Generate, preview, and copy prompts for **Plan my research**, **Review my evidence**, and **Draft my report**. The page does not call a model. Prompts are built from the current record and require human verification.
+- **AI-use disclosure:** Optionally record the approved tool, actions, and what a person verified; the report includes it only when AI use is explicitly marked.
+- **Optional technical About page:** Local MCP and local-LLM setup are separated from the primary research task.
 - **Evidence-backed research record (0.2.0):** Research questions, searches, evidence, findings, and pending decisions are linked by stable identifiers. Legacy 0.1.0 records import through a documented migration that does not invent history.
 - **Static About the local MCP and AI guidance:** The About page explains the local stdio server, its tools/resources, and its boundaries without claiming live MCP data, and provides copyable AI prompt patterns that do not execute a model.
 - **Shared decision rules:** `src/omr_mcp/rules.json` drives the browser and Python questions, validation limits, and report wording from one versioned source.
@@ -159,7 +161,7 @@ These links are reference sources, not claims that any external program endorses
 
 ## What to build next
 
-See [Phase 1 assessment](docs/PHASE1-ASSESSMENT.md), [procurement usability test plan](docs/USABILITY-TEST-PLAN.md), [Roadmap](docs/ROADMAP.md), [research schema](docs/SCHEMA.md), [migration](docs/MIGRATION.md), [DITAP alignment](docs/DITAP.md), [workshop materials](docs/workshop/README.md), [decision rules](docs/DECISION-RULES.md), [public metadata adapters](docs/ADAPTERS.md), [OpenACR import](docs/OPENACR-IMPORT.md), [1102tools integration proposal](docs/INTEGRATION-1102TOOLS.md), [implementation agent prompt](docs/IMPLEMENTATION-PROMPT.md), [security](SECURITY.md), and [contributing](CONTRIBUTING.md).
+See [Phase 1 assessment](docs/PHASE1-ASSESSMENT.md), [Phase 2 assessment](docs/PHASE2-ASSESSMENT.md), [procurement usability test plan](docs/USABILITY-TEST-PLAN.md), [Roadmap](docs/ROADMAP.md), [research schema](docs/SCHEMA.md), [migration](docs/MIGRATION.md), [DITAP alignment](docs/DITAP.md), [workshop materials](docs/workshop/README.md), [decision rules](docs/DECISION-RULES.md), [public metadata adapters](docs/ADAPTERS.md), [OpenACR import](docs/OPENACR-IMPORT.md), [1102tools integration proposal](docs/INTEGRATION-1102TOOLS.md), [implementation agent prompt](docs/IMPLEMENTATION-PROMPT.md), [security](SECURITY.md), and [contributing](CONTRIBUTING.md).
 
 ## License
 

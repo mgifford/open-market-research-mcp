@@ -33,6 +33,17 @@
       },
       "additionalProperties": false
     },
+    "ai_assistance": {
+      "type": "object",
+      "required": ["used", "tool", "actions", "notes"],
+      "properties": {
+        "used": {"type": "boolean"},
+        "tool": {"type": "string", "maxLength": 300},
+        "actions": {"type": "array", "items": {"enum": ["plan", "review", "draft"]}, "maxItems": 3},
+        "notes": {"type": "string", "maxLength": 5000}
+      },
+      "additionalProperties": false
+    },
     "accessibility_requirements": {
       "type": "object",
       "required": ["identified", "tool", "reviewer", "as_of", "requirement_ids", "notes"],

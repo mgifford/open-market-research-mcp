@@ -30,15 +30,16 @@ The public application is a static, zero-install research workspace. The local M
 
 Completion criterion: a nontechnical officer can begin and save research without an account or installation. This is implemented but not yet demonstrated with users.
 
-## Phase 2 — source discovery and AI assistance
+## Phase 2 — source discovery and AI assistance (implemented, validation pending)
 
-- [ ] Expand source cards with what the source answers, authentication expectations, and recording guidance.
-- [ ] Add prepared, documented search strategies without fabricating deep links or API behavior.
-- [ ] Generate context-sensitive prompts for **Plan my research**, **Review my evidence**, and **Draft my report**.
-- [ ] Add preview and one-click copy with sensitive-information warnings.
-- [ ] Record AI assistance in the research methodology when it materially contributes.
-- [ ] Keep proposed searches distinct from performed searches.
-- [ ] Add automated tests for generated prompts and copy behavior.
+- [x] Expand source cards with what the source answers, when to use it, authentication expectations, recording guidance, and a search strategy.
+- [x] Add prepared, documented search strategies without fabricating deep links or API behavior.
+- [x] Generate context-sensitive prompts for **Plan my research**, **Review my evidence**, and **Draft my report**.
+- [x] Add preview and one-click copy with sensitive-information warnings.
+- [x] Record AI assistance in the research methodology when it materially contributes.
+- [x] Keep proposed searches distinct from performed searches in prompts, source prefill, and the report.
+- [x] Add automated tests for generated prompts, copy behavior, source guidance, and AI-use disclosure.
+- [ ] Validate prompt usefulness with procurement officers and approved AI tools.
 
 ## Phase 3 — evidence and reporting
 

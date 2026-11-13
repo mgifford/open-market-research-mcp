@@ -112,9 +112,9 @@ These are prompt phases 2–5 and are **not** claimed as delivered:
 
 Local results on this branch:
 
-- Python: **51 passed**
-- Node: **9 passed**
-- Playwright: **32 passed**
+- Python: **52 passed**
+- Node: **10 passed**
+- Playwright: **33 passed**
 - OpenACR CLI: **Valid!**
 - Build: pass
 - Ruff: pass

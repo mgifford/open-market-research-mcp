@@ -12,7 +12,8 @@ const EVIDENCE_FIELDS = ['id', 'search_id', 'source_name', 'source_url', 'source
 const FINDING_FIELDS = ['id', 'description', 'supporting_evidence_ids', 'contradicting_evidence_ids', 'evidence_gap', 'question_ids', 'candidate_ids', 'requires_verification', 'reviewer_notes'];
 const DECISION_FIELDS = ['id', 'description', 'decision_type', 'status', 'owner', 'rationale', 'evidence_ids', 'due_date', 'resolved_at'];
 const ACCESSIBILITY_FIELDS = ['identified', 'tool', 'reviewer', 'as_of', 'requirement_ids', 'notes'];
-const TOP_LEVEL_FIELDS = ['schema_version', 'demonstration_only', 'migration', 'project', 'accessibility_requirements', 'research_questions', 'searches', 'evidence', 'findings', 'decisions', 'candidates'];
+const TOP_LEVEL_FIELDS = ['schema_version', 'demonstration_only', 'migration', 'project', 'ai_assistance', 'accessibility_requirements', 'research_questions', 'searches', 'evidence', 'findings', 'decisions', 'candidates'];
+const AI_ASSISTANCE_FIELDS = ['used', 'tool', 'actions', 'notes'];
 
 const message = (name, values = {}) => format(getRules().messages[name], values);
 const isObject = value => value !== null && typeof value === 'object' && !Array.isArray(value);
@@ -52,6 +53,7 @@ export const emptyResearch = () => ({
   schema_version: getRulesOrNull()?.schema_version || SCHEMA_VERSION,
   demonstration_only: false,
   project: { name: '', need: '', users: '', constraints: '', ict_type: '', agency_context: '', research_mode: 'guided' },
+  ai_assistance: { used: false, tool: '', actions: [], notes: '' },
   accessibility_requirements: {
     identified: false,
     tool: '',
@@ -260,6 +262,22 @@ function validateCurrent(data) {
     throw new Error(message('field', { field: 'research_mode' }));
   }
 
+  if (data.ai_assistance !== undefined) {
+    const ai = data.ai_assistance;
+    if (!isObject(ai)) throw new Error(message('field', { field: 'ai_assistance' }));
+    for (const key of Object.keys(ai)) {
+      if (!AI_ASSISTANCE_FIELDS.includes(key)) throw new Error(message('extra', { field: key }));
+    }
+    for (const field of AI_ASSISTANCE_FIELDS) {
+      if (!(field in ai)) throw new Error(message('field', { field }));
+    }
+    if (typeof ai.used !== 'boolean') throw new Error(message('field', { field: 'ai_assistance.used' }));
+    textFields(ai, rules.limits.ai_assistance);
+    if (!Array.isArray(ai.actions) || ai.actions.length > 3 || ai.actions.some(action => !rules.ai_actions.includes(action))) {
+      throw new Error(message('field', { field: 'ai_assistance.actions' }));
+    }
+  }
+
   const accessibility = data.accessibility_requirements;
   if (!isObject(accessibility)) throw new Error(message('field', { field: 'accessibility_requirements' }));
   for (const key of Object.keys(accessibility)) {
@@ -398,6 +416,7 @@ export function validateResearch(data) {
 export function prepareResearch(data) {
   const prepared = relink(migrateResearch(data));
   prepared.project = { ...Object.fromEntries(optionalProjectFields().map(field => [field, ''])), ...prepared.project };
+  prepared.ai_assistance = { used: false, tool: '', actions: [], notes: '', ...(prepared.ai_assistance || {}) };
   validateCurrent(prepared);
   return prepared;
 }
@@ -478,7 +497,14 @@ export function markdownReport(data, sources = []) {
   const sourceText = Object.entries(sourceCounts).map(([key, count]) => `${label('source_types', key)} (${count})`).join(', ') || 'None recorded';
   lines.push(`- Search methods: ${methodText}.`, `- Source types: ${sourceText}.`,
     '- Only the searches recorded in this file count as investigations. A reference link is not evidence that a search was performed.',
-    '- No result, no matching record, partial coverage, and a failed search are recorded as different states.', '');
+    '- No result, no matching record, partial coverage, and a failed search are recorded as different states.');
+  const ai = prepared.ai_assistance || {};
+  if (ai.used) {
+    const tool = ai.tool || 'tool not named';
+    const actions = ai.actions.map(action => label('ai_actions', action)).join(', ') || 'not recorded';
+    lines.push(`- AI assistance recorded: ${tool}; actions: ${actions}; note: ${ai.notes || 'no additional note'}. AI output is assistance, not evidence; a person must verify the record.`);
+  }
+  lines.push('');
 
   const investigated = searches.filter(search => search.status !== 'not-searched');
   lines.push(report.headings.investigated_sources, '');
