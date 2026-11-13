@@ -7,6 +7,13 @@ let publicSoftware = [];
 let publicSnapshotAsOf = 'not recorded';
 let sourceStatusTimer;
 const editing = { question: null, search: null, evidence: null, finding: null, decision: null };
+let aiPromptText = '';
+let aiUsedActions = new Set();
+const AI_DESCRIPTIONS = {
+  plan: 'Ask for research strategies, useful source types, neutral queries, and the evidence each question needs. Proposed searches are not completed searches.',
+  review: 'Ask for unsupported statements, contradictions, missing references, stale sources, and incomplete verification. The AI must not add facts.',
+  draft: 'Ask for a neutral report organized from the recorded evidence. It must not invent facts, citations, suppliers, or determinations.'
+};
 const byId = id => document.getElementById(id);
 const status = message => { byId('status').textContent = message; };
 
@@ -394,7 +401,26 @@ function renderSources() {
     use.setAttribute('aria-label', `Use this source: ${s.name}`);
     use.addEventListener('click', () => useSource(s));
     article.append(createText('p', s.category.replaceAll('-', ' '), 'category'), h3,
-      createText('p', s.purpose), createText('p', `Limit: ${s.limitations}`, 'small'), use);
+      createText('p', s.purpose), createText('p', `Limit: ${s.limitations}`, 'small'));
+    if (s.use_when || s.questions || s.authentication || s.record_how || s.search_strategy) {
+      const details = document.createElement('details');
+      details.className = 'source-details';
+      details.append(createText('summary', 'Access, questions, and how to record'));
+      const dl = document.createElement('dl');
+      for (const [term, value] of [
+        ['Use when', s.use_when],
+        ['Questions it can help answer', s.questions],
+        ['Access', s.authentication],
+        ['How to record', s.record_how],
+        ['Search strategy', s.search_strategy]
+      ]) {
+        if (!value) continue;
+        dl.append(createText('dt', term), createText('dd', value));
+      }
+      details.append(dl);
+      article.append(details);
+    }
+    article.append(use);
     list.append(article);
   }
   if (!filtered.length) list.append(createText('p', 'No sources match this filter.'));
@@ -469,8 +495,138 @@ function renderNextAction() {
   container.append(link);
 }
 
+function aiPromptData() {
+  const data = structuredClone(research);
+  applyProjectForm(data);
+  return data;
+}
+
+function promptLabel(value) { return label('question_statuses', value); }
+function searchLabel(value) { return label('search_statuses', value); }
+
+function promptFor(action, data) {
+  const project = data.project;
+  const lines = [];
+  lines.push('You are assisting a U.S. government procurement team with market research. AI output is not evidence. Use only the information below. Do not invent sources, citations, dates, supplier capabilities, accessibility results, or procurement determinations. A person must verify every claim.');
+  lines.push('', 'RESEARCH CONTEXT');
+  for (const [name, value] of [
+    ['Problem or need', project.need],
+    ['Product or service', project.ict_type],
+    ['Agency or procurement context', project.agency_context],
+    ['Users and access needs', project.users],
+    ['Constraints and unknowns', project.constraints],
+    ['Research approach', project.research_mode ? label('research_modes', project.research_mode) : '']
+  ]) {
+    if (value) lines.push(`- ${name}: ${value}`);
+  }
+  lines.push('', 'RESEARCH QUESTIONS');
+  if (!data.research_questions.length) lines.push('- None recorded.');
+  for (const question of data.research_questions) {
+    lines.push(`- [${question.id}] ${question.question} (status: ${promptLabel(question.status)}); relationship to need: ${question.need_link || 'not recorded'}; uncertainties: ${question.uncertainties || 'not recorded'}.`);
+  }
+  lines.push('', 'SEARCHES (including planned and failed searches)');
+  if (!data.searches.length) lines.push('- None recorded. A source link is not a completed search.');
+  for (const search of data.searches) {
+    lines.push(`- [${search.id}] ${search.source_name}: status ${searchLabel(search.status)}; query: ${search.query || 'not recorded'}; filters: ${search.filters || 'not recorded'}; searched: ${search.searched_at || 'not recorded'}; result count: ${search.result_count === null ? 'not recorded' : search.result_count}; limitations: ${search.limitations || 'not recorded'}.`);
+  }
+  if (action === 'plan') {
+    lines.push('', 'TASK', 'Propose a practical research plan for the questions above. For each question, identify:', '1. the uncertainty it tests;', '2. a source type that could answer it;', '3. a neutral search query and any filters;', '4. what evidence would answer it;', '5. what would remain unverified.', 'For every proposed search, label it PROPOSED — not completed. Do not recommend a supplier, rank options, or conclude Section 508 conformance.');
+  } else if (action === 'review') {
+    lines.push('', 'EVIDENCE AND FINDINGS');
+    if (!data.evidence.length) lines.push('- No evidence records.');
+    for (const item of data.evidence) {
+      lines.push(`- [${item.id}] source: ${item.source_name}; URL: ${item.source_url || 'not supplied'}; identifier: ${item.source_identifier || 'not supplied'}; retrieved: ${item.retrieved_at}; source as of: ${item.source_as_of || 'not recorded'}; type: ${label('evidence_types', item.evidence_type)}; verification: ${label('verification_states', item.verification_state)}; reviewer: ${item.reviewer || 'not recorded'}; claim: ${item.claim || 'not recorded'}; limitations: ${item.limitations || 'not recorded'}; uncertainties: ${item.uncertainties || 'not recorded'}.`);
+    }
+    if (!data.findings.length) lines.push('- No findings recorded.');
+    for (const finding of data.findings) {
+      lines.push(`- [${finding.id}] ${finding.description}; supporting evidence: ${finding.supporting_evidence_ids.join(', ') || 'none'}; contradictory evidence: ${finding.contradicting_evidence_ids.join(', ') || 'none'}; gap: ${finding.evidence_gap || 'not recorded'}.`);
+    }
+    if (!data.decisions.length) lines.push('- No decisions recorded.');
+    for (const decision of data.decisions) {
+      lines.push(`- [${decision.id}] ${decision.description}; status: ${label('decision_statuses', decision.status)}; owner: ${decision.owner || 'not assigned'}.`);
+    }
+    lines.push('', 'TASK', 'Review the record for:', '- statements not supported by the cited evidence;', '- contradictions between records;', '- missing source, retrieval, or as-of dates;', '- reference links or proposed searches described as completed searches;', '- stale sources;', '- incomplete verification;', '- findings that should be unresolved questions.', 'Return a short table: issue | record id | why it is a problem | evidence or person needed.', 'Do not add facts or sources. Ask for missing evidence instead. Do not rank suppliers or make a procurement or conformance determination.');
+  } else {
+    lines.push('', 'EVIDENCE AND FINDINGS');
+    for (const item of data.evidence) {
+      lines.push(`- [${item.id}] ${item.source_name}; URL: ${item.source_url || 'not supplied'}; retrieved: ${item.retrieved_at}; source as of: ${item.source_as_of || 'not recorded'}; type: ${label('evidence_types', item.evidence_type)}; verification: ${label('verification_states', item.verification_state)}; claim: ${item.claim || 'not recorded'}; limitations: ${item.limitations || 'not recorded'}.`);
+    }
+    for (const finding of data.findings) {
+      lines.push(`- [${finding.id}] ${finding.description}; supporting evidence: ${finding.supporting_evidence_ids.join(', ')}; contradictory evidence: ${finding.contradicting_evidence_ids.join(', ') || 'none'}; gap: ${finding.evidence_gap || 'not recorded'}.`);
+    }
+    for (const decision of data.decisions) {
+      lines.push(`- [${decision.id}] ${decision.description}; status: ${label('decision_statuses', decision.status)}; owner: ${decision.owner || 'not assigned'}.`);
+    }
+    lines.push('', 'TASK', 'Draft a neutral market research report using only the recorded material. Include: scope and context; method and searches actually performed; alternatives investigated; evidence and limitations; accessibility evidence and gaps; findings with supporting and contradictory evidence; open questions; and decisions that remain with people.', 'Label the result DRAFT. Do not invent facts, sources, dates, or citations. Do not rank suppliers, recommend a winner, declare Section 508 conformance, or state that an exception is approved.');
+  }
+  lines.push('', 'Return plain text. Flag uncertainty explicitly. Do not present any suggestion as an independently completed search.');
+  return lines.join('\n');
+}
+
+function setAiPrompt(action) {
+  try {
+    aiPromptText = promptFor(action, aiPromptData());
+  } catch (error) {
+    byId('ai-prompt-preview').textContent = `Could not generate a prompt: ${error.message}`;
+    byId('copy-ai-prompt').disabled = true;
+    return;
+  }
+  aiUsedActions.add(action);
+  byId('ai-action-description').textContent = AI_DESCRIPTIONS[action];
+  byId('ai-prompt-preview').textContent = aiPromptText;
+  byId('copy-ai-prompt').disabled = false;
+  byId('ai-copy-status').textContent = 'Prompt generated locally. Review it for sensitive information before copying.';
+}
+
+async function copyAiPrompt() {
+  if (!aiPromptText) return;
+  try {
+    if (navigator.clipboard?.writeText) {
+      await navigator.clipboard.writeText(aiPromptText);
+    } else {
+      const area = document.createElement('textarea');
+      area.value = aiPromptText;
+      area.setAttribute('readonly', '');
+      document.body.append(area);
+      area.select();
+      document.execCommand('copy');
+      area.remove();
+    }
+    byId('ai-copy-status').textContent = 'Prompt copied. Paste it into an approved AI tool; AI output is not evidence.';
+    status('AI prompt copied. Review the output and record what a person verified.');
+  } catch {
+    byId('ai-copy-status').textContent = 'Copy failed. Select the prompt preview and copy it manually.';
+  }
+}
+
+function syncAiForm() {
+  const ai = research.ai_assistance || { used: false, tool: '', actions: [], notes: '' };
+  byId('ai-used').checked = Boolean(ai.used);
+  byId('ai-tool').value = ai.tool || '';
+  byId('ai-notes').value = ai.notes || '';
+  aiUsedActions = new Set(ai.used ? (ai.actions || []) : []);
+  aiPromptText = '';
+  byId('ai-prompt-preview').textContent = 'Choose one of the three actions above. The prompt will use the information currently in this record.';
+  byId('copy-ai-prompt').disabled = true;
+  byId('ai-copy-status').textContent = '';
+  byId('ai-action-description').textContent = 'Choose an action to generate a prompt from the current research record.';
+}
+
+function saveAiUse() {
+  const item = {
+    used: byId('ai-used').checked,
+    tool: String(byId('ai-tool').value).trim(),
+    actions: byId('ai-used').checked ? [...aiUsedActions] : [],
+    notes: String(byId('ai-notes').value).trim()
+  };
+  const message = item.used
+    ? 'AI-use note saved and will appear in the report. AI output remains assistance, not evidence.'
+    : 'AI-use note saved but not included in the report because the use checkbox is clear.';
+  commit(data => { data.ai_assistance = item; }, message, 'ai-assistance-heading');
+}
+
 function renderAll({ syncForms = false } = {}) {
-  if (syncForms) { updateProjectForm(); syncAccessibilityForm(); }
+  if (syncForms) { updateProjectForm(); syncAccessibilityForm(); syncAiForm(); }
   renderQuestions();
   renderSearches();
   renderEvidence();
@@ -902,6 +1058,11 @@ async function init() {
   byId('demo').addEventListener('click', loadDemo);
   byId('start-new').addEventListener('click', startNewResearch);
   byId('save-research').addEventListener('click', saveResearchFile);
+  for (const button of document.querySelectorAll('.ai-action')) {
+    button.addEventListener('click', () => setAiPrompt(button.dataset.aiAction));
+  }
+  byId('copy-ai-prompt').addEventListener('click', copyAiPrompt);
+  byId('save-ai-use').addEventListener('click', saveAiUse);
   byId('import-file').addEventListener('change', importFile);
   byId('export-json').addEventListener('click', () => {
     if (!renderReport()) return;

@@ -6,7 +6,12 @@
     "url": "https://sam.gov/",
     "purpose": "Find contract opportunities, entity registrations, and exclusion records in the official federal system.",
     "limitations": "A registration or notice is not proof of capability, past performance, or accessibility. Some records require sign-in or government access.",
-    "method": "Search the public opportunity and entity pages, then record the notice or entity identifier, date, and what you actually searched."
+    "method": "Search the public opportunity and entity pages, then record the notice or entity identifier, date, and what you actually searched.",
+    "use_when": "Use when you need current federal opportunities, entity registrations, or exclusions.",
+    "questions": "Are there current or recent notices for this product or service? Is the entity registered? Is there an exclusion record?",
+    "authentication": "Public search; some records or actions may require sign-in or government access.",
+    "record_how": "Record the notice or entity identifier, URL, search date, filters, and whether you found a notice, registration, or exclusion.",
+    "search_strategy": "Search the official public pages by product/service terms, NAICS or PSC, agency, and date range. A registration is not proof of capability or accessibility."
   },
   {
     "id": "acquisition-gov",
@@ -15,7 +20,12 @@
     "url": "https://www.acquisition.gov/",
     "purpose": "Read the current FAR, agency supplements, and acquisition policy text.",
     "limitations": "Policy text does not decide applicability or create a legal determination; agency deviations and effective dates still need verification.",
-    "method": "Record the part, section, effective date, and any deviation you checked."
+    "method": "Record the part, section, effective date, and any deviation you checked.",
+    "use_when": "Use when you need the current FAR, agency supplement, or acquisition policy text.",
+    "questions": "What does the current policy say? Which part or section applies? Is there a deviation or effective date?",
+    "authentication": "Public.",
+    "record_how": "Record the part and section, URL, as-of date, and whether the text is proposed, final, or a deviation.",
+    "search_strategy": "Search the FAR part/section or agency supplement. Verify currentness and any deviation before relying on it."
   },
   {
     "id": "usaspending-gov",
@@ -24,7 +34,12 @@
     "url": "https://www.usaspending.gov/",
     "purpose": "Find comparable federal awards, recipients, agencies, amounts, and periods of performance.",
     "limitations": "A past award does not establish current fitness, availability, price, or accessibility. Data lags and scope vary.",
-    "method": "Use the award search and record the award identifier, filters, date, and limitations."
+    "method": "Use the award search and record the award identifier, filters, date, and limitations.",
+    "use_when": "Use when comparable awards or recipient and agency spending patterns are relevant.",
+    "questions": "What awards were made for similar work? Who received them? What were the amount, agency, and period of performance?",
+    "authentication": "Public.",
+    "record_how": "Record the award identifier, recipient, amount, agency, period, filters, retrieval date, source-as-of date, and limitations.",
+    "search_strategy": "Search award keywords, NAICS or PSC, agency, and fiscal year. A past award does not establish current fitness or availability."
   },
   {
     "id": "ecfr-gov",
@@ -33,7 +48,12 @@
     "url": "https://www.ecfr.gov/",
     "purpose": "Read the operative electronic Code of Federal Regulations text as of a chosen date.",
     "limitations": "The eCFR is not a legal determination; verify currentness and agency-specific guidance.",
-    "method": "Record the title, part, section, and as-of date."
+    "method": "Record the title, part, section, and as-of date.",
+    "use_when": "Use when the operative regulation text and its date matter.",
+    "questions": "What does the regulation say as of a date? Has it changed?",
+    "authentication": "Public.",
+    "record_how": "Record the title, part, section, as-of date, URL, and how you checked currentness.",
+    "search_strategy": "Search the title, part, or section. Compare with current agency guidance before treating it as applicable."
   },
   {
     "id": "section508-gov",
@@ -42,7 +62,12 @@
     "url": "https://www.section508.gov/",
     "purpose": "Use GSA's official Section 508 acquisition, ACR, and accessibility guidance.",
     "limitations": "Guidance does not determine conformance or approve an exception for a specific product.",
-    "method": "Follow the applicable acquisition or ACR guidance and record the page and date."
+    "method": "Follow the applicable acquisition or ACR guidance and record the page and date.",
+    "use_when": "Use for official Section 508 acquisition, ACR, and accessibility guidance.",
+    "questions": "What accessibility requirements apply? How do I request and review an ACR? What is the exception process?",
+    "authentication": "Public.",
+    "record_how": "Record the page and date, the requirement or ACR guidance used, and any agency-specific step. Do not record general guidance as product conformance.",
+    "search_strategy": "Start with buy/sell and ART guidance for requirements, then ACR and exception guidance. Use an accessibility specialist for applicability."
   },
   {
     "id": "gsa-art",
@@ -51,7 +76,12 @@
     "url": "https://www.section508.gov/art/",
     "purpose": "Generate tailored Section 508 requirements for an ICT purchase or development effort.",
     "limitations": "An ART output identifies requirements, not product conformance or an approved exception.",
-    "method": "Follow official guidance and retain the requirements generated for the specific acquisition."
+    "method": "Follow official guidance and retain the requirements generated for the specific acquisition.",
+    "use_when": "Use to generate acquisition-specific Section 508 requirements.",
+    "questions": "Which requirements apply to this ICT? What functionality must be evaluated?",
+    "authentication": "Public tool; an agency process may require an account or specialist.",
+    "record_how": "Record the ART output, version or date, and requirement identifiers. ART produces requirements, not a conformance result.",
+    "search_strategy": "Use the official ART flow for this acquisition and save the generated requirements with the research record."
   },
   {
     "id": "gsa-acr-editor",
@@ -60,7 +90,12 @@
     "url": "https://acreditor.section508.gov/",
     "purpose": "Create or work with machine-readable OpenACR reports.",
     "limitations": "An ACR is a report of claims and findings, not an independent procurement approval.",
-    "method": "Request version-matched ACRs from suppliers and verify claims by additional evaluation."
+    "method": "Request version-matched ACRs from suppliers and verify claims by additional evaluation.",
+    "use_when": "Use to draft or review an ACR against a catalog.",
+    "questions": "How are criteria reported? Which criteria are missing or not evaluated?",
+    "authentication": "Public; some workflows may require an account.",
+    "record_how": "Record the product, version, catalog, date, and that the ACR is a draft or supplier claim.",
+    "search_strategy": "Select the applicable catalog and review every criterion. Do not treat a completed ACR as an independent test."
   },
   {
     "id": "gsa-buy",
@@ -69,7 +104,12 @@
     "url": "https://www.section508.gov/buy-sell/",
     "purpose": "Understand accessibility requirements and acquisition responsibilities.",
     "limitations": "Agency-specific procedures and current rules must also be reviewed.",
-    "method": "Use the buyer guidance alongside your agency Section 508 program."
+    "method": "Use the buyer guidance alongside your agency Section 508 program.",
+    "use_when": "Use for the Section 508 buy/sell process guidance.",
+    "questions": "What steps apply to this ICT acquisition? What documentation is expected?",
+    "authentication": "Public.",
+    "record_how": "Record the guidance page and date, then confirm the agency-specific process.",
+    "search_strategy": "Read the buy/sell guidance before requesting an ACR or planning an exception question."
   },
   {
     "id": "gsa-exceptions",
@@ -78,7 +118,12 @@
     "url": "https://www.section508.gov/buy/determine-ict-exceptions/",
     "purpose": "Identify whether any narrow exception might warrant formal review.",
     "limitations": "Do not treat a possible exception as an authorized determination.",
-    "method": "Preserve required evidence and send it through agency approval procedures."
+    "method": "Preserve required evidence and send it through agency approval procedures.",
+    "use_when": "Use to identify the exception process and the questions an authorized official must answer.",
+    "questions": "Is an exception category potentially relevant? Who is authorized to decide?",
+    "authentication": "Public.",
+    "record_how": "Record the guidance and route the question to the authorized official. Do not record a determination.",
+    "search_strategy": "Read the exceptions guidance and document the question, evidence, and owner. This tool cannot approve an exception."
   },
   {
     "id": "gsa-assessment",
@@ -87,7 +132,12 @@
     "url": "https://www.section508.gov/manage/section-508-assessment/2025/recommendations/",
     "purpose": "Identify program improvements related to acquisition, oversight, and exceptions.",
     "limitations": "Recommendations are not a standalone product evaluation standard.",
-    "method": "Use as context when designing quality checks and follow-up responsibilities."
+    "method": "Use as context when designing quality checks and follow-up responsibilities.",
+    "use_when": "Use for Section 508 program assessment context and expectations.",
+    "questions": "What assessment expectations apply to the agency or program?",
+    "authentication": "Public.",
+    "record_how": "Record the page and date and note the relevance to the agency process.",
+    "search_strategy": "Read the current assessment guidance; do not infer product conformance from a program assessment."
   },
   {
     "id": "gsa-acr-supplement",
@@ -96,7 +146,12 @@
     "url": "https://www.section508.gov/sell/acr-supplement/",
     "purpose": "Request additional details on barriers, severity, and impact.",
     "limitations": "Supplemental claims still need verification.",
-    "method": "Ask suppliers to provide issue-level details for partial support or failures."
+    "method": "Ask suppliers to provide issue-level details for partial support or failures.",
+    "use_when": "Use for issue-detail supplement fields and supplier follow-up questions.",
+    "questions": "What detail should an ACR include for a criterion? What should we ask the supplier?",
+    "authentication": "Public.",
+    "record_how": "Record the supplement and date and use it to draft a question, not to fill in missing supplier evidence.",
+    "search_strategy": "Read the supplement fields and ask the supplier for product-specific evidence."
   },
   {
     "id": "openacr",
@@ -105,7 +160,12 @@
     "url": "https://github.com/GSA/openacr",
     "purpose": "Machine-readable ACR schema and tools.",
     "limitations": "This starter does not yet parse or validate OpenACR YAML, PDF, DOCX, or HTML files.",
-    "method": "Record ACR URLs and metadata now; add upstream OpenACR validation in the next phase."
+    "method": "Record ACR URLs and metadata now; add upstream OpenACR validation in the next phase.",
+    "use_when": "Use for the machine-readable ACR format and validation.",
+    "questions": "How is an ACR structured? Are required fields present?",
+    "authentication": "Public repository and local tool.",
+    "record_how": "Record the repository or tool version, imported file, and validation result. An import is not certification.",
+    "search_strategy": "Use the upstream docs and local import; preserve the original ACR file and its source URL."
   },
   {
     "id": "sam-gov-mcp",
@@ -114,7 +174,12 @@
     "url": "https://github.com/1102tools-dev/federal-contracting-mcps/tree/main/servers/sam-gov-mcp",
     "purpose": "Research notices, registered entities, certifications, and exclusions.",
     "limitations": "Hosted and local editions differ in coverage and freshness; registration is not proof of delivery capability.",
-    "method": "Use the existing MCP through an AI host; record exact records, retrieval dates, and source dates."
+    "method": "Use the existing MCP through an AI host; record exact records, retrieval dates, and source dates.",
+    "use_when": "Optional: use only when an approved MCP client connects the 1102tools SAM server.",
+    "questions": "Same questions as SAM.gov, retrieved by an upstream tool.",
+    "authentication": "Requires an approved MCP host and whatever SAM access the upstream tool requires.",
+    "record_how": "Record the upstream tool, version, query, retrieval time, and URL. This project does not call it automatically.",
+    "search_strategy": "Use only in an approved environment. Record provenance and do not treat a tool response as independent verification."
   },
   {
     "id": "usaspending-gov-mcp",
@@ -123,7 +188,12 @@
     "url": "https://github.com/1102tools-dev/federal-contracting-mcps/tree/main/servers/usaspending-gov-mcp",
     "purpose": "Research comparable contracts, agency purchases, and incumbent suppliers.",
     "limitations": "Past contracts do not imply current capability or market completeness.",
-    "method": "Search comparables, inspect award scopes, and retain record links."
+    "method": "Search comparables, inspect award scopes, and retain record links.",
+    "use_when": "Optional: use only when an approved MCP client connects the 1102tools USAspending server.",
+    "questions": "Same questions as USAspending.gov, retrieved by an upstream tool.",
+    "authentication": "Requires an approved MCP host and network access.",
+    "record_how": "Record the upstream tool, version, query, retrieval time, award identifier, and URL.",
+    "search_strategy": "Use only in an approved environment. A mapped award remains evidence, not a ranking or suitability finding."
   },
   {
     "id": "gsa-calc-mcp",
@@ -132,7 +202,12 @@
     "url": "https://github.com/1102tools-dev/federal-contracting-mcps/tree/main/servers/gsa-calc-mcp",
     "purpose": "Research federal awarded labor ceiling rates.",
     "limitations": "Ceiling rates are not actual rates paid or fully burdened cost estimates.",
-    "method": "Match labor categories, contract conditions, and geographic assumptions."
+    "method": "Match labor categories, contract conditions, and geographic assumptions.",
+    "use_when": "Optional: use for ceiling labor-rate context through an approved 1102tools MCP host.",
+    "questions": "What ceiling rates apply to a labor category?",
+    "authentication": "Requires an approved MCP host; some sources may require access.",
+    "record_how": "Record the labor category, schedule/contract, date, source, and limitation. Ceiling rates are not paid rates.",
+    "search_strategy": "Use only in an approved environment and preserve the upstream source and date."
   },
   {
     "id": "bls-oews-mcp",
@@ -141,7 +216,12 @@
     "url": "https://github.com/1102tools-dev/federal-contracting-mcps/tree/main/servers/bls-oews-mcp",
     "purpose": "Find occupational wage benchmarks.",
     "limitations": "Wage statistics are not the same as vendor hourly billing rates.",
-    "method": "Record occupation, geography, year, and any data suppression caveat."
+    "method": "Record occupation, geography, year, and any data suppression caveat.",
+    "use_when": "Optional: use for occupational wage benchmarks through an approved 1102tools MCP host.",
+    "questions": "What occupational wage benchmark applies?",
+    "authentication": "Requires an approved MCP host and network access.",
+    "record_how": "Record the occupation, geography, period, source, and limitation. A wage benchmark is not a vendor billing rate.",
+    "search_strategy": "Use only in an approved environment and retain the upstream series or table reference."
   },
   {
     "id": "acquisition-gov-mcp",
@@ -150,7 +230,12 @@
     "url": "https://github.com/1102tools-dev/federal-contracting-mcps/tree/main/servers/acquisition-gov-mcp",
     "purpose": "Investigate FAR Overhaul language, agency deviations, and source guidance.",
     "limitations": "Model language alone does not establish which rule governs a particular procurement.",
-    "method": "Inspect dates, agency-specific deviations, and operative authority."
+    "method": "Inspect dates, agency-specific deviations, and operative authority.",
+    "use_when": "Optional: use for acquisition policy retrieval through an approved 1102tools MCP host.",
+    "questions": "What does the current FAR or agency policy say?",
+    "authentication": "Requires an approved MCP host and network access.",
+    "record_how": "Record the tool, query, part/section, effective date, retrieval time, and URL.",
+    "search_strategy": "Use only in an approved environment and verify the current text before relying on it."
   },
   {
     "id": "ecfr-mcp",
@@ -159,7 +244,12 @@
     "url": "https://github.com/1102tools-dev/federal-contracting-mcps/tree/main/servers/ecfr-mcp",
     "purpose": "Retrieve CFR provisions, history, and associated clauses.",
     "limitations": "An AI summary is not a legal applicability determination.",
-    "method": "Quote and link to applicable text as-of a particular date."
+    "method": "Quote and link to applicable text as-of a particular date.",
+    "use_when": "Optional: use for regulation retrieval through an approved 1102tools MCP host.",
+    "questions": "What does the operative regulation say as of a date?",
+    "authentication": "Requires an approved MCP host and network access.",
+    "record_how": "Record the title/part/section, as-of date, tool, retrieval time, and URL.",
+    "search_strategy": "Use only in an approved environment and confirm currentness."
   },
   {
     "id": "cms-codejson",
@@ -168,7 +258,12 @@
     "url": "https://github.com/DSACMS/gov-codejson",
     "purpose": "Discover agency software inventory metadata and reuse conditions.",
     "limitations": "An inventory entry does not prove that software is fit for the user's need.",
-    "method": "Look for code.json, agency indexes, repository visibility, license, and maintenance."
+    "method": "Look for code.json, agency indexes, repository visibility, license, and maintenance.",
+    "use_when": "Use to find government software metadata and reuse candidates.",
+    "questions": "Is there government-developed code for this function? What license, version, maintenance, and usage are reported?",
+    "authentication": "Public.",
+    "record_how": "Record the repository URL, metadata source, version/date, license, reported status, and limitations. Listing is not suitability.",
+    "search_strategy": "Search metadata by function and agency, then inspect the repository and license separately."
   },
   {
     "id": "publiccode",
@@ -177,7 +272,12 @@
     "url": "https://yml.publiccode.tools/",
     "purpose": "Discover and describe public-sector software using an established metadata convention.",
     "limitations": "Metadata completeness and field semantics vary by project and version.",
-    "method": "Validate claims against project source code, governance, and documentation."
+    "method": "Validate claims against project source code, governance, and documentation.",
+    "use_when": "Use to read publiccode.yml metadata about a public-sector codebase.",
+    "questions": "What does the project report about ownership, license, maintenance, and version?",
+    "authentication": "Public.",
+    "record_how": "Record the metadata URL, version/date, license, and limitations. Verify the repository and reuse rights separately.",
+    "search_strategy": "Find the project metadata, then check the source repository and license."
   },
   {
     "id": "ditap",
@@ -186,7 +286,12 @@
     "url": "https://github.com/usds/ditap-curriculum-update/tree/main/3_Curriculum/3A_DITAP-Core-Curriculum/Module-2/Sprint-4",
     "purpose": "Guide research questions, responsible industry engagement, and the market research case study.",
     "limitations": "Curriculum material is educational, not agency-specific approval authority.",
-    "method": "Use Module 2 Sprint 4 learning outcomes and the Live Digital Assignment rubric."
+    "method": "Use Module 2 Sprint 4 learning outcomes and the Live Digital Assignment rubric.",
+    "use_when": "Use for the DITAP market-research method and workshop context.",
+    "questions": "What does the curriculum expect for this market research activity?",
+    "authentication": "Public.",
+    "record_how": "Record the module or page and date. This project is independent of DITAP.",
+    "search_strategy": "Read the module guidance and adapt it to agency policy; it is educational, not binding."
   },
   {
     "id": "digital-first",
@@ -195,6 +300,11 @@
     "url": "https://digital.gov/resources/delivering-digital-first-public-experience",
     "purpose": "Examine usability, accessibility, content, mobile, service quality, and the public experience.",
     "limitations": "Determine applicability of policy provisions and current agency rules independently.",
-    "method": "Translate applicable outcomes into verifiable evaluation questions."
+    "method": "Translate applicable outcomes into verifiable evaluation questions.",
+    "use_when": "Use to check digital-first public experience guidance.",
+    "questions": "Does the digital-first guidance apply? What user experience or channel considerations matter?",
+    "authentication": "Public.",
+    "record_how": "Record the guidance page and date and distinguish guidance from a binding requirement.",
+    "search_strategy": "Read the current guidance and confirm applicability with agency policy."
   }
 ]

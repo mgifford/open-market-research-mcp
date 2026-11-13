@@ -25,6 +25,7 @@
         <a href="#accessibility">Accessibility</a>
         <a href="#findings">Findings</a>
         <a href="#report">Report</a>
+        <a href="#ai-assistance">AI help</a>
         <a href="./about.html">About</a>
       </nav>
     </div>
@@ -327,6 +328,33 @@
       </div>
     </section>
 
+    <section id="ai-assistance" aria-labelledby="ai-assistance-heading">
+      <div class="section-title"><span class="step">AI</span><div><h2 id="ai-assistance-heading" tabindex="-1">Use an approved AI assistant</h2><p>Generate a prompt from this research, copy it into an approved tool, and keep the evidence and decision with people.</p></div></div>
+      <div class="panel">
+        <p><strong>This page does not run AI and does not send your research anywhere.</strong> It generates a prompt that you choose to paste into an approved agency tool. Do not paste CUI, PII, vendor-proprietary, or procurement-sensitive material without authorization and a retention decision.</p>
+        <div class="actions">
+          <button type="button" class="primary ai-action" data-ai-action="plan">Plan my research</button>
+          <button type="button" class="secondary ai-action" data-ai-action="review">Review my evidence</button>
+          <button type="button" class="secondary ai-action" data-ai-action="draft">Draft my report</button>
+        </div>
+        <p id="ai-action-description" class="hint">Choose an action to generate a prompt from the current research record.</p>
+        <h3>Prompt preview</h3>
+        <pre id="ai-prompt-preview" tabindex="0" class="report-preview">Choose one of the three actions above. The prompt will use the information currently in this record.</pre>
+        <div class="actions">
+          <button type="button" id="copy-ai-prompt" class="secondary" disabled>Copy prompt</button>
+        </div>
+        <p id="ai-copy-status" role="status" aria-live="polite" class="small"></p>
+        <p class="small"><strong>Use it in an approved tool:</strong> open your agency-approved assistant, start a new conversation, paste the prompt, and review the output. The tool may not support file upload or connectors; do not assume it does. AI suggestions are not searches, evidence, conformance findings, or procurement decisions.</p>
+        <fieldset class="panel-inset">
+          <legend>Record AI assistance</legend>
+          <p class="hint">Record this when AI materially contributes to your research. Generating a prompt alone does not make the output evidence.</p>
+          <div class="field checkbox-field"><input id="ai-used" type="checkbox"><label for="ai-used">AI assistance was used in this research</label></div>
+          <div class="field"><label for="ai-tool">Approved tool, if recorded</label><input id="ai-tool" maxlength="300" placeholder="For example, an agency-approved assistant"></div>
+          <div class="field"><label for="ai-notes">What it contributed, and what a person verified</label><textarea id="ai-notes" rows="2" maxlength="5000"></textarea></div>
+          <button type="button" id="save-ai-use" class="secondary">Save AI-use note</button>
+        </fieldset>
+      </div>
+    </section>
     <section id="report" aria-labelledby="report-heading">
       <div class="section-title"><span class="step">07</span><div><h2 id="report-heading" tabindex="-1">Prepare the report</h2><p>Export an auditable draft. The report separates what was searched from reference links not yet investigated.</p></div></div>
       <div class="panel">

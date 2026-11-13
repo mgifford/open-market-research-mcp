@@ -37,7 +37,9 @@ protocol tests through `pytest`.
   the static About-the-local-MCP boundary section; the zero-install landing,
   focused Start action, start-new discard warning, optional
   agency/research-mode fields, human-readable JSON download, file chooser,
-  source-prefill without a recorded search, and About-page axe scan; and 1102tools/USAspending fixture-based mapping,
+  source-prefill without a recorded search, source access/recording/search
+  guidance, the three AI prompt actions, prompt copy, AI-use disclosure, and
+  About-page axe scan; and 1102tools/USAspending fixture-based mapping,
   provenance preservation, explicit approval, duplicate/unknown-question
   rejection, and report inclusion without a network call.
 - OpenACR: every import validated against the pinned upstream JSON schema;
@@ -59,7 +61,7 @@ Before the hardening changes, the local browser audit found:
 - repeated “Record as research option” button names.
 
 The regression suite covers each of those behaviors. The current local run
-(2026-11-13) is green: **51 Python tests**, **9 Node unit tests**, **32
+(2026-11-13) is green: **52 Python tests**, **10 Node unit tests**, **33
 Playwright browser tests**, the upstream OpenACR fixture validation, the
 build, and Ruff. axe reports no automated WCAG A/AA violations in the tested
 states, but axe covers only a subset of WCAG and is not a conformance result.

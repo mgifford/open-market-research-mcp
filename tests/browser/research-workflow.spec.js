@@ -205,9 +205,46 @@ test('a source launcher fills a not-searched draft without recording a search', 
   page.once('dialog', dialog => dialog.accept());
   await page.click('#demo');
   await expect(page.locator('#search-table tr')).toHaveCount(7);
+  await expect(page.locator('#source-list details').first()).toContainText('Use when');
+  await expect(page.locator('#source-list details').first()).toContainText('Search strategy');
   await page.locator('#source-list button').first().click();
   await expect(page.locator('#search-source-name')).not.toHaveValue('');
   await expect(page.locator('#search-status')).toHaveValue('not-searched');
   await expect(page.locator('#status')).toContainText('not searched');
+  await expect(page.locator('#search-table tr')).toHaveCount(7);
+});
+
+
+test('AI prompt actions generate, copy, and record assistance without a search', async ({ page }) => {
+  await page.addInitScript(() => {
+    window.__copiedPrompt = '';
+    Object.defineProperty(navigator, 'clipboard', {
+      configurable: true,
+      value: { writeText: async text => { window.__copiedPrompt = text; } }
+    });
+  });
+  await openApp(page);
+  await page.click('#demo');
+  await expect(page.locator('#search-table tr')).toHaveCount(7);
+
+  await page.click('[data-ai-action="plan"]');
+  await expect(page.locator('#ai-prompt-preview')).toContainText('PROPOSED');
+  await expect(page.locator('#ai-prompt-preview')).toContainText('fictional federal team');
+  await page.click('#copy-ai-prompt');
+  await expect(page.locator('#ai-copy-status')).toContainText('Prompt copied');
+  expect(await page.evaluate(() => window.__copiedPrompt)).toContain('PROPOSED');
+
+  await page.click('[data-ai-action="review"]');
+  await expect(page.locator('#ai-prompt-preview')).toContainText('contradictions');
+  await expect(page.locator('#ai-prompt-preview')).toContainText('ev-reuse-archive');
+  await page.click('[data-ai-action="draft"]');
+  await expect(page.locator('#ai-prompt-preview')).toContainText('DRAFT');
+
+  await page.check('#ai-used');
+  await page.fill('#ai-tool', 'A fictional approved assistant');
+  await page.fill('#ai-notes', 'Used to critique gaps; a person checked the sources.');
+  await page.click('#save-ai-use');
+  await expect(page.locator('#status')).toContainText('AI-use note saved');
+  await expect(page.locator('#preview')).toContainText('AI assistance recorded');
   await expect(page.locator('#search-table tr')).toHaveCount(7);
 });

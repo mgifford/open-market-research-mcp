@@ -66,10 +66,11 @@ DECISION_FIELDS = (
 )
 TOP_LEVEL_FIELDS = (
     "schema_version", "demonstration_only", "migration", "project",
-    "accessibility_requirements", "research_questions", "searches", "evidence",
-    "findings", "decisions", "candidates",
+    "ai_assistance", "accessibility_requirements", "research_questions", "searches",
+    "evidence", "findings", "decisions", "candidates",
 )
 ACCESSIBILITY_FIELDS = ("identified", "tool", "reviewer", "as_of", "requirement_ids", "notes")
+AI_ASSISTANCE_FIELDS = ("used", "tool", "actions", "notes")
 # Backward-compatible names used by tests and older callers.
 _CANDIDATE_FIELDS = CANDIDATE_FIELDS
 _PROJECT_FIELDS = PROJECT_FIELDS
@@ -348,6 +349,25 @@ def _validate_current(data: dict[str, Any]) -> None:
     if project.get("research_mode") and project["research_mode"] not in _RULES["research_modes"]:
         raise ValueError(_message("field", field="research_mode"))
 
+    ai = data.get("ai_assistance")
+    if ai is not None:
+        if (
+            not isinstance(ai, dict)
+            or any(key not in AI_ASSISTANCE_FIELDS for key in ai)
+            or any(key not in ai for key in AI_ASSISTANCE_FIELDS)
+        ):
+            raise ValueError(_message("field", field="ai_assistance"))
+        if not isinstance(ai["used"], bool):
+            raise ValueError(_message("field", field="ai_assistance.used"))
+        _text_fields({"tool": ai["tool"], "notes": ai["notes"]}, _RULES["limits"]["ai_assistance"])
+        actions = ai["actions"]
+        if (
+            not isinstance(actions, list)
+            or len(actions) > 3
+            or any(action not in _RULES["ai_actions"] for action in actions)
+        ):
+            raise ValueError(_message("field", field="ai_assistance.actions"))
+
     accessibility = data.get("accessibility_requirements")
     if (
         not isinstance(accessibility, dict)
@@ -538,6 +558,7 @@ def prepare_research(data: dict[str, Any]) -> dict[str, Any]:
     if isinstance(project, dict):
         for field in OPTIONAL_PROJECT_FIELDS:
             project.setdefault(field, "")
+    prepared.setdefault("ai_assistance", {"used": False, "tool": "", "actions": [], "notes": ""})
     relink(prepared)
     _validate_current(prepared)
     return prepared
@@ -642,6 +663,17 @@ def build_report(data: dict[str, Any]) -> str:
             "",
         ])
 
+    ai = data.get("ai_assistance") or {}
+    ai_line = ""
+    if ai.get("used"):
+        ai_tool = ai.get("tool") or "tool not named"
+        ai_actions = ", ".join(_label("ai_actions", action) for action in ai.get("actions", [])) or "not recorded"
+        ai_notes = ai.get("notes") or "no additional note"
+        ai_line = (
+            f"- AI assistance recorded: {ai_tool}; actions: {ai_actions}; note: {ai_notes}. "
+            "AI output is assistance, not evidence; a person must verify the record."
+        )
+
     lines.extend([report["headings"]["methodology"], ""])
     methods = Counter(search["method"] for search in searches)
     sources = Counter(search["source_type"] for search in searches)
@@ -652,8 +684,10 @@ def build_report(data: dict[str, Any]) -> str:
         f"- Source types: {source_text}.",
         "- Only the searches recorded in this file count as investigations. A reference link is not evidence that a search was performed.",
         "- No result, no matching record, partial coverage, and a failed search are recorded as different states.",
-        "",
     ])
+    if ai_line:
+        lines.append(ai_line)
+    lines.append("")
 
     investigated = [search for search in searches if search["status"] != "not-searched"]
     lines.extend([report["headings"]["investigated_sources"], ""])

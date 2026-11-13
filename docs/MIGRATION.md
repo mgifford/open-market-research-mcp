@@ -20,6 +20,13 @@ invented during migration. The legacy project object is preserved exactly;
 `prepare_research()` adds empty optional values to the in-memory current record
 so the form can show them. Reports omit them when empty.
 
+## Optional AI-assistance record
+
+The current interface adds an optional `ai_assistance` object. It is not part
+of the 0.1.0 schema and is not invented during migration. `prepare_research()`
+adds a default `{used: false, tool: "", actions: [], notes: ""}` so the form can
+display it. A legacy or earlier 0.2.0 record remains valid without the field.
+
 ## What is preserved
 
 - project name, need, users, constraints, and ICT type;

@@ -111,7 +111,11 @@
     "max_searches": 300,
     "max_evidence": 1000,
     "max_findings": 500,
-    "max_decisions": 500
+    "max_decisions": 500,
+    "ai_assistance": {
+      "tool": 300,
+      "notes": 5000
+    }
   },
   "questions": [
     {
@@ -535,6 +539,11 @@
       "guided": "Guided research",
       "manual": "Manual research",
       "ai-assisted": "Assisted by an approved AI tool"
+    },
+    "ai_actions": {
+      "plan": "Plan my research",
+      "review": "Review my evidence",
+      "draft": "Draft my report"
     }
   },
   "research_question_templates": [
@@ -567,5 +576,10 @@
     "guided",
     "manual",
     "ai-assisted"
+  ],
+  "ai_actions": [
+    "plan",
+    "review",
+    "draft"
   ]
 }

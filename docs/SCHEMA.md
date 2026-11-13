@@ -9,6 +9,7 @@ browser and Python engine share the validation values and report wording in
 | Field | Purpose |
 | --- | --- |
 | `project` | Acquisition need, intended users, constraints, ICT category, and optional agency/research context |
+| `ai_assistance` | Optional record of whether an approved AI assistant was used, which prompt actions it supported, and what a person verified |
 | `accessibility_requirements` | Whether Section 508 requirements were identified, by which tool/reviewer, and as of when |
 | `research_questions` | Questions that must be answered before the research can support a decision |
 | `searches` | What was actually searched, how, when, and with what result |
@@ -25,6 +26,16 @@ is one of `guided`, `manual`, or `ai-assisted`; an empty string means the user
 has not chosen. `prepareResearch()` / `prepare_research()` add empty values
 when a record is loaded so the browser form can display them without inventing
 a choice. Reports include these lines only when a value is present.
+
+## AI assistance
+
+`ai_assistance` is optional. Existing records without it remain valid;
+`prepareResearch()` / `prepare_research()` adds a default false record.
+When `used` is true, the record can name the approved tool, list the prompt
+actions (`plan`, `review`, `draft`), and note what a person verified. The
+report includes this disclosure only when `used` is true. AI output is
+assistance, not evidence; it does not create searches, findings, or
+determinations.
 
 ## Search status
 

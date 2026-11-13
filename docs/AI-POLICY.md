@@ -4,9 +4,13 @@
 
 AI is not necessary to perform the starter's core tasks. The browser never sends user inputs to external services. The local MCP server performs deterministic operations without a model, including public metadata normalization and OpenACR YAML import.
 
-## Phase 1: static guidance only
+## Phase 2: generated prompts, no hosted AI
 
-The zero-install workspace does not call an AI service. Copyable prompt patterns and AI guardrails live on the secondary About page. Generated, context-specific prompts and one-click copying are deferred to Phase 2. No model, API key, or hosted AI endpoint is required for the core workflow.
+The zero-install workspace still does not call an AI service. The **Use an approved AI assistant** section generates a prompt from the current record, previews it, and offers one-click copy. The user pastes it into an agency-approved tool. No model, API key, connector, or hosted AI endpoint is required.
+
+Prompts require the AI to use only the provided record, avoid invented sources and citations, distinguish proposed searches from completed searches, flag uncertainty, avoid supplier ranking and Section 508/exception determinations, and leave decisions to authorized personnel.
+
+If AI materially contributes, the user can record the approved tool, actions, and what a person verified. That disclosure appears in the report only when the AI-use checkbox is set. AI output remains assistance, not evidence.
 
 ## Experiment included
 
