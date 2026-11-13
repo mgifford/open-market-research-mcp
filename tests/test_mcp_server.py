@@ -98,10 +98,17 @@ def test_stdio_calls_tools_and_returns_actionable_errors():
         assert "schema version" in bad_schema.content[0].text.lower()
 
         openacr = (ROOT / "examples/openacr.sample.yaml").read_text()
-        imported = await session.call_tool("import_openacr_report", {"openacr_yaml": openacr})
+        catalog = (ROOT / "examples/openacr.catalog.sample.yaml").read_text()
+        imported = await session.call_tool(
+            "import_openacr_report",
+            {"openacr_yaml": openacr, "catalog_yaml": catalog},
+        )
         assert imported.is_error is False
         payload = json.loads(imported.content[0].text)
         assert payload["summary"]["missing"] == 1
+        assert payload["catalog_completeness"]["missing_criteria"] == [
+            {"chapter": "success_criteria_level_a", "id": "2.1.1"}
+        ]
         assert payload["conformance_determination"] is False
 
         metadata = (ROOT / "examples/adapters/codejson.sample.json").read_text()

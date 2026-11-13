@@ -23,6 +23,7 @@ The first release is intentionally an educational prototype, not a procurement s
 
 - [ ] Involve acquisition professionals and disabled participants in co-design and usability tests.
 - [x] Automated axe, keyboard, reflow, and forced-colors regression checks.
+- [x] Manual accessibility test pack and learner pilot report templates prepared.
 - [ ] Manual screen-reader, zoom, text-spacing, and cross-browser testing.
 - [x] Make decision rules a single machine-readable source rather than duplicated JS/Python text.
 - [ ] Add report source selection and retrieval-as-of metadata.
@@ -35,7 +36,7 @@ The first release is intentionally an educational prototype, not a procurement s
 - [x] Prototype read-only `code.json`, `agency-index.json`, and `publiccode.yml` adapters without inventing replacement standards.
 - [x] Prepare an integration proposal for 1102tools with a minimal adapter boundary; no upstream connection or copied code.
 - [ ] Build a read-only discovery adapter for ACR URLs, with source/version/time metadata.
-- [x] Prototype machine-readable OpenACR import using GSA's upstream schema and pinned CLI validation.
+- [x] Prototype machine-readable OpenACR import using GSA's upstream schema, pinned CLI validation, and optional catalog completeness checks.
 - [ ] Support Word/PDF ACR only with documented parsing limitations and human confirmation.
 - [ ] Support ART outputs and product-specific criteria mapping, subject to API compatibility.
 - [ ] Preserve a clear separation between claims, third-party tests, and procurement judgments.

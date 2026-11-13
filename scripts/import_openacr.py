@@ -6,15 +6,19 @@ import argparse
 import json
 from pathlib import Path
 
+import yaml
+
 from omr_mcp.openacr import parse_openacr_yaml
 
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--file", required=True, type=Path)
+    parser.add_argument("--catalog", type=Path, help="Optional OpenACR catalog YAML for completeness checks")
     parser.add_argument("--out", type=Path)
     args = parser.parse_args()
-    result = parse_openacr_yaml(args.file.read_text(encoding="utf-8"))
+    catalog = yaml.safe_load(args.catalog.read_text(encoding="utf-8")) if args.catalog else None
+    result = parse_openacr_yaml(args.file.read_text(encoding="utf-8"), catalog=catalog)
     output = json.dumps(result, indent=2) + "\n"
     if args.out:
         args.out.parent.mkdir(parents=True, exist_ok=True)

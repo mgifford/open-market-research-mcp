@@ -19,7 +19,7 @@ The practical objective is to help an acquisition professional answer:
 - **Shared decision rules:** `src/omr_mcp/rules.json` drives the browser and Python questions, validation limits, and report wording from one versioned source.
 - **Local MCP server:** Seven read-only/deterministic tools and two resources for source discovery, research planning, accessibility evidence questions, report drafting, public metadata normalization, and OpenACR import.
 - **Public metadata adapters:** Read-only normalization of public `code.json`, `agency-index.json`, and `publiccode.yml` with source, retrieval date, data-as-of date, license, access rights, and limitations.
-- **OpenACR import prototype:** Local CLI and MCP import of OpenACR YAML for human review, distinguishing supports, partial support, non-support, not applicable, not evaluated, and missing claims. It does not create or certify an ACR.
+- **OpenACR import prototype:** Local CLI and MCP import of OpenACR YAML for human review, checked against the pinned upstream schema and optionally compared with a catalog for missing criteria. It distinguishes supports, partial support, non-support, not applicable, not evaluated, and missing claims, and does not create or certify an ACR.
 - **DITAP workshop materials:** Fictional facilitator guide, worksheet, and pilot protocol. These are prepared but **not yet learner-tested**.
 - **GitHub Actions:** Tests Python, Node, MCP-over-stdio, browser behavior, axe/keyboard regressions, and the upstream OpenACR CLI; publishes the static app and can refresh an allowlisted public `code.json` sample as a reviewable artifact.
 - **DITAP fixture:** Clearly fictional case management scenario, never a real vendor shortlist.
@@ -27,7 +27,7 @@ The practical objective is to help an acquisition professional answer:
 
 **No live procurement, vendor, ACR, ART, CMS, or AI APIs are connected by the browser.** The source directory and public software sample are curated static metadata and links, not a comprehensive or live market search. A scheduled GitHub Action can refresh the public sample for review; it does not publish it automatically. OpenACR and public metadata are parsed only by local tools, not by the static site. The app never determines Section 508 conformance or approves exceptions.
 
-**Accessibility status:** automated axe scans, keyboard/focus regression tests, 320 CSS px reflow, and forced-colors focus checks run in CI. Manual screen-reader testing with NVDA, JAWS, and VoiceOver has **not** been performed, and no WCAG conformance claim is made. See [testing](docs/TESTING.md).
+**Accessibility status:** automated axe scans, keyboard/focus regression tests, 320 CSS px reflow, and forced-colors focus checks run in CI. Manual screen-reader testing with NVDA, JAWS, and VoiceOver has **not** been performed, and no WCAG conformance claim is made. The [manual evidence pack](docs/accessibility/README.md) provides the environments, tasks, issue record, and results template for a real audit. See [testing](docs/TESTING.md).
 
 ## Deploy to GitHub Pages
 
