@@ -130,6 +130,9 @@ test('the About local MCP section is static and does not imply live data', async
   await expect(section).toContainText('This page does not display live MCP data');
   await expect(section).toContainText('cannot start or reach a local stdio MCP server');
   await expect(section).toContainText('Eight read-only tools');
+  await expect(section).toContainText('Connect a local LLM');
+  await expect(section).toContainText('LM Studio');
+  await expect(section).toContainText('Ollama is a model runtime, not an MCP host');
   await expect(section).not.toContainText('live MCP connection');
   await page.getByRole('link', { name: 'MCP', exact: true }).click();
   await expect(page).toHaveURL(/#local-mcp$/);
